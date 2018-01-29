@@ -2,9 +2,9 @@ CS 308 Cell Society Team 12 Design Plan
 ===================
 
 ### Introduction
-Our goal is to make a Cellular Automata simulation program that can run various type of CA rules such as Conway’s Game of Life, Schelling’s Model of Segregation, Wa-Tor, etc. We want to create an interface that allows users to run all these types of simulations through XML input files specifying the type of simulation. 
+Our goal is to make a Cellular Automata simulation program that can run various type of CA rules such as Conwayâ€™s Game of Life, Schellingâ€™s Model of Segregation, Wa-Tor, etc. We want to create an interface that allows users to run all these types of simulations through XML input files specifying the type of simulation. 
 
-The user has access to a GUI that allows him or her to upload the configuration files, effectively altering the grid and the placement of the cells, and can control the speed of the simulation after the simulation has started. He or she can also reset the level from the simulation screen by uploading a configuration file. The simulation logic will be controlled by each of the block classes’ logic, but the user will not be able to access any of the methods used to determine the rules of each CA simulation - that is predetermined based on the type of CA that user wants to run. 
+The user has access to a GUI that allows him or her to upload the configuration files, effectively altering the grid and the placement of the cells, and can control the speed of the simulation after the simulation has started. He or she can also reset the level from the simulation screen by uploading a configuration file. The simulation logic will be controlled by each of the block classesâ€™ logic, but the user will not be able to access any of the methods used to determine the rules of each CA simulation - that is predetermined based on the type of CA that user wants to run. 
 
 ### Overview
 
@@ -13,7 +13,7 @@ The user will mostly be interfacing with the splash screen, as the other parts a
 
 Error checking can be added to make sure that the grid size is valid, and that the cell data is correct for the game type specified, and that they can properly constructed for the game. The simulation will be mostly hands off from the user.
 
-![Interface figure](interface.png | height = 600)
+![Interface figure](interface.png)
 ### Design Details
 
 ### Design Considerations
@@ -25,4 +25,4 @@ What the best way will be to parse the information from the XML file, and what d
 
 
 ### Team Responsibilities
-All members of the group will constructively work together to implement the three cellular automata simulations described in the link assignments of the project page: Schelling’s model of segregation, Wa-Tor World model of predator-prey relationships, and Spreading of Fire. Work will be divided up among the members based on class implementation. This approach for the first three CA simulations ensures that the basic requirements are met. To exceed these requirements, we will extend the plan to include at least 2-3 additional simulations. After breaking down the class structure and concepts for each of these simulations, including inheritance relationships between superclasses and subclasses, grid cell object parameters, motion control, and neighbor checking requirements, each member will be responsible for implementing one of the simulations independently. Throughout the project, collaboration and collective consent will be key, especially for high-level implementation of multiple class dependencies.
+All members of the group will constructively work together to implement the three cellular automata simulations described in the link assignments of the project page: Schellingâ€™s model of segregation, Wa-Tor World model of predator-prey relationships, and Spreading of Fire. Work will be divided up among the members based on class implementation. This approach for the first three CA simulations ensures that the basic requirements are met. To exceed these requirements, we will extend the plan to include at least 2-3 additional simulations. After breaking down the class structure and concepts for each of these simulations, including inheritance relationships between superclasses and subclasses, grid cell object parameters, motion control, and neighbor checking requirements, each member will be responsible for implementing one of the simulations independently. Throughout the project, collaboration and collective consent will be key, especially for high-level implementation of multiple class dependencies.
