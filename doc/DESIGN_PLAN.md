@@ -7,6 +7,7 @@ Our goal is to make a Cellular Automata simulation program that can run various 
 The user has access to a GUI that allows him or her to upload the configuration files, effectively altering the grid and the placement of the cells, and can control the speed of the simulation after the simulation has started. He or she can also reset the level from the simulation screen by uploading a configuration file. The simulation logic will be controlled by each of the block classes’ logic, but the user will not be able to access any of the methods used to determine the rules of each CA simulation - that is predetermined based on the type of CA that user wants to run. 
 
 ### Overview
+![CRC cards](crccards.PNG)
 
 ### User Interface
 The user will mostly be interfacing with the splash screen, as the other parts are Cellular Automata simulation that the user can control the step speed of. The splash screen will allow the user to upload a data file which will contain the necessary information to run the simulation (Title, author, grid dimension, initial configuration). Once you start the simulations, the user will have speed control, a stop, start, and reset button. Users can reset from the same configuration or a different data file.
