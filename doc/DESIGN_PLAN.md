@@ -13,7 +13,7 @@ The user will mostly be interfacing with the splash screen, as the other parts a
 
 Error checking can be added to make sure that the grid size is valid, and that the cell data is correct for the game type specified, and that they can properly constructed for the game. The simulation will be mostly hands off from the user.
 
-![Interface figure](interface.png)
+![Interface figure](interface.png | height = 600)
 ### Design Details
 
 ### Design Considerations
