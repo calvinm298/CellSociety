@@ -22,17 +22,17 @@ The GameObject class can be used for games that have multiple objects that fill 
 
 Some example code that might help visualize how we will format our code.
 ```Java
-Cells[100][100];
+Cells[][] grid = new Cells[100][100];
 
-Cells[30][27] = new Water_Cell(new Fish(), false);
+grid[30][27] = new Water_Cell(new Fish(), false);
 
 move(row, col, new_row, new_col);
 
 move(int old_row, int o, int new_row, int new_col) {
-	Cells[new_row][new_col] = Cells[old_row][old_col];
-	Cells[new_row][new_col].getAnimal.setLocation(new_row, new_col);
-	Cells[old_row][old_col].setAnimal(null);
-	}
+	grid[new_row][new_col] = grid[old_row][old_col];
+	grid[new_row][new_col].getAnimal.setLocation(new_row, new_col);
+	grid[old_row][old_col].setAnimal(null);
+}
 ```
 ### User Interface
 The user will mostly be interfacing with the splash screen, as the other parts are Cellular Automata simulation that the user can control the step speed of. The splash screen will allow the user to upload a data file which will contain the necessary information to run the simulation (Title, author, grid dimension, initial configuration). Once you start the simulations, the user will have speed control, a stop, start, and reset button. Users can reset from the same configuration or a different data file.
