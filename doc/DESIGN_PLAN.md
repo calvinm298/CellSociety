@@ -55,12 +55,12 @@ Below are the design specific details that we plan to incorporate into each supe
     * Method for moving objects
     * Method for checking neighbors
     * GUI Elements
+    * Getters and Setters for grid size, simulation speed
+    * Global Grid (Array of blocks)
     * List of possible game subclasses
         * Game 1: Schelling’s model of segregation
-           * Global Grid (Array of blocks)
-           * Getters and Setters for grid size, simulation speed, threshold
-           * Method to check neighbors
-           * Method for moving unsatisfied agent (random, from user, etc.)
+           * Getter and setter methods for threshold value
+           * Overridden method for moving unsatisfied agent (random, from user, etc.)
         * Game 2: Wa-Tor World model of predator-prey relationships
            * Fish and shark cell objects
            * Shark needs energy to survive
