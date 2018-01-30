@@ -28,7 +28,7 @@ grid[30][27] = new Water_Cell(new Fish(), false);
 
 move(row, col, new_row, new_col);
 
-move(int old_row, int o, int new_row, int new_col) {
+move(int old_row, int old_col, int new_row, int new_col) {
 	grid[new_row][new_col] = grid[old_row][old_col];
 	grid[new_row][new_col].getAnimal.setLocation(new_row, new_col);
 	grid[old_row][old_col].setAnimal(null);
