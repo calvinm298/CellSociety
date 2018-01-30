@@ -52,10 +52,10 @@ Below are the design specific details that we plan to incorporate into each supe
     * Link to superclass for games
 * Superclass for games
     * Animation controls (start, stop, reset)
-    * List of possible game subclasses
     * Method for moving objects
     * Method for checking neighbors
     * GUI Elements
+    * List of possible game subclasses
         * Game 1: Schelling’s model of segregation
            * Global Grid (Array of blocks)
            * Getters and Setters for grid size, simulation speed, threshold
