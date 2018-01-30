@@ -48,6 +48,71 @@ When the simulation is started, the interface that the user sees is not directly
 
 Below are the design specific details that we plan to incorporate into each superclass and class. We have included what we think will be valuable methods and how the methods help the classes interact with each other. 
 
+* Main Screen  
+    * Link to superclass for games
+* Superclass for games
+    * Animation controls (start, stop, reset)
+    * List of possible game subclasses
+    * Method for moving objects
+    * Method for checking neighbors
+    * GUI Elements
+        * Game 1: Schelling’s model of segregation
+           * Global Grid (Array of blocks)
+           * Getters and Setters for grid size, simulation speed, threshold
+           * Method to check neighbors
+           * Method for moving unsatisfied agent (random, from user, etc.)
+        * Game 2: Wa-Tor World model of predator-prey relationships
+           * Fish and shark cell objects
+           * Shark needs energy to survive
+                * Will be dealt with the Shark class
+            * For advanced implementation: deal with decisions for two or more fish that want/have to occupy same location (with level of priority)
+        * Game 3: Spreading of Fire
+            * Extend cell object to have tree cell (contains info on empty, burning, tree) that calls super() on the default constructor
+            * Can pass in their own probability of catching fire
+            * Have a get status method in the tree cell class
+            * Methods will exist in the game class that handles the simulation logic
+        * Game 4: Conway’s Game of Life
+            * Contains a grid of Conway cells
+        * Game 5: Brian’s Brain
+        * Game 6: Byl’s Loop
+        * Game 7: Langton’s ant
+* Game subclass
+    * XML files based on user game choice
+    * Take inputs from the user (grid size, game speed, configurations)
+    * Implement Grid class based on inputs to create scene 
+* Cells
+    * Two constructors
+        * Default constructor with no parameters
+        * Constructor with single parameter - object specific to the game (Object)
+    * Methods for checking state of cells: isTaken(), isNotTaken(), willBeRemoved()
+    * Method for “reproducing” that will return a grid coordinate of where reproduction will occur
+    * Subclass: Water_Cell
+        * Additional constructor parameters containing boolean for willBeTakenByFish() and willBeTakenByShark()
+        * WIll also contain method for willBeTakenByFish() (avoiding collisions among multiple fish)
+        * Will also contain method for willBeTakenByShark() (avoiding collisions among multiple sharks and between sharks and fish)
+        * Will contain a getAnimal() method to retrieve the animal there if isTaken() returns true
+    * Subclass: Tree_Cell
+        * Methods: isEmpty(), isTree(), or isBurning()
+        * Color attribute
+    * Subclass: Conway_Cell
+        * Methods: isAlive(), isDead()
+* Objects specific to Games
+    * Wa-Tor:
+        * Water_Animals superclass
+            * Chronon count (incremented until max chronon count)
+            * Max chronon count (randomly generated)
+            * Location (row and column number)
+                * getLocation() will return row and col numbers
+                * setLocation() will set new row and col numbers
+            * Method for canReproduce() (some of them can be abstract)
+        * For each Fish
+            * Same color (green)
+        * For each Shark
+            * Same color (blue)
+            * Method for isDead(), isAlive()
+            * Energy
+                * When we increment chronon count, we decrement energy count
+                * getEnergy(), setEnergy(), eatsFish()
 
 *Extending the game*
 
@@ -67,15 +132,6 @@ To set up the file for a simulation, you will need to start off my specifying th
 
 We will use standard DOM XML parser for information. A setup class, possibly a setup super class and each kind of simulation will extend for each type of simulation (super class will getType, getLocation, etc, but the setupConway sub class will create the blocks. The setup class will hold each block in an arraylist, and can pass this into a simulation driver class that will handle the rest of the game logic. The XML parser will be called from the Game superclass, and the data will be imported into the necessary Cells or GameObjects to initialize the simulation.
 
-### Design Considerations
-Where we will put methods to move cells, update simulation frame, either in the superclass or in the subclass for the game. How we plan to extend each class to implement each different type of simulation. We also need to consider how to most efficiently implement cells either as their own abstract class and implement them in the simulation class, or as a specific cell type class for each simulation. We will have to see how we want to implement the cell and what methods we would want each type of cell to have, and then consider if each type of cell is similar/different enough to warrant a superclass or not.
-
-What the correct rules for each game are - for each game, we will have to determine the rules of how objects move around and how they interact with each other. Basically, what the objects *DO* between each step. This will vary between each game. We will have a superclass of games which will include an abstract method for rules, letting us edit the rules of each game without interfering with the other games. 
-
-How we are going to scale each cell, since the user gets to define the grid size but the window size remains the same. We want to use a cell class that will take care of displaying the simulation pieces (game of life piece, predator, prey, fish, shark, etc), but then when creating the cells, we will have to make them the right size, and make the displayed cells scale. 
-
-What the best way will be to parse the information from the XML file, and what data we should put in the XML that the user can specify, and what we should put in a file manager class that will set up the simulation. We will want to decide what parameters we will set by default, and makes it easy for the user to set up the game without have to specify each block in a large grid. We also have to decide how much control the user will have to control the parameters of the simulation (if they can decide speed, default block type, etc) from the XML file.
-
 Here is how we will deal with some of the use cases:
 
 * Apply the rules to a middle cell: set the next state of a cell to dead by counting its number of neighbors using the Game of Life rules for a cell in the middle (i.e., with all its neighbors)
@@ -88,6 +144,15 @@ Here is how we will deal with some of the use cases:
     * The simulation parameter for the value of probCatch will be read from the XML file by extracting the data for the corresponding node (probably called “fire”). A private instance variable, called probCatch, in the “Fire” game subclass will store this value and will be used later in the game to determine the probability of a tree burning. 
 * Switch simulations: use the GUI to change the current simulation from Game of Life to Wator
     * To switch simulations, the game superclass will contain different game options. This interface is maintained by the superclass because it is common across all specific game subclasses. In the basic implementation, the game options will be presented in a ComboBox using JavaFX. For later more advanced implementation, we will create image buttons (screenshots of the different simulations) linking to the different games as an enhancement of the GUI. For now, consider the basic implementation. When the user selects a new simulation, the current frame (e.g. for Game of Life) is closed, and a new frame is created in the game superclass corresponding to the specific game subclass (e.g. Wa-Tor). The XML file corresponding to the new game is changed, and the respective user’s parameters from this file are read in as they would during a transition from the main menu screen to any game. This smooth user interaction allows for a free-flowing linking across classes, superclasses, and subclasses. 
+
+### Design Considerations
+Where we will put methods to move cells, update simulation frame, either in the superclass or in the subclass for the game. How we plan to extend each class to implement each different type of simulation. We also need to consider how to most efficiently implement cells either as their own abstract class and implement them in the simulation class, or as a specific cell type class for each simulation. We will have to see how we want to implement the cell and what methods we would want each type of cell to have, and then consider if each type of cell is similar/different enough to warrant a superclass or not.
+
+What the correct rules for each game are - for each game, we will have to determine the rules of how objects move around and how they interact with each other. Basically, what the objects *DO* between each step. This will vary between each game. We will have a superclass of games which will include an abstract method for rules, letting us edit the rules of each game without interfering with the other games. 
+
+How we are going to scale each cell, since the user gets to define the grid size but the window size remains the same. We want to use a cell class that will take care of displaying the simulation pieces (game of life piece, predator, prey, fish, shark, etc), but then when creating the cells, we will have to make them the right size, and make the displayed cells scale. 
+
+What the best way will be to parse the information from the XML file, and what data we should put in the XML that the user can specify, and what we should put in a file manager class that will set up the simulation. We will want to decide what parameters we will set by default, and makes it easy for the user to set up the game without have to specify each block in a large grid. We also have to decide how much control the user will have to control the parameters of the simulation (if they can decide speed, default block type, etc) from the XML file.
 
 ### Team Responsibilities
 All members of the group will constructively work together to implement the three cellular automata simulations described in the link assignments of the project page: Schelling’s model of segregation, Wa-Tor World model of predator-prey relationships, and Spreading of Fire. Work will be divided up among the members based on class implementation. This approach for the first three CA simulations ensures that the basic requirements are met. To exceed these requirements, we will extend the plan to include at least 2-3 additional simulations. After breaking down the class structure and concepts for each of these simulations, including inheritance relationships between superclasses and subclasses, grid cell object parameters, motion control, and neighbor checking requirements, each member will be responsible for implementing one of the simulations independently. Throughout the project, collaboration and collective consent will be key, especially for high-level implementation of multiple class dependencies.
