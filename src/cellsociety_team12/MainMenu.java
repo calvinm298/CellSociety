@@ -9,6 +9,7 @@ import java.util.Properties;
 import gui_elements.ComboBoxes;
 import gui_elements.Labels;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -56,8 +57,6 @@ public class MainMenu extends Application {
     private static Stage stage;
    	private static Properties menu_properties;
 	private static InputStream input;
-	private static Labels lbl;
-	private static ComboBoxes cb;
 	private static Image image;
 	private static ImageView imageView;
 	
@@ -77,12 +76,13 @@ public class MainMenu extends Application {
     /**
      * Sets the scene and initializes the screen properties.
      */
-    private void initialize() {        
+    private void initialize() {
     	root = new Group();
     	setProperties();
         myScene = new Scene(root, screen_width, screen_height, BACKGROUND);
         setStage();
-        setContents();
+        setSimulationContents();
+    	setImage();
     }
 
     /**
@@ -131,33 +131,10 @@ public class MainMenu extends Application {
      * Calls methods to set contents of the main menu, 
      * including labels, drop-down menus, and the image.
      */
-    private void setContents() {
-    	setLabels();
-    	setComboBoxes();
-    	setImage();
+    private void setSimulationContents() {
+    	SimulationSetup ss = new SimulationSetup(root);
     }
-    
-    /**
-     * Sets the labels for the main menu.
-     */
-    private void setLabels() {
-    	lbl = new Labels();
-    	Label[] main_menu_labels = {lbl.getMainMenuHeading(),
-    	                            lbl.getMainMenuBody(),
-    	                            lbl.getMainMenuSim(),
-    	                            lbl.getMainMenuFile()};
-    	root.getChildren().addAll(Arrays.asList(main_menu_labels));
-    }
-
-    /**
-     * Sets the drop-down menus for the main menu.
-     */
-    private void setComboBoxes() {
-    	cb = new ComboBoxes();
-    	ComboBox[] main_menu_cbs = {cb.getMainMenuSim(), cb.getMainMenuFile()};
-    	root.getChildren().addAll(Arrays.asList(main_menu_cbs));
-    }
-    
+        
     /**
      * Sets the image for the main menu.
      */

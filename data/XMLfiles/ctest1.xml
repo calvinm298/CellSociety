@@ -1,0 +1,46 @@
+<?xml version="1.0" ?>
+<Simulation>
+	<setup>
+		<type>conway</type>
+		<title>Conway's Game of Life</title>
+		<author>Team 12</author>
+		<size_x>20</size_x>
+		<size_y>20</size_y>
+	</setup>
+	<block>
+		<loc_x>4</loc_x>
+		<loc_y>3</loc_y>
+	</block>
+	<block>
+		<loc_x>5</loc_x>
+		<loc_y>10</loc_y>
+	</block>
+		<block>
+		<loc_x>5</loc_x>
+		<loc_y>4</loc_y>
+	</block>
+		<block>
+		<loc_x>6</loc_x>
+		<loc_y>6</loc_y>
+	</block>
+		<block>
+		<loc_x>7</loc_x>
+		<loc_y>8</loc_y>
+	</block>
+		<block>
+		<loc_x>1</loc_x>
+		<loc_y>4</loc_y>
+	</block>
+		<block>
+		<loc_x>14</loc_x>
+		<loc_y>17</loc_y>
+	</block>
+		<block>
+		<loc_x>2</loc_x>
+		<loc_y>3</loc_y>
+	</block>
+		<block>
+		<loc_x>4</loc_x>
+		<loc_y>18</loc_y>
+	</block>
+</Simulation>
