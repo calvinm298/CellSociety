@@ -81,7 +81,7 @@ public class MainMenu extends Application {
     	setProperties();
         myScene = new Scene(root, screen_width, screen_height, BACKGROUND);
         setStage();
-        setSimulationContents();
+        chooseSimulation();
     	setImage();
     }
 
@@ -131,8 +131,8 @@ public class MainMenu extends Application {
      * Calls methods to set contents of the main menu, 
      * including labels, drop-down menus, and the image.
      */
-    private void setSimulationContents() {
-    	SimulationSetup ss = new SimulationSetup(root);
+    private void chooseSimulation() {
+    	ChooseSimulation ss = new ChooseSimulation(root);
     }
         
     /**
