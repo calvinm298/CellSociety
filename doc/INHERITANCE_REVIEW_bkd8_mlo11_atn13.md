@@ -30,8 +30,12 @@ Keep code more DRY, and make the code more readable. Throw better errors
 Superclass reads the information that is common among all file configurations, and then the subclass parses specfic information for each simulation.
 * Part 3
 1. Come up with at least five use cases for your part (most likely these will be useful for both teams).
-
+* Correctly read information
+* Pass the right information to the game classes
+* throw errors when the XML file doesn't exist or is incorrectly done
+* Make sure the files are properly set up
+* There aren't that many use cases for XML parsing
 1. What feature/design problem are you most excited to work on?
-Throwing good errors for other teammates so they can understand what when wrong.
+* Throwing good errors for other teammates so they can understand what when wrong.
 1. What feature/design problem are you most worried about working on?
-Getting all the information to to "talk" with other parts of the game.
+* Getting all the information to to "talk" with other parts of the game.
