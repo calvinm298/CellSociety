@@ -24,6 +24,7 @@ public class ComboBoxes {
     private static final String SIMULATION_PROPERTIES = "data/simulation_names.properties";
 	private static final String SIMULATION_WORD = "simulation";
 	private static final String NUM_SIMULATIONS_PROPERTY = "numSims";
+	private static final String XML_FILE_WORD = "XML File";
 	private static final int SIM_XLOC = 280;
 	private static final int SIM_YLOC = 520;
 	private static final int SIM_WIDTH = 240;
@@ -35,7 +36,8 @@ public class ComboBoxes {
 	private static String simulation_string;
 	private static String simulation_xml_files;
     private static Properties simulation_properties;
-	private static InputStream input;
+	private static Properties xml_file_properties;
+    private static InputStream input;
 	private static ComboBox<String> cb_sim, cb_file;
 	private static HBox hbox_sim, hbox_file;
 	private static Group root;
@@ -91,11 +93,12 @@ public class ComboBoxes {
      */
 	public ComboBox<String> getXMLFile(String simulation_name) {
 		cb_file = new ComboBox<String>();
-		simulation_properties = new Properties();
+		xml_file_properties = new Properties();
 		input = null;
-//		try {
-//	  		input = new FileInputStream(simulation_xml_files);
-//	  		simulation_properties.load(input);
+		try {
+	  		input = new FileInputStream(simulation_name + " " + XML_FILE_WORD);
+	  		xml_file_properties.load(input);
+	  		
 //
 //	  		number_of_simulations = Integer.parseInt(simulation_properties.getProperty(NUM_SIMULATIONS_PROPERTY));
 //	  		
