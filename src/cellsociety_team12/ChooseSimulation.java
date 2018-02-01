@@ -16,7 +16,7 @@ import javafx.scene.control.Label;
  * 
  * @author Aditya Sridhar
  */
-public class SimulationSetup {
+public class ChooseSimulation {
 	
 	private static Group root;
 	private static String simulation_name;
@@ -26,7 +26,7 @@ public class SimulationSetup {
     /**
      * Constructor for the simulation setup. 
      */
-	public SimulationSetup(Group root) {
+	public ChooseSimulation(Group root) {
 		this.root = root;
 		initialize();
 	}
