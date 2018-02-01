@@ -132,7 +132,7 @@ public class MainMenu extends Application {
      * including labels, drop-down menus, and the image.
      */
     private void chooseSimulation() {
-    	ChooseSimulation ss = new ChooseSimulation(root);
+    	ChooseSimulation simChoice = new ChooseSimulation(root);
     }
         
     /**
