@@ -9,7 +9,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 /**
@@ -35,8 +34,7 @@ public class FileSorter {
 			for (File f : files) {
 				Document doc = dBuilder.parse(f);
 				doc.getDocumentElement().normalize();
-				NodeList type = doc.getElementsByTagName("type");
-				String simType = type.item(0).getTextContent();
+				String simType = doc.getElementsByTagName("type").item(0).getTextContent();
 				if (!sortedFiles.containsKey(simType)) {
 					sortedFiles.put(simType, new ArrayList<String>());
 				}

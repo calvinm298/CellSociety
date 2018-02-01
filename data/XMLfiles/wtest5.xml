@@ -1,0 +1,18 @@
+<?xml version="1.0" ?>
+<Simulation>
+	<setup>
+		<type>wator</type>
+		<title>Wa-Tor World</title>
+		<author>Team 12</author>
+		<size_x>20</size_x>
+		<size_y>20</size_y>
+	</setup>
+	<block>
+		<loc_x>4</loc_x>
+		<loc_y>3</loc_y>
+	</block>
+	<block>
+		<loc_x>10</loc_x>
+		<loc_y>5</loc_y>
+	</block>
+</Simulation>
