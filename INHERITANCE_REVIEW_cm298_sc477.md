@@ -1,5 +1,7 @@
 # INHERITANCE REVIEW
 
+CALVIN MA AND SUSIE CHOI
+
 * Part 1
 There are some methods are not needed by other classes when this current class is called, so we are planning to 
 encapsulate these methods. For example, when checking for neighbors, this method will be private within the class 
