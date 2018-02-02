@@ -12,7 +12,8 @@ import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
 /**
- * @author August Sorts files by type of simulations
+ * @author August Ning
+ *  Sorts files by type of simulations, used for start up screen so a user can only select the type of XML file for their choosen simulation
  */
 public class FileSorter {
 	private File directory;

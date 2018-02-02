@@ -9,7 +9,7 @@ import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
 /**
- * @author August
+ * @author August Ning
  * Super class that will initiate the XMLparser for each type of simulation
  */
 public class XMLParser {
@@ -29,14 +29,15 @@ public class XMLParser {
 			dBuilder = dbFactory.newDocumentBuilder();
 			doc = dBuilder.parse(file);
 			doc.getDocumentElement().normalize();
-			getSettings(doc);
+			parseSettings(doc);
 		} catch (ParserConfigurationException | SAXException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 	}
-	public void getSettings(Document doc) {
+	
+	public void parseSettings(Document doc) {
 		this.type = doc.getElementsByTagName("type").item(0).getTextContent();
 		this.title = doc.getElementsByTagName("title").item(0).getTextContent();
 		this.author = doc.getElementsByTagName("author").item(0).getTextContent();
