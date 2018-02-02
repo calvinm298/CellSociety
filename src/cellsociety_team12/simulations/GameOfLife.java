@@ -6,6 +6,10 @@ import java.util.ArrayList;
 
 public class GameOfLife extends Simulation {
 
+	public GameOfLife(String simulation_name, String xml_file_name) {
+		super(simulation_name, xml_file_name);
+	}
+
 	private static ConwayCell[][] currGrid;
 	
 	private ConwayCell[][] updateGrid(ConwayCell[][] currGrid){
