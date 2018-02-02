@@ -8,11 +8,39 @@
 		<size_y>20</size_y>
 	</setup>
 	<block>
-		<loc_x>4</loc_x>
-		<loc_y>3</loc_y>
+		<loc_x>3</loc_x>
+		<loc_y>4</loc_y>
 	</block>
 	<block>
 		<loc_x>4</loc_x>
-		<loc_y>3</loc_y>
+		<loc_y>4</loc_y>
+	</block>
+		<block>
+		<loc_x>5</loc_x>
+		<loc_y>4</loc_y>
+	</block>
+		<block>
+		<loc_x>10</loc_x>
+		<loc_y>6</loc_y>
+	</block>
+	<block>
+		<loc_x>11</loc_x>
+		<loc_y>6</loc_y>
+	</block>
+		<block>
+		<loc_x>12</loc_x>
+		<loc_y>6</loc_y>
+	</block>
+	<block>
+		<loc_x>9</loc_x>
+		<loc_y>7</loc_y>
+	</block>
+	<block>
+		<loc_x>10</loc_x>
+		<loc_y>7</loc_y>
+	</block>
+		<block>
+		<loc_x>11</loc_x>
+		<loc_y>7</loc_y>
 	</block>
 </Simulation>
