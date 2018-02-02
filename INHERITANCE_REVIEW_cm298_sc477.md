@@ -19,7 +19,7 @@ Errors in checking movement, trying to stay within the bounds of our "grid" beca
 
 The design seems pretty good - with the polymorphism, there is a lot of flexibility within both of our projects to make changes and help debug! Only need to create cell subclass and then the properties are easy to create. The overall design makes it very simplified and my partner's group would only have to mess around with a few classes. 
 
-*Part 2
+* Part 2
 
 Main needs the splash screen class. Main needs grid class to display the cells. The grid is composed of a 2-d cell array, and the cell are what are displayed on the screen. 
 

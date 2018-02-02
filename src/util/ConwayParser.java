@@ -11,7 +11,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 /**
- * @author August
+ * @author August Ning
  * Specific parser used for Conway's Game of Life simulation
  */
 public class ConwayParser extends XMLParser {
@@ -33,36 +33,15 @@ public class ConwayParser extends XMLParser {
 			}
 		}
 	}
-//	public void parseCells() {
-//		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-//		DocumentBuilder dBuilder;
-//		try {
-//			dBuilder = dbFactory.newDocumentBuilder();
-//			Document doc = dBuilder.parse(this.getFileName());
-//			doc.getDocumentElement().normalize();
-//			
-//			NodeList cellList = doc.getElementsByTagName("block");
-//			cellLocations = new ArrayList<>();
-//			for (int i = 0; i < cellList.getLength(); i++) {
-//				Node cell = cellList.item(i);
-//				if (cell.getNodeType() == Node.ELEMENT_NODE) {
-//					Element cellinfo = (Element) cell;
-//					int xLoc = Integer.parseInt(cellinfo.getElementsByTagName("loc_x").item(0).getTextContent());
-//					int yLoc = Integer.parseInt(cellinfo.getElementsByTagName("loc_y").item(0).getTextContent());
-//					cellLocations.add(new Point(xLoc, yLoc));
-//				}
-//			}
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//
-//	}
+	
 	public void printCells() {
 		for (Point p : cellLocations) {
 			System.out.println("x: "+ p.getX());
 			System.out.println("y: "+ p.getY());
 		}
+	}
+	public ArrayList<Point> getCells() {
+		return this.cellLocations;
 	}
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
