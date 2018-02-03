@@ -1,18 +1,31 @@
 package cellsociety_team12.simulations;
 
 import cells.ConwayCell;
+import util.ConwayParser;
+import util.XMLParser;
+
 import java.awt.Point;
 import java.util.ArrayList;
 
 public class GameOfLife extends Simulation {
+	
+	private static ConwayCell[][] currGrid;
+	private static ConwayCell[][] nextGrid;
+	private static ArrayList<Point> cellArray;
+	private static String file;
+	private static XMLParser parser = new ConwayParser(file);
+
 
 	public GameOfLife(String simulation_name, String xml_file_name) {
 		super(simulation_name, xml_file_name);
+		 cellArray = parser.getConwayCells();
+		/**XML parser needs to take this in, and create the grid and objects that will be made into 
+		 *private instance variables. 
+		 */
 	}
 
-	private static ConwayCell[][] currGrid;
 	
-	private ConwayCell[][] updateGrid(ConwayCell[][] currGrid){
+	private void updateGrids(ConwayCell[][] currGrid){
 		//ONLY EDIT NEXTGRID
 		ConwayCell[][] nextGrid = currGrid;
 		for (int x = 0; x < nextGrid.length; x++) {
@@ -32,8 +45,8 @@ public class GameOfLife extends Simulation {
 		}
 		
 		//NEED A METHOD OR SOMETHING THAT SAYS CURRGRID = NEXTGRID
+		currGrid = nextGrid;
 		
-		return nextGrid;
 	}
 
 	private int getNumNeighbors(int x, int y) {
@@ -57,4 +70,6 @@ public class GameOfLife extends Simulation {
 		}
 		return 0;
 	}
+	
+	
 }

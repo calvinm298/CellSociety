@@ -41,7 +41,7 @@ public class ConwayParser extends XMLParser {
 			System.out.println("y: "+ p.getY());
 		}
 	}
-	public ArrayList<Point> getCells() {
+	public ArrayList<Point> getConwayCells() {
 		return this.cellLocationsArray;
 	}
 	public static void main(String[] args) {
