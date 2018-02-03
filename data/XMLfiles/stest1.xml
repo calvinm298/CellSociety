@@ -6,13 +6,16 @@
 		<author>Team 12</author>
 		<size_x>20</size_x>
 		<size_y>20</size_y>
+		<similar>0.4</similar>
 	</setup>
 	<block>
 		<loc_x>4</loc_x>
 		<loc_y>3</loc_y>
+		<class>blue</class>
 	</block>
 	<block>
 		<loc_x>4</loc_x>
 		<loc_y>3</loc_y>
+		<class>red</class>
 	</block>
 </Simulation>

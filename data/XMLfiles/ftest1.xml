@@ -9,8 +9,8 @@
 		<probcatch>0.6</probcatch>
 	</setup>
 	<block>
-		<loc_x>2</loc_x>
-		<loc_y>2</loc_y>
+		<loc_x>5</loc_x>
+		<loc_y>15</loc_y>
 		<class>burning</class>
 	</block>
 	<block>
@@ -32,15 +32,5 @@
 		<loc_x>6</loc_x>
 		<loc_y>8</loc_y>
 		<class>tree</class>
-	</block>
-		<block>
-		<loc_x>15</loc_x>
-		<loc_y>8</loc_y>
-		<class>empty</class>
-	</block>
-		<block>
-		<loc_x>14</loc_x>
-		<loc_y>3</loc_y>
-		<class>empty</class>
 	</block>
 </Simulation>

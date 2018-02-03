@@ -2,12 +2,18 @@ package cellsociety_team12;
 
 import java.util.Arrays;
 
+import cellsociety_team12.simulations.Simulation;
+import gui_elements.Buttons;
 import gui_elements.ComboBoxes;
 import gui_elements.Labels;
 import javafx.event.ActionEvent;
 import javafx.scene.Group;
+import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.stage.Stage;
+import sun.font.CreatedFontTracker;
 
 /**
  * This class sets up the simulation choices for "Cell Society." The user can select a new 
@@ -18,15 +24,19 @@ import javafx.scene.control.Label;
  */
 public class ChooseSimulation {
 	
+	private static Stage stage;
 	private static Group root;
 	private static String simulation_name;
-	private static String xml_file;
+	private static String xml_file_name;
 	private static ComboBox<String> main_menu_sim_cb, main_menu_file_cb;
-
+	private static Label file_label;
+	private static Button ok_button;
+	
     /**
      * Constructor for the simulation setup. 
      */
-	public ChooseSimulation(Group root) {
+	public ChooseSimulation(Stage stage, Group root) {
+		this.stage = stage;
 		this.root = root;
 		initialize();
 	}
@@ -35,7 +45,7 @@ public class ChooseSimulation {
      * Calls methods to set labels and comboBoxes.
      */
 	private void initialize() {    	
-    	Label file_label = setLabels();	// Returns label for choosing an XML file
+    	file_label = setLabels();	// Returns label for choosing an XML file
     	setComboBoxes(file_label);
 	}
 	
@@ -50,7 +60,7 @@ public class ChooseSimulation {
     	                            new Labels().getMainMenuSim(),
     	                            new Labels().getMainMenuFile()};
     	for(int label_element = 0; label_element < 3; label_element++) {
-        	root.getChildren().add(main_menu_labels[label_element]);
+        	rootAdd(main_menu_labels[label_element]);
         }
     	
     	return main_menu_labels[3];
@@ -62,16 +72,39 @@ public class ChooseSimulation {
     private void setComboBoxes(Label file_label) {
     	main_menu_sim_cb = new ComboBoxes(root).getSim();
     	main_menu_sim_cb.setOnAction((ActionEvent ev) -> {
+    		rootRemove(ok_button);
             simulation_name = main_menu_sim_cb.getSelectionModel().getSelectedItem().toString();
-            if(!root.getChildren().contains(file_label)) {
-            	root.getChildren().add(file_label);
-            }
+            rootAdd(file_label);
             main_menu_file_cb = new ComboBoxes(root).getXMLFile(simulation_name);
-        });
-    	if(root.getChildren().contains(file_label)) {
-	        main_menu_file_cb.setOnAction((ActionEvent ev) -> {
-	        	xml_file = main_menu_file_cb.getSelectionModel().getSelectedItem().toString();
+    		main_menu_file_cb.setOnAction((ActionEvent ev2) -> {
+	        	xml_file_name = main_menu_file_cb.getSelectionModel().getSelectedItem().toString();
+	        	if(ok_button == null) {
+	        		ok_button = new Buttons().createOkButton();
+	        	}
+	        	rootAdd(ok_button);
+	        	createSimulation(ok_button);
 	        });
-    	}
+    	});
     }
+    
+    private void createSimulation(Button ok_button) {
+    	ok_button.setOnAction(value -> {
+    		stage.close();
+    		Simulation sim = new Simulation(simulation_name, xml_file_name);
+    		sim.start(new Stage());
+    	});
+    }
+    
+    private void rootAdd(Object obj) {
+		if(!root.getChildren().contains(obj)) {
+			root.getChildren().add((Node) obj);
+		}
+    }
+
+    private void rootRemove(Object obj) {
+		if(root.getChildren().contains(obj)) {
+			root.getChildren().remove(obj);
+		}
+    }
+
 }
