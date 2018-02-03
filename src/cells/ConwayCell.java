@@ -1,6 +1,10 @@
 package cells;
 
-import objects.conway.conwayObject;
+import com.sun.prism.paint.Color;
+
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Rectangle;
+
 
 /**
  * This is a subclass made for the Conway Game. This class will have functions determining
@@ -11,7 +15,9 @@ import objects.conway.conwayObject;
 
 public class ConwayCell extends Cell {
 	
-	private static conwayObject conway = null;
+	private static Paint color;
+	private static Paint ALIVE_COLOR = Color.GREEN;
+	private static Paint DEAD_COLOR = Color.WHITE;
 	/**
 	 * Constructor to make a Conway Cell, there is no need for a constructor parameter because
 	 * we will be setting the cell as alive/dead with methods.
@@ -24,28 +30,30 @@ public class ConwayCell extends Cell {
 	 * @return
 	 */
 	public boolean isAlive() {
-		return this.conway != null;
+		return this.color == ALIVE_COLOR;
 	}
 	/**
 	 * returns whether the cell is dead
 	 * @return
 	 */	
 	public boolean isDead() {
-		return this.conway == null;
+		return this.color != ALIVE_COLOR;
 	}
 	/**
 	 * sets the cell to alive
 	 * 
 	 */	
 	public void setAlive() {
-		this.conway = new conwayObject();
+		this.color = ALIVE_COLOR;
 	}
 	/**
 	 * sets the cell to dead
 	 * 
 	 */	
 	public void setDead() {
-		this.conway = null;
+		this.color = DEAD_COLOR;
 	}
+	
+
 	
 }
