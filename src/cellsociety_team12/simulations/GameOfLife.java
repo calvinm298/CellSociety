@@ -12,13 +12,14 @@ public class GameOfLife extends Simulation {
 	private static ConwayCell[][] currGrid;
 	private static ConwayCell[][] nextGrid;
 	private static ArrayList<Point> cellArray;
-	private static String file;
-	private static XMLParser parser = new ConwayParser(file);
+	private static ConwayParser parser;
+
 
 
 	public GameOfLife(String simulation_name, String xml_file_name) {
 		super(simulation_name, xml_file_name);
-		 cellArray = parser.getConwayCells();
+		ConwayParser parser = new ConwayParser(xml_file_name);
+		 cellArray = parser.getCells();
 		/**XML parser needs to take this in, and create the grid and objects that will be made into 
 		 *private instance variables. 
 		 */
