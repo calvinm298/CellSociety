@@ -13,7 +13,7 @@ public class GameOfLife extends Simulation {
 		ConwayCell[][] nextGrid = currGrid;
 		for (int x = 0; x < nextGrid.length; x++) {
 			for (int y = 0; y < nextGrid[x].length; y++) {
-				int numNeighbors = getNeighborCoordinates(x, y);
+				int numNeighbors = getNumNeighbors(x, y);
 				if (nextGrid[x][y].isAlive()) {
 					if (numNeighbors < 2 || numNeighbors > 3) {
 						nextGrid[x][y].setDead();
@@ -32,7 +32,7 @@ public class GameOfLife extends Simulation {
 		return nextGrid;
 	}
 
-	private int getNeighborCoordinates(int x, int y) {
+	private int getNumNeighbors(int x, int y) {
 		return 	checkIfAlive(x - 1, y - 1) +
 				checkIfAlive(x - 1, y + 1) +
 				checkIfAlive(x + 1, y - 1) +
