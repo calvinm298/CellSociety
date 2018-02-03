@@ -53,7 +53,6 @@ public abstract class Simulation extends Application {
     private static final String HEIGHT_PROPERTY = "height";
     private static String title, image_name, simulation_name, xml_file_name;
     private static int screen_width, screen_height;
-    private static int cell_sizeX, cell_sizeY;
     private static boolean setIntroLabels = false;
     private static Stage stage;
     private static Timeline animation;
@@ -61,7 +60,8 @@ public abstract class Simulation extends Application {
 	private static InputStream input;
 	private static GridPane visual_grid;
 	protected Cell[][] curr_grid, next_grid;
-	protected int sizeX, sizeY;
+	protected int sizeX, sizeY, cell_sizeX, cell_sizeY;
+	 
 	
 	// Additional setup for the main menu
     private Scene myScene;
@@ -105,8 +105,8 @@ public abstract class Simulation extends Application {
     	visual_grid.setPrefSize(GRID_SIZEX, GRID_SIZEY);
     	visual_grid.setLayoutX(GRID_XLOC);
     	visual_grid.setLayoutY(GRID_YLOC);
-    	cell_sizeX = GRID_SIZEX / getNumXCells();
-    	cell_sizeY = GRID_SIZEY / getNumYCells();
+    	cell_sizeX = GRID_SIZEX / curr_grid.length;
+    	cell_sizeY = GRID_SIZEY / curr_grid[0].length;
     	root.getChildren().add(visual_grid);
     }
     
@@ -154,21 +154,18 @@ public abstract class Simulation extends Application {
     	ChooseSimulation simChoice = new ChooseSimulation(stage, root, setIntroLabels);
     }
     
+    protected abstract void setupGrid();
     protected abstract void updateGrid();
     
     private void updateGUI() {
     	for(int i = 0; i < curr_grid.length; i++) {
     		for(int j = 0; j < curr_grid[0].length; j++) {
-    			visual_grid.getChildren().set(i*curr_grid[0].length + j, getNode(i, j));
+    			visual_grid.getChildren().set(i*curr_grid[0].length + j, getObject(i, j));
     		}
     	}
     }
-           
-    protected abstract int getNumXCells();
-
-    protected abstract int getNumYCells();
     
-    protected abstract Node getNode(int row, int col);
+    protected abstract Node getObject(int row, int col);
     
     /**
      * Returns the width of the main menu screen.
