@@ -13,21 +13,36 @@ public class GameOfLife extends Simulation {
 	private static ConwayCell[][] nextGrid;
 	private static ArrayList<Point> cellArray;
 	private static String file;
-	private static XMLParser parser = new ConwayParser(file);
+	private static ConwayParser parser;
 
 
 	public GameOfLife(String simulation_name, String xml_file_name) {
 		super(simulation_name, xml_file_name);
+		 parser = new ConwayParser(file);
 		 cellArray = parser.getConwayCells();
 		/**XML parser needs to take this in, and create the grid and objects that will be made into 
 		 *private instance variables. 
 		 */
 	}
-
+	/**
+	 * @author August
+	 * sets up the grid
+	 */
+	private void setupGrid() {
+		currGrid = new ConwayCell[parser.getSizeX()][parser.getSizeY()];
+		for (int i = 0; i < parser.getSizeX(); i++) {
+			for (int j = 0; j < parser.getSizeY(); j++) {
+				currGrid[i][j] = new ConwayCell();
+			}
+		}
+		for (Point p : cellArray) {
+			currGrid[p.x][p.y].setAlive();
+		}
+	}
 	
-	private void updateGrids(ConwayCell[][] currGrid){
+	private void updateGrids(){
 		//ONLY EDIT NEXTGRID
-		ConwayCell[][] nextGrid = currGrid;
+		nextGrid = currGrid;
 		for (int x = 0; x < nextGrid.length; x++) {
 			for (int y = 0; y < nextGrid[x].length; y++) {
 				int numNeighbors = getNumNeighbors(x, y);
