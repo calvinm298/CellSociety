@@ -45,18 +45,14 @@ public abstract class Simulation extends Application {
     private static final String TITLE_PROPERTY = "title";
     private static final String WIDTH_PROPERTY = "width";
     private static final String HEIGHT_PROPERTY = "height";
-    private static String title;
-    private static String image_name;
-    private static String simulation_name;
-    private static String xml_file_name;
-    private static int screen_width;
-    private static int screen_height;
+    private static String title, image_name, simulation_name, xml_file_name;
+    private static int screen_width, screen_height;
     private static Stage stage;
     private static Timeline animation;
     private static Properties menu_properties;
 	private static InputStream input;
-	protected Cell[][] curr_grid;
-	protected Cell[][] next_grid;
+	protected Cell[][] curr_grid, next_grid;
+	protected int sizeX, sizeY;
 	
 	// Additional setup for the main menu
     private Scene myScene;
