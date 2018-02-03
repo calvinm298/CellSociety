@@ -11,7 +11,7 @@ import objects.conway.conwayObject;
 
 public class ConwayCell extends Cell {
 	
-	private static conwayObject conway= null;
+	private static conwayObject conway = null;
 	/**
 	 * Constructor to make a Conway Cell, there is no need for a constructor parameter because
 	 * we will be setting the cell as alive/dead with methods.
