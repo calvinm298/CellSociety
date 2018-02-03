@@ -12,7 +12,7 @@ public class Buttons {
 	private static final String OK_TEXT = "OK";
 	private static final String OK_STYLE = "-fx-background-color: #0000ff";
 	private static final Paint OK_COLOR = Color.YELLOW;
-	private static Button ok;
+	private static Button ok, start_or_resume, stop, reset, step;
 	
 	public Button createOkButton() {
    		ok = new Button(OK_TEXT);
@@ -23,5 +23,21 @@ public class Buttons {
         ok.setPrefWidth(OK_WIDTH);
         
         return ok;
+	}
+	
+	public Button createStartButton() {
+		return start_or_resume;
+	}
+
+	public Button createStopButton() {
+		return stop;
+	}
+
+	public Button createResetButton() {
+		return reset;
+	}
+
+	public Button createStepButton() {
+		return step;
 	}
 }

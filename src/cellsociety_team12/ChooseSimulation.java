@@ -26,7 +26,7 @@ import sun.font.CreatedFontTracker;
 /**
  * This class sets up the simulation choices for "Cell Society." The user can select a new 
  * simulation at any time (whether from the main screen or from another running simulation). 
- * It is called from the "MainMenu" class.
+ * It is called from the "MainMenu" and "Simulation" classes.
  * 
  * @author Aditya Sridhar
  */
@@ -35,6 +35,8 @@ public class ChooseSimulation {
 	private static final String SIMULATION_WORD = "simulation";
     private static final String SIMULATION_PROPERTIES_FILENAME = "data/simulation_names.properties";
     private static final String NUM_SIMULATIONS_PROPERTY = "numSims";
+	private static int number_of_simulations;
+	private static boolean setIntroLabels;
     private static Properties simulation_properties;
     private static InputStream input;
     private static Stage stage;
@@ -44,14 +46,14 @@ public class ChooseSimulation {
 	private static ComboBox<String> main_menu_sim_cb, main_menu_file_cb;
 	private static Label file_label;
 	private static Button ok_button;
-	private static int number_of_simulations;
 	
     /**
      * Constructor for the simulation setup. 
      */
-	public ChooseSimulation(Stage stage, Group root) {
+	public ChooseSimulation(Stage stage, Group root, boolean setIntroLabels) {
 		this.stage = stage;
 		this.root = root;
+		this.setIntroLabels = setIntroLabels;
 		initialize();
 	}
 	
@@ -69,15 +71,23 @@ public class ChooseSimulation {
      * only after a simulation is chosen).
      */
     private Label setLabels() {
-    	Label[] main_menu_labels = {new Labels().getMainMenuHeading(),
-    	                            new Labels().getMainMenuBody(),
-    	                            new Labels().getMainMenuSim(),
-    	                            new Labels().getMainMenuFile()};
-    	for(int label_element = 0; label_element < 3; label_element++) {
+    	Label[] main_menu_labels;
+    	if(setIntroLabels) {
+    		main_menu_labels = new Label[] {new Labels().getMainMenuHeading(),
+                        					new Labels().getMainMenuBody(),
+                        					new Labels().getMainMenuSim(),
+                        					new Labels().getMainMenuFile()};
+    	}
+    	else {
+    		main_menu_labels = new Label[] {new Labels().getMainMenuSim(),
+											new Labels().getMainMenuFile()};    		
+    	}
+    				           
+    	for(int label_element = 0; label_element < main_menu_labels.length - 1; label_element++) {
         	rootAdd(main_menu_labels[label_element]);
         }
     	
-    	return main_menu_labels[3];
+    	return main_menu_labels[main_menu_labels.length - 1];
     }
 
     /**
@@ -143,9 +153,9 @@ public class ChooseSimulation {
     private Simulation[] listOfSimulations(String xml_file_name) {
     	return new Simulation[] {
     			new Segregation(xml_file_name),
-    			new WaTor(xml_file_name),
-    			new SpreadingOfFire(xml_file_name),
-    			new SpreadingOfFire(xml_file_name),
+    			new Segregation(xml_file_name),
+    			new Segregation(xml_file_name),
+    			new Segregation(xml_file_name),
     	};
     }
     

@@ -15,9 +15,6 @@ public class GameOfLife extends Simulation {
 	private static ConwayCell[][] nextGrid;
 	private static ArrayList<Point> cellArray;
 	private static ConwayParser parser;
-	private static Group root;
-
-
 
 	public GameOfLife(String xml_file_name) {
 		parser = new ConwayParser(xml_file_name);
@@ -86,6 +83,11 @@ public class GameOfLife extends Simulation {
 			return 1;
 		}
 		return 0;
+	}
+	@Override
+	protected void updateGrid() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	
