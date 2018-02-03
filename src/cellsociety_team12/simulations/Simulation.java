@@ -105,8 +105,8 @@ public abstract class Simulation extends Application {
     	visual_grid.setPrefSize(GRID_SIZEX, GRID_SIZEY);
     	visual_grid.setLayoutX(GRID_XLOC);
     	visual_grid.setLayoutY(GRID_YLOC);
-    	cell_sizeX = GRID_SIZEX / getNumXCells();
-    	cell_sizeY = GRID_SIZEY / getNumYCells();
+    	cell_sizeX = GRID_SIZEX / curr_grid.length;
+    	cell_sizeY = GRID_SIZEY / curr_grid[0].length;
     	root.getChildren().add(visual_grid);
     }
     
@@ -154,6 +154,7 @@ public abstract class Simulation extends Application {
     	ChooseSimulation simChoice = new ChooseSimulation(stage, root, setIntroLabels);
     }
     
+    protected abstract void setupGrid();
     protected abstract void updateGrid();
     
     private void updateGUI() {
@@ -163,10 +164,6 @@ public abstract class Simulation extends Application {
     		}
     	}
     }
-           
-    protected abstract int getNumXCells();
-
-    protected abstract int getNumYCells();
     
     protected abstract Node getNode(int row, int col);
     
