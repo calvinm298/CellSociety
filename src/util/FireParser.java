@@ -1,25 +1,24 @@
 package util;
 
-import java.awt.Point;
-import java.util.*;
-
 /**
- * @author August Ning
- * Specific parser used for Spreading Fire
+ * @author August Ning Specific parser used for Spreading Fire
  */
 public class FireParser extends XMLParser {
 	private double probCatch;
-	private HashMap<String, ArrayList<Point>> cellLocations;
+
 	public FireParser(String file) {
 		super(file);
-		parseProbCatch();
-		parseCells();
-	}
-	public void parseProbCatch() {
+		this.parseGameConstants();
+		}
+	public void parseGameConstants() {
 		this.probCatch = Double.parseDouble(this.getDoc().getElementsByTagName("probcatch").item(0).getTextContent());
 	}
-	public void parseCells() {
-		
+	public double getProbCatch() {
+		return this.probCatch;
+	}
+	public static void main(String[] args) {
+		FireParser parser = new FireParser("data\\XMLFiles\\ftest1.xml");
+		parser.printCells();
 	}
 
 }
