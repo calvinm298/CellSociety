@@ -5,10 +5,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Properties;
+import java.util.Random;
 
+import cells.Cell;
 import cellsociety_team12.ChooseSimulation;
 import gui_elements.ComboBoxes;
 import gui_elements.Labels;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.scene.Group;
@@ -20,18 +24,17 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 /**
- * This class displays the main menu screen for "Cell Society." Here, we choose a simulation 
- * and select an XML file to read in. Based on these configurations, a simulation will be 
- * chosen thereafter. It calls the "Simulation" class, found in the "simulations" folder, and 
- * the frame will switch to the simulation corresponding to the configurations. This class has 
- * a main method, so this is the program to run to begin any simulation.
  * 
  * @author Aditya Sridhar
  */
-public class Simulation extends Application {
+public abstract class Simulation extends Application {
 
     private static final int FRAMES_PER_SECOND = 60;
     private static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
@@ -42,30 +45,22 @@ public class Simulation extends Application {
     private static final String TITLE_PROPERTY = "title";
     private static final String WIDTH_PROPERTY = "width";
     private static final String HEIGHT_PROPERTY = "height";
-    private static final String IMAGE_PROPERTY = "image";
-    private static final String IMAGE_WIDTH_PROPERTY = "imgWidth";
-    private static final String IMAGE_HEIGHT_PROPERTY = "imgHeight";
-    private static final String IMAGE_XLOC_PROPERTY = "imgXLoc";
-    private static final String IMAGE_YLOC_PROPERTY = "imgYLoc";
     private static String title;
     private static String image_name;
     private static String simulation_name;
     private static String xml_file_name;
     private static int screen_width;
     private static int screen_height;
-    private static int image_width;
-    private static int image_height;
-    private static int image_xloc;
-    private static int image_yloc;
     private static Stage stage;
-   	private static Properties menu_properties;
+    private static Timeline animation;
+    private static Properties menu_properties;
 	private static InputStream input;
-	private static Image image;
-	private static ImageView imageView;
+	protected Cell[][] curr_grid;
+	protected Cell[][] next_grid;
 	
 	// Additional setup for the main menu
-    protected Scene myScene;
-    protected Group root;
+    private Scene myScene;
+    private Group root;
     
     /**
      * Initializes the stage for the main menu.
@@ -85,9 +80,25 @@ public class Simulation extends Application {
         myScene = new Scene(root, screen_width, screen_height, BACKGROUND);
         setStage();
         chooseSimulation();
-    	setImage();
+        initializeGUI();
+        
+        KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY),
+                e -> step());
+		Timeline animation = new Timeline();
+		animation.setCycleCount(Timeline.INDEFINITE);
+		animation.getKeyFrames().add(frame);
+		this.animation = animation;
     }
 
+    private void step() {
+    	updateGrid();
+    	updateGUI();
+    }
+    
+    private void initializeGUI() {
+    	
+    }
+    
     /**
      * Reads in properties from a property file and sets the  
      * screen properties.
@@ -100,13 +111,7 @@ public class Simulation extends Application {
     		menu_properties.load(input);
     		title = menu_properties.getProperty(TITLE_PROPERTY);
     		screen_width = Integer.parseInt(menu_properties.getProperty(WIDTH_PROPERTY));
-    		screen_height = Integer.parseInt(menu_properties.getProperty(HEIGHT_PROPERTY));
-    		image_name = menu_properties.getProperty(IMAGE_PROPERTY);
-    		image_width = Integer.parseInt(menu_properties.getProperty(IMAGE_WIDTH_PROPERTY));
-    		image_height = Integer.parseInt(menu_properties.getProperty(IMAGE_HEIGHT_PROPERTY));
-    		image_xloc = Integer.parseInt(menu_properties.getProperty(IMAGE_XLOC_PROPERTY));
-    		image_yloc = Integer.parseInt(menu_properties.getProperty(IMAGE_YLOC_PROPERTY));
-     	
+    		screen_height = Integer.parseInt(menu_properties.getProperty(HEIGHT_PROPERTY));     	
      	} catch (IOException ex) {
     		ex.printStackTrace();
     	} finally {
@@ -137,20 +142,13 @@ public class Simulation extends Application {
     private void chooseSimulation() {
     	ChooseSimulation simChoice = new ChooseSimulation(stage, root);
     }
-        
-    /**
-     * Sets the image for the main menu.
-     */
-    private void setImage() {
-        image = new Image(getClass().getClassLoader().getResourceAsStream(image_name));
-        imageView = new ImageView(image);
-        imageView.setX(image_xloc);
-        imageView.setY(image_yloc);
-        imageView.setFitWidth(image_width);
-        imageView.setFitHeight(image_height);
-        root.getChildren().add(imageView);
-    }
     
+    protected abstract void updateGrid();
+    
+    private void updateGUI() {
+    	
+    }
+           
     /**
      * Returns the width of the main menu screen.
      */
@@ -164,8 +162,4 @@ public class Simulation extends Application {
     public int getScreenHeight() {
     	return screen_height;
     }
-   
-	private void selectSim(String simulation) {
-		
-	}
 }

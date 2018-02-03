@@ -6,4 +6,7 @@ public class Segregation extends Simulation {
 		System.out.println("HELLO 1");
 	}
 
+	@Override
+	protected void updateGrid() {}
+
 }
