@@ -87,7 +87,7 @@ public class GameOfLife extends Simulation {
 		return 0;
 	}
 	
-	private void showObjects
+//	private void showObjects
 	
 	
 }

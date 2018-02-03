@@ -1,8 +1,16 @@
 package cellsociety_team12;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Arrays;
+import java.util.Properties;
 
+import cellsociety_team12.simulations.GameOfLife;
+import cellsociety_team12.simulations.Segregation;
 import cellsociety_team12.simulations.Simulation;
+import cellsociety_team12.simulations.SpreadingOfFire;
+import cellsociety_team12.simulations.WaTor;
 import gui_elements.Buttons;
 import gui_elements.ComboBoxes;
 import gui_elements.Labels;
@@ -24,13 +32,19 @@ import sun.font.CreatedFontTracker;
  */
 public class ChooseSimulation {
 	
-	private static Stage stage;
+	private static final String SIMULATION_WORD = "simulation";
+    private static final String SIMULATION_PROPERTIES_FILENAME = "data/simulation_names.properties";
+    private static final String NUM_SIMULATIONS_PROPERTY = "numSims";
+    private static Properties simulation_properties;
+    private static InputStream input;
+    private static Stage stage;
 	private static Group root;
 	private static String simulation_name;
 	private static String xml_file_name;
 	private static ComboBox<String> main_menu_sim_cb, main_menu_file_cb;
 	private static Label file_label;
 	private static Button ok_button;
+	private static int number_of_simulations;
 	
     /**
      * Constructor for the simulation setup. 
@@ -90,9 +104,49 @@ public class ChooseSimulation {
     private void createSimulation(Button ok_button) {
     	ok_button.setOnAction(value -> {
     		stage.close();
-    		Simulation sim = new Simulation(simulation_name, xml_file_name);
+    		Simulation sim = assignSimulation(simulation_name, xml_file_name);
     		sim.start(new Stage());
     	});
+    }
+    
+    private Simulation assignSimulation(String simulation_name, String xml_file_name) {
+    	Simulation[] simulations = listOfSimulations(xml_file_name);
+    	simulation_properties = new Properties();
+    	input = null;
+
+    	try {
+	  		input = new FileInputStream(SIMULATION_PROPERTIES_FILENAME);
+	  		simulation_properties.load(input);
+
+	  		number_of_simulations = Integer.parseInt(simulation_properties.getProperty(NUM_SIMULATIONS_PROPERTY));
+	  		
+	  		for(int simulation_number = 1; simulation_number <= number_of_simulations; simulation_number++) {
+	  			String file_simulation_name = simulation_properties.getProperty(SIMULATION_WORD + simulation_number);
+	  			if(simulation_name.equals(file_simulation_name)) {
+	  				return simulations[simulation_number];
+	  			}
+	  		}
+	   	} catch (IOException ex) {
+	  		ex.printStackTrace();
+	  	} finally {
+	  		if (input != null) {
+	  			try {
+	  				input.close();
+	  			} catch (IOException e) {
+	  				e.printStackTrace();
+	  			}
+	  		}
+	  	}
+		throw new NullPointerException("The simulation requested does not exist!");
+    }
+    
+    private Simulation[] listOfSimulations(String xml_file_name) {
+    	return new Simulation[] {
+    			new Segregation(xml_file_name),
+    			new WaTor(xml_file_name),
+    			new SpreadingOfFire(xml_file_name),
+    			new SpreadingOfFire(xml_file_name),
+    	};
     }
     
     private void rootAdd(Object obj) {
@@ -106,5 +160,4 @@ public class ChooseSimulation {
 			root.getChildren().remove(obj);
 		}
     }
-
 }

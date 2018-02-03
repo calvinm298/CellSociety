@@ -64,14 +64,9 @@ public class Simulation extends Application {
 	private static ImageView imageView;
 	
 	// Additional setup for the main menu
-    private Scene myScene;
-    private Group root;
+    protected Scene myScene;
+    protected Group root;
     
-    public Simulation(String simulation_name, String xml_file_name) {
-    	this.simulation_name = simulation_name;
-    	this.xml_file_name = xml_file_name;
-    }
-
     /**
      * Initializes the stage for the main menu.
      */
