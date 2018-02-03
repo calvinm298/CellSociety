@@ -16,6 +16,7 @@ import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -27,6 +28,7 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -38,6 +40,10 @@ public abstract class Simulation extends Application {
 
     private static final int FRAMES_PER_SECOND = 60;
     private static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
+    private static final int GRID_SIZEX = 400;
+    private static final int GRID_SIZEY = 400;
+    private static final int GRID_XLOC = 150;
+    private static final int GRID_YLOC = 50;
     private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
     private static final Paint BACKGROUND = Color.BLACK;
     private static final Paint HIGHLIGHT = Color.OLIVEDRAB;
@@ -47,10 +53,13 @@ public abstract class Simulation extends Application {
     private static final String HEIGHT_PROPERTY = "height";
     private static String title, image_name, simulation_name, xml_file_name;
     private static int screen_width, screen_height;
+    private static int cell_sizeX, cell_sizeY;
+    private static boolean setIntroLabels = false;
     private static Stage stage;
     private static Timeline animation;
     private static Properties menu_properties;
 	private static InputStream input;
+	private static GridPane visual_grid;
 	protected Cell[][] curr_grid, next_grid;
 	protected int sizeX, sizeY;
 	
@@ -92,7 +101,13 @@ public abstract class Simulation extends Application {
     }
     
     private void initializeGUI() {
-    	
+    	visual_grid = new GridPane();
+    	visual_grid.setPrefSize(GRID_SIZEX, GRID_SIZEY);
+    	visual_grid.setLayoutX(GRID_XLOC);
+    	visual_grid.setLayoutY(GRID_YLOC);
+    	cell_sizeX = GRID_SIZEX / getNumXCells();
+    	cell_sizeY = GRID_SIZEY / getNumYCells();
+    	root.getChildren().add(visual_grid);
     }
     
     /**
@@ -136,15 +151,25 @@ public abstract class Simulation extends Application {
      * including labels, drop-down menus, and the image.
      */
     private void chooseSimulation() {
-    	ChooseSimulation simChoice = new ChooseSimulation(stage, root);
+    	ChooseSimulation simChoice = new ChooseSimulation(stage, root, setIntroLabels);
     }
     
     protected abstract void updateGrid();
     
     private void updateGUI() {
-    	
+    	for(int i = 0; i < curr_grid.length; i++) {
+    		for(int j = 0; j < curr_grid[0].length; j++) {
+    			visual_grid.getChildren().set(i*curr_grid[0].length + j, getNode(i, j));
+    		}
+    	}
     }
            
+    protected abstract int getNumXCells();
+
+    protected abstract int getNumYCells();
+    
+    protected abstract Node getNode(int row, int col);
+    
     /**
      * Returns the width of the main menu screen.
      */

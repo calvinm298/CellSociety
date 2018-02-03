@@ -54,6 +54,7 @@ public class MainMenu extends Application {
     private static int image_height;
     private static int image_xloc;
     private static int image_yloc;
+    private static boolean setIntroLabels = true;
     private static Stage stage;
    	private static Properties menu_properties;
 	private static InputStream input;
@@ -132,7 +133,7 @@ public class MainMenu extends Application {
      * including labels, drop-down menus, and the image.
      */
     private void chooseSimulation() {
-    	ChooseSimulation simChoice = new ChooseSimulation(stage, root);
+    	ChooseSimulation simChoice = new ChooseSimulation(stage, root, setIntroLabels);
     }
         
     /**
