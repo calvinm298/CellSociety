@@ -107,7 +107,7 @@ public class XMLParser {
 		return this.doc;
 	}
 	public static void main(String[] args) {
-		XMLParser parser = new XMLParser("data\\XMLFiles\\ctest2.xml");
+		XMLParser parser = new XMLParser("data\\XMLFiles\\wtest1.xml");
 		System.out.println(parser.getType());
 		System.out.println(parser.getTitle());
 		System.out.println(parser.getAuthor());

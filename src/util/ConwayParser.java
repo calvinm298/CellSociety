@@ -18,7 +18,6 @@ public class ConwayParser extends XMLParser {
 	private ArrayList<Point> cellLocationsArray;
 	public ConwayParser(String file) {
 		super(file);
-		parseCells();
 	}
 	@Override
 	public void parseCells() {
@@ -34,7 +33,7 @@ public class ConwayParser extends XMLParser {
 			}
 		}
 	}
-	
+	@Override
 	public void printCells() {
 		for (Point p : cellLocationsArray) {
 			System.out.println("x: "+ p.getX());
