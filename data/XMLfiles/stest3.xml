@@ -4,15 +4,15 @@
 		<type>segregation</type>
 		<title>Schelling's Model of Segregation</title>
 		<author>Team 12</author>
-		<size_x>20</size_x>
-		<size_y>20</size_y>
+		<size_x>50</size_x>
+		<size_y>50</size_y>
+		<similar>0.5</similar>
+		<blue_percent>0.48</blue_percent>
+		<red_percent>0.48</red_percent>
 	</setup>
 	<block>
-		<loc_x>4</loc_x>
-		<loc_y>3</loc_y>
-	</block>
-	<block>
-		<loc_x>4</loc_x>
-		<loc_y>3</loc_y>
+		<loc_x>-1</loc_x>
+		<loc_y>-1</loc_y>
+		<class>segregation</class>
 	</block>
 </Simulation>

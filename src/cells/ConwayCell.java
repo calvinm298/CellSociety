@@ -15,7 +15,7 @@ public class ConwayCell extends Cell {
 	
 	private Paint color;
 	private static Paint ALIVE_COLOR = Color.GREEN;
-	private static Paint DEAD_COLOR = Color.PURPLE;
+	private static Paint DEAD_COLOR = Color.WHITE;
 	/**
 	 * Constructor to make a Conway Cell, there is no need for a constructor parameter because
 	 * we will be setting the cell as alive/dead with methods.
@@ -28,7 +28,7 @@ public class ConwayCell extends Cell {
 	 * @return
 	 */
 	public boolean isAlive() {
-		return this.color.equals(ALIVE_COLOR);
+		return (color.equals(ALIVE_COLOR));
 	}
 	/**
 	 * returns whether the cell is dead
@@ -42,16 +42,13 @@ public class ConwayCell extends Cell {
 	 * 
 	 */	
 	public void setAlive() {
-		this.color = ALIVE_COLOR;
+		color = ALIVE_COLOR;
 	}
 	/**
 	 * sets the cell to dead
 	 * 
 	 */	
 	public void setDead() {
-		this.color = DEAD_COLOR;
-	}
-	
-
-	
+		color = DEAD_COLOR;
+	}	
 }
