@@ -95,9 +95,11 @@ public class SpreadingOfFire extends Simulation {
 		ArrayList<Point> neighborPoints = this.createNeighborPoints(i, j);
 		for (Point p : neighborPoints) {
 			if (this.burningList.contains(p) && rand.nextDouble() <= this.probCatch) {
+				System.out.println("set fire");
 				return true;
 			}
 		}
+		System.out.println("no fire");
 		return false;
 	}
 	@Override
