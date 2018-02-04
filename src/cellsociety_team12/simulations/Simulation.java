@@ -39,7 +39,8 @@ import javafx.util.Duration;
  */
 public abstract class Simulation extends Application {
 
-    private static final int FRAMES_PER_SECOND = 1;
+
+    private static final int FRAMES_PER_SECOND = 2;
     private static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
     private static final int GRID_SIZEX = 400;
     private static final int GRID_SIZEY = 400;
@@ -100,7 +101,7 @@ public abstract class Simulation extends Application {
     }
 
     private void step() {
-    	System.out.println("Hell");
+    	//System.out.println("Hell");
     	updateGrid();
     	updateGUI();
     }
