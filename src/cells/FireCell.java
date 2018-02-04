@@ -9,7 +9,7 @@ public class FireCell extends Cell {
 	private final Paint EMPTY_COLOR = Color.PALEGOLDENROD;
 	private Paint cellColor;
 	private final String BURNING = "burning";
-	private final String TREE = "tree";	
+//	private final String TREE = "tree";	
 	/**
 	 * August Ning
 	 * @param type
@@ -20,10 +20,11 @@ public class FireCell extends Cell {
 	public FireCell(String type) {
 		if (type.equals(BURNING)) {
 			this.setBurning();
-		} else if (type.equals(TREE)) {
-			this.setTree();
+//		} else if (type.equals(TREE)) {
+//			this.setTree();
 		} else {
-			this.setEmpty();
+			//this.setEmpty();
+			this.setTree();
 		}
 	}
 	public boolean isBurning() {
