@@ -43,7 +43,7 @@ public class WaterCell extends Cell {
 	}
 	
 	public boolean ifFish() {
-		return this.animalType.equals(obj));
+		return this.animalType.equals(obj)); //probably add a private instance string of some sort for comparing purposes
 	}
 	
 	
