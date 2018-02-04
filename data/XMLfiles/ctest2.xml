@@ -10,37 +10,46 @@
 	<block>
 		<loc_x>3</loc_x>
 		<loc_y>4</loc_y>
+		<class>cell</class>
 	</block>
 	<block>
 		<loc_x>4</loc_x>
 		<loc_y>4</loc_y>
+		<class>cell</class>
 	</block>
 		<block>
 		<loc_x>5</loc_x>
 		<loc_y>4</loc_y>
+		<class>cell</class>
 	</block>
 		<block>
 		<loc_x>10</loc_x>
 		<loc_y>6</loc_y>
+		<class>cell</class>
 	</block>
 	<block>
 		<loc_x>11</loc_x>
 		<loc_y>6</loc_y>
+		<class>cell</class>
 	</block>
 		<block>
 		<loc_x>12</loc_x>
 		<loc_y>6</loc_y>
+		<class>cell</class>
 	</block>
 	<block>
 		<loc_x>9</loc_x>
 		<loc_y>7</loc_y>
+		<class>cell</class>
 	</block>
 	<block>
 		<loc_x>10</loc_x>
 		<loc_y>7</loc_y>
+		<class>cell</class>
 	</block>
 		<block>
 		<loc_x>11</loc_x>
 		<loc_y>7</loc_y>
+		<class>cell</class>
 	</block>
 </Simulation>
