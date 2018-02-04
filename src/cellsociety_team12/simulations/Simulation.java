@@ -39,11 +39,11 @@ import javafx.util.Duration;
  */
 public abstract class Simulation extends Application {
 
-    private static final int FRAMES_PER_SECOND = 60;
+    private static final int FRAMES_PER_SECOND = 1;
     private static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
     private static final int GRID_SIZEX = 400;
     private static final int GRID_SIZEY = 400;
-    private static final int GRID_XLOC = 150;
+    private static final int GRID_XLOC = 100;
     private static final int GRID_YLOC = 50;
     private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
     private static final Paint BACKGROUND = Color.BLACK;
@@ -84,6 +84,7 @@ public abstract class Simulation extends Application {
     	root = new Group();
     	setProperties();
         myScene = new Scene(root, screen_width, screen_height, BACKGROUND);
+//        myScene.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
         setStage();
         chooseSimulation();
         setupGrid();
@@ -95,9 +96,11 @@ public abstract class Simulation extends Application {
 		animation.setCycleCount(Timeline.INDEFINITE);
 		animation.getKeyFrames().add(frame);
 		this.animation = animation;
+		animation.play();
     }
 
     private void step() {
+    	System.out.println("Hell");
     	updateGrid();
     	updateGUI();
     }
@@ -109,16 +112,16 @@ public abstract class Simulation extends Application {
     	visual_grid.setLayoutY(GRID_YLOC);
     	cell_sizeX = GRID_SIZEX / curr_grid.length;
     	cell_sizeY = GRID_SIZEY / curr_grid[0].length;
-    	root.getChildren().add(visual_grid);
     	initializeVisualGrid();
     }
     
     private void initializeVisualGrid() {
        	for(int i = 0; i < curr_grid.length; i++) {
     		for(int j = 0; j < curr_grid[0].length; j++) {
-    			visual_grid.getChildren().add(i*curr_grid[0].length + j, getObject(i, j));
+    			visual_grid.add(getObject(i, j), i, j);
     		}
     	}
+    	root.getChildren().add(visual_grid);
     }
         
     /**
@@ -169,11 +172,13 @@ public abstract class Simulation extends Application {
     protected abstract void updateGrid();
     
     private void updateGUI() {
+    	root.getChildren().remove(visual_grid);
     	for(int i = 0; i < curr_grid.length; i++) {
     		for(int j = 0; j < curr_grid[0].length; j++) {
     			visual_grid.getChildren().set(i*curr_grid[0].length + j, getObject(i, j));
     		}
     	}
+    	root.getChildren().add(visual_grid);
     }
     
     protected abstract Node getObject(int row, int col);
@@ -192,9 +197,9 @@ public abstract class Simulation extends Application {
     	return screen_height;
     }
     
-    private void handleKeyInput (KeyCode code) {
-    	if(code == KeyCode.SPACE) {
-    		animation.play();
-    	}
-    }
+//    private void handleKeyInput (KeyCode code) {
+//    	if(code == KeyCode.SPACE) {
+//    		animation.play();
+//    	}
+//    }
 }

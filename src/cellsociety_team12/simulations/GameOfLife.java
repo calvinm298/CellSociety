@@ -82,7 +82,7 @@ public class GameOfLife extends Simulation {
 
 	private int checkIfAlive(int xCoor, int yCoor) {
 		int last = curr_grid.length;
-		if (xCoor < 0 || xCoor > last || yCoor < 0 || yCoor > last) {
+		if (xCoor < 0 || xCoor > (last - 1) || yCoor < 0 || yCoor > (last - 1)) {
 			return 0;
 		}
 		if (((ConwayCell) curr_grid[xCoor][yCoor]).isAlive()) {
