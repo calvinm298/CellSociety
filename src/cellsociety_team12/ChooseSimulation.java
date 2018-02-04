@@ -159,14 +159,14 @@ public class ChooseSimulation {
 //    			new GameOfLife(full_xml_file_name),
 //    			new GameOfLife(full_xml_file_name),
 //    			new GameOfLife(full_xml_file_name),
-    			new SpreadingOfFire(full_xml_file_name),
-    			new SpreadingOfFire(full_xml_file_name),
-    			new SpreadingOfFire(full_xml_file_name),
-    			new SpreadingOfFire(full_xml_file_name),
-//    			new Segregation(full_xml_file_name),
-//    			new Segregation(full_xml_file_name),
-//    			new Segregation(full_xml_file_name),
-//    			new Segregation(full_xml_file_name),
+//    			new SpreadingOfFire(full_xml_file_name),
+//    			new SpreadingOfFire(full_xml_file_name),
+//    			new SpreadingOfFire(full_xml_file_name),
+//    			new SpreadingOfFire(full_xml_file_name),
+    			new Segregation(full_xml_file_name),
+    			new Segregation(full_xml_file_name),
+    			new Segregation(full_xml_file_name),
+    			new Segregation(full_xml_file_name),
     	};
     }
     

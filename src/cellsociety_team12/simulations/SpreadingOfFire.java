@@ -23,7 +23,7 @@ public class SpreadingOfFire extends Simulation {
 	private ArrayList<Point> burningList;
 	private Random rand = new Random();
 	private final String BURNING = "burning";
-	private final String TREE = "tree";
+//	private final String TREE = "tree";
 	// private final String EMPTY = "empty";
 	
 

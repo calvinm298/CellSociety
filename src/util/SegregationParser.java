@@ -2,6 +2,8 @@ package util;
 
 public class SegregationParser extends XMLParser {
 	private double similarPercentage;
+	private double bluePercentage;
+	private double redPercentage;
 	public SegregationParser(String file) {
 		super(file);
 		this.parseGameConstants();
@@ -9,9 +11,17 @@ public class SegregationParser extends XMLParser {
 	}
 	public void parseGameConstants() {
 		this.similarPercentage = Double.parseDouble(this.getDoc().getElementsByTagName("similar").item(0).getTextContent());
+		this.bluePercentage = Double.parseDouble(this.getDoc().getElementsByTagName("blue_percent").item(0).getTextContent());
+		this.redPercentage = Double.parseDouble(this.getDoc().getElementsByTagName("red_percent").item(0).getTextContent());
 	}
 	public double getSimilar() {
 		return this.similarPercentage;
+	}
+	public double getBluePercentage() {
+		return this.bluePercentage;
+	}
+	public double getRedPercentage() {
+		return this.redPercentage;
 	}
 	public static void main(String[] args) {
 		SegregationParser parser = new SegregationParser("data\\XMLFiles\\stest1.xml");
