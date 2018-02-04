@@ -23,6 +23,8 @@ public class GameOfLife extends Simulation {
 	public GameOfLife(String xml_file_name) {
 		parser = new ConwayParser(xml_file_name);
 		cellArray = parser.getCells();
+		sizeX = parser.getSizeX();
+		sizeY = parser.getSizeY();
 		/**XML parser needs to take this in, and create the grid and objects that will be made into 
 		 *private instance variables. 
 		 */
@@ -32,9 +34,9 @@ public class GameOfLife extends Simulation {
 	 * sets up the grid
 	 */
 	protected void setupGrid() {
-		curr_grid = new ConwayCell[parser.getSizeX()][parser.getSizeY()];
-		for (int i = 0; i < parser.getSizeX(); i++) {
-			for (int j = 0; j < parser.getSizeY(); j++) {
+		curr_grid = new ConwayCell[sizeX][sizeY];
+		for (int i = 0; i < sizeX; i++) {
+			for (int j = 0; j < sizeY; j++) {
 				curr_grid[i][j] = new ConwayCell();
 			}
 		}
@@ -104,3 +106,4 @@ public class GameOfLife extends Simulation {
 	
 	
 }
+

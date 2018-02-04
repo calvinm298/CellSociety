@@ -35,6 +35,7 @@ public class ChooseSimulation {
 	private static final String SIMULATION_WORD = "simulation";
     private static final String SIMULATION_PROPERTIES_FILENAME = "data/simulation_names.properties";
     private static final String NUM_SIMULATIONS_PROPERTY = "numSims";
+    private static final String XML_FILE_HEADING = "data\\XMLFiles\\";
 	private static int number_of_simulations;
 	private static boolean setIntroLabels;
     private static Properties simulation_properties;
@@ -120,6 +121,7 @@ public class ChooseSimulation {
     }
     
     private Simulation assignSimulation(String simulation_name, String xml_file_name) {
+    	System.out.println(xml_file_name);
     	Simulation[] simulations = listOfSimulations(xml_file_name);
     	simulation_properties = new Properties();
     	input = null;
@@ -133,7 +135,7 @@ public class ChooseSimulation {
 	  		for(int simulation_number = 1; simulation_number <= number_of_simulations; simulation_number++) {
 	  			String file_simulation_name = simulation_properties.getProperty(SIMULATION_WORD + simulation_number);
 	  			if(simulation_name.equals(file_simulation_name)) {
-	  				return simulations[simulation_number];
+	  				return simulations[simulation_number - 1];
 	  			}
 	  		}
 	   	} catch (IOException ex) {
@@ -151,11 +153,12 @@ public class ChooseSimulation {
     }
     
     private Simulation[] listOfSimulations(String xml_file_name) {
+    	String full_xml_file_name = XML_FILE_HEADING + xml_file_name;
     	return new Simulation[] {
-    			new Segregation(xml_file_name),
-    			new Segregation(xml_file_name),
-    			new Segregation(xml_file_name),
-    			new Segregation(xml_file_name),
+    			new Segregation(full_xml_file_name),
+    			new Segregation(full_xml_file_name),
+    			new Segregation(full_xml_file_name),
+    			new GameOfLife(full_xml_file_name),
     	};
     }
     

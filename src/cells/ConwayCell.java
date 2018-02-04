@@ -13,7 +13,7 @@ import javafx.scene.paint.Paint;
 
 public class ConwayCell extends Cell {
 	
-	private static Paint color;
+	private Paint color;
 	private static Paint ALIVE_COLOR = Color.GREEN;
 	private static Paint DEAD_COLOR = Color.WHITE;
 	/**
@@ -21,21 +21,21 @@ public class ConwayCell extends Cell {
 	 * we will be setting the cell as alive/dead with methods.
 	 */
 	public ConwayCell () {
-		
+		this.setDead();
 	}
 	/**
 	 * returns whether the cell is alive
 	 * @return
 	 */
 	public boolean isAlive() {
-		return this.color == ALIVE_COLOR;
+		return this.color.equals(ALIVE_COLOR);
 	}
 	/**
 	 * returns whether the cell is dead
 	 * @return
 	 */	
 	public boolean isDead() {
-		return this.color != ALIVE_COLOR;
+		return !this.isAlive();
 	}
 	/**
 	 * sets the cell to alive
