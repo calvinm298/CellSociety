@@ -18,7 +18,7 @@ public class GameOfLife extends Simulation {
 	private ArrayList<Point> nextDeadCell;
 	private ConwayParser parser;
 	private static final Paint ALIVE_COLOR = Color.GREEN;
-	private static final Paint DEAD_COLOR = Color.PURPLE;
+	private static final Paint DEAD_COLOR = Color.WHITE;
 
 	public GameOfLife(String xml_file_name) {
 		parser = new ConwayParser(xml_file_name);
