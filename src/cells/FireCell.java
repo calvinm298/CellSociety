@@ -45,4 +45,7 @@ public class FireCell extends Cell {
 	public void setEmpty() {
 		this.cellColor = EMPTY_COLOR;
 	}
+	public Paint getColor() {
+		return this.cellColor;
+	}
 }
