@@ -31,6 +31,11 @@ public class WaterCell extends Cell {
 		this.willBeTakenByShark = willBeTakenByShark;
 	}
 	
+	public WaterCell() {
+		
+	}
+
+	
 	/**Checks to see if this cell will be taken by a fish in the next evolution
 	 */
 	public void markWillBeTakenByFish() {
@@ -64,6 +69,12 @@ public class WaterCell extends Cell {
 	
 	public boolean isTakenByShark() {
 		return this.animalType.getAnimalTypeString().equals("Shark");
+	}
+
+	public void reset() {
+		this.willBeTakenByFish = false;
+		this.willBeTakenByFish = false;
+		this.animalType = null;
 	}
 
 	

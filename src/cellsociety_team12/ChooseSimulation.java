@@ -181,6 +181,11 @@ public class ChooseSimulation {
 //    			new Segregation(full_xml_file_name),
 //    			new Segregation(full_xml_file_name),
 //    			new Segregation(full_xml_file_name),
+    			new WaTor(full_xml_file_name),
+    			new WaTor(full_xml_file_name),
+    			new WaTor(full_xml_file_name),
+    			new WaTor(full_xml_file_name)
+    			
     	};
     }
     

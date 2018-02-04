@@ -6,4 +6,17 @@ package objects.wator_objects;
  */
 public class Fish extends WaterAnimals {
 
+	private final int giveEnergy;
+	
+	public Fish(int maxChrononCount, int givenEnergy) {
+		animalString = "Shark";
+		CurrChrononCount = 0;
+		MaxChrononCount = maxChrononCount;
+		this.giveEnergy = givenEnergy;
+	}
+	
+	public int giveEnergy() {
+		return this.giveEnergy;
+	}
+	
 }
