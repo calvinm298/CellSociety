@@ -28,30 +28,27 @@ public class ConwayCell extends Cell {
 	 * @return
 	 */
 	public boolean isAlive() {
-		return this.color.equals(ALIVE_COLOR);
+		return (color.equals(ALIVE_COLOR));
 	}
 	/**
 	 * returns whether the cell is dead
 	 * @return
 	 */	
 	public boolean isDead() {
-		return !this.isAlive();
+		return !isAlive();
 	}
 	/**
 	 * sets the cell to alive
 	 * 
 	 */	
 	public void setAlive() {
-		this.color = ALIVE_COLOR;
+		color = ALIVE_COLOR;
 	}
 	/**
 	 * sets the cell to dead
 	 * 
 	 */	
 	public void setDead() {
-		this.color = DEAD_COLOR;
-	}
-	
-
-	
+		color = DEAD_COLOR;
+	}	
 }

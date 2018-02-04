@@ -43,20 +43,45 @@ public class GameOfLife extends Simulation {
 		for (Point p : cellArray) {
 			((ConwayCell) curr_grid[p.x][p.y]).setAlive();
 		}
+		
+		for (int i = 0; i < sizeX; i++) {
+			for (int j = 0; j < sizeY; j++) {
+				System.out.print((((ConwayCell) curr_grid[i][j]).isAlive() ? 1 : 0) + " ");
+			}
+			System.out.println();
+		}
+		System.out.println();
+
+		//ONLY EDIT NEXTGRID
+		next_grid = new ConwayCell[curr_grid.length][curr_grid[0].length];
+		for(int i = 0; i < curr_grid.length; i++) {
+			for(int j = 0; j < curr_grid[0].length; j++) {
+				next_grid[i][j] = curr_grid[i][j];
+			}
+		}		
+
+	
 	}
 	
 	protected void updateGrid(){
-		//ONLY EDIT NEXTGRID
-		next_grid = curr_grid;
-		for (int x = 0; x < next_grid.length; x++) {
-			for (int y = 0; y < next_grid[x].length; y++) {
+//		for (int i = 0; i < sizeX; i++) {
+//			for (int j = 0; j < sizeY; j++) {
+//				System.out.print((((ConwayCell) curr_grid[i][j]).isAlive() ? 1 : 0) + " ");
+//			}
+//			System.out.println();
+//		}
+//		System.out.println();
+
+		for (int x = 0; x < sizeX; x++) {
+			for (int y = 0; y < sizeY; y++) {
 				int numNeighbors = getNumNeighbors(x, y);
-				if (((ConwayCell) next_grid[x][y]).isAlive()) {
+				System.out.println("(" + y + ", " + x + "): " + numNeighbors);
+				if (((ConwayCell) curr_grid[x][y]).isAlive()) {
 					if (numNeighbors < 2 || numNeighbors > 3) {
 						((ConwayCell) next_grid[x][y]).setDead();
-					}					
+					}
 				}
-				if (((ConwayCell) next_grid[x][y]).isDead()) {
+				else {
 					if (numNeighbors == 3) {
 						((ConwayCell) next_grid[x][y]).setAlive();
 					}
@@ -64,28 +89,44 @@ public class GameOfLife extends Simulation {
 			}
 		}
 		
+//		for (int i = 0; i < sizeX; i++) {
+//			for (int j = 0; j < sizeY; j++) {
+//				System.out.print((((ConwayCell) curr_grid[i][j]).isAlive() ? 1 : 0) + " ");
+//			}
+//			System.out.println();
+//		}
+//		System.out.println("Iteration over");
+
 		//NEED A METHOD OR SOMETHING THAT SAYS CURRGRID = NEXTGRID
-		curr_grid = next_grid;
-		
+		for(int i = 0; i < curr_grid.length; i++) {
+			for(int j = 0; j < curr_grid[0].length; j++) {
+				curr_grid[i][j] = next_grid[i][j];
+			}
+		}		
 	}
 
 	private int getNumNeighbors(int x, int y) {
-		return 	checkIfAlive(x - 1, y - 1) +
-				checkIfAlive(x - 1, y + 1) +
-				checkIfAlive(x + 1, y - 1) +
-				checkIfAlive(x + 1, y + 1) +
-				checkIfAlive(x - 1, y) +
-				checkIfAlive(x + 1, y) +
-				checkIfAlive(x , y - 1) +
-				checkIfAlive(x , y + 1);			
+		int a = x + 1;
+		int b = x - 1;
+		int c = y + 1;
+		int d = y - 1;
+		return (checkIfAlive(b, d) +
+				checkIfAlive(b, c) +
+				checkIfAlive(a, d) +
+				checkIfAlive(a, c) +
+				checkIfAlive(b, y) +
+				checkIfAlive(a, y) +
+				checkIfAlive(x, d) +
+				checkIfAlive(x, c));
 	}
 
 	private int checkIfAlive(int xCoor, int yCoor) {
-		int last = curr_grid.length;
-		if (xCoor < 0 || xCoor > (last - 1) || yCoor < 0 || yCoor > (last - 1)) {
+		if (xCoor < 0 || xCoor > (sizeX - 1) || yCoor < 0 || yCoor > (sizeY - 1)) {
+			System.out.println("Made it here 1, " + yCoor + " and " + xCoor);
 			return 0;
 		}
 		if (((ConwayCell) curr_grid[xCoor][yCoor]).isAlive()) {
+			System.out.println("Made it here 2");
 			return 1;
 		}
 		return 0;
@@ -102,8 +143,6 @@ public class GameOfLife extends Simulation {
 		}
 		tempRect.setFill(DEAD_COLOR);
 		return tempRect;
-	}
-	
-	
+	}	
 }
 
