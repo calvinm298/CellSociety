@@ -23,6 +23,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
@@ -85,6 +86,7 @@ public abstract class Simulation extends Application {
         myScene = new Scene(root, screen_width, screen_height, BACKGROUND);
         setStage();
         chooseSimulation();
+        setupGrid();
         initializeGUI();
         
         KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY),
@@ -108,8 +110,17 @@ public abstract class Simulation extends Application {
     	cell_sizeX = GRID_SIZEX / curr_grid.length;
     	cell_sizeY = GRID_SIZEY / curr_grid[0].length;
     	root.getChildren().add(visual_grid);
+    	initializeVisualGrid();
     }
     
+    private void initializeVisualGrid() {
+       	for(int i = 0; i < curr_grid.length; i++) {
+    		for(int j = 0; j < curr_grid[0].length; j++) {
+    			visual_grid.getChildren().add(i*curr_grid[0].length + j, getObject(i, j));
+    		}
+    	}
+    }
+        
     /**
      * Reads in properties from a property file and sets the  
      * screen properties.
@@ -179,5 +190,11 @@ public abstract class Simulation extends Application {
      */
     public int getScreenHeight() {
     	return screen_height;
+    }
+    
+    private void handleKeyInput (KeyCode code) {
+    	if(code == KeyCode.SPACE) {
+    		animation.play();
+    	}
     }
 }
