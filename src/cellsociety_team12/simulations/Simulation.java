@@ -11,6 +11,7 @@ import cells.Cell;
 import cellsociety_team12.ChooseSimulation;
 import gui_elements.ComboBoxes;
 import gui_elements.Labels;
+import javafx.animation.Animation.Status;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -39,6 +40,7 @@ import javafx.util.Duration;
  */
 public abstract class Simulation extends Application {
 
+
     private static final int FRAMES_PER_SECOND = 2;
     private static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
     private static final int GRID_SIZEX = 400;
@@ -60,6 +62,8 @@ public abstract class Simulation extends Application {
     private static Properties menu_properties;
 	private static InputStream input;
 	private static GridPane visual_grid;
+	protected ChooseSimulation simChoice, newSimChoice;
+	private static boolean setNewToOldChoice = true;
 	protected Cell[][] curr_grid, next_grid;
 	protected int sizeX, sizeY, cell_sizeX, cell_sizeY;
 	 
@@ -74,6 +78,7 @@ public abstract class Simulation extends Application {
     @Override
     public void start(Stage stage) {
     	this.stage = stage;
+//    	newSimulationChosen = false;
     	initialize();
     }
 
@@ -84,19 +89,20 @@ public abstract class Simulation extends Application {
     	root = new Group();
     	setProperties();
         myScene = new Scene(root, screen_width, screen_height, BACKGROUND);
-//        myScene.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
+        myScene.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
         setStage();
         chooseSimulation();
         setupGrid();
         initializeGUI();
         
         KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY),
-                e -> step());
-		Timeline animation = new Timeline();
-		animation.setCycleCount(Timeline.INDEFINITE);
-		animation.getKeyFrames().add(frame);
-		this.animation = animation;
-		animation.play();
+                                      e -> step());
+        Timeline animation = new Timeline();
+        animation.setCycleCount(Timeline.INDEFINITE);
+        animation.getKeyFrames().add(frame);
+        this.animation = animation;
+        ChooseSimulation.setAnimation(animation);
+        animation.play();
     }
 
     private void step() {
@@ -165,7 +171,11 @@ public abstract class Simulation extends Application {
      * including labels, drop-down menus, and the image.
      */
     private void chooseSimulation() {
-    	ChooseSimulation simChoice = new ChooseSimulation(stage, root, setIntroLabels);
+    	if(simChoice == null) {
+    		newSimChoice = new ChooseSimulation(stage, root, setIntroLabels, animation, 
+    				simChoice == null ? ChooseSimulation.getOldSimChoice() : simChoice, setNewToOldChoice);
+    	}
+		simChoice = newSimChoice;
     }
     
     protected abstract void setupGrid();
@@ -190,11 +200,8 @@ public abstract class Simulation extends Application {
      */
     public int getScreenHeight() {
     	return screen_height;
-    }
+    }    
     
-//    private void handleKeyInput (KeyCode code) {
-//    	if(code == KeyCode.SPACE) {
-//    		animation.play();
-//    	}
-//    }
+    private void handleKeyInput (KeyCode code) {
+    }
 }

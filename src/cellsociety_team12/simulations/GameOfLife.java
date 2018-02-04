@@ -49,6 +49,7 @@ public class GameOfLife extends Simulation {
 		for (Point p : parser.getCells("cell")) {
 			((ConwayCell) curr_grid[p.x][p.y]).setAlive();
 		}
+		
 	}
 	
 	protected void updateGrid(){
@@ -106,6 +107,7 @@ public class GameOfLife extends Simulation {
 		this.nextDeadCell.clear();
 		
 		next_grid = curr_grid;
+
 		for (int i = 0; i < sizeX; i++) {
 			for (int j = 0; j <sizeY; j++) {
 				if (((ConwayCell) next_grid[i][j]).isAlive()) {
@@ -132,6 +134,7 @@ public class GameOfLife extends Simulation {
 				numNeighbors++;
 			}
 		}
+
 		return numNeighbors;
 	}
 	
@@ -186,4 +189,3 @@ public class GameOfLife extends Simulation {
 	
 	
 }
-

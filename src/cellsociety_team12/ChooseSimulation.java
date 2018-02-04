@@ -14,6 +14,8 @@ import cellsociety_team12.simulations.WaTor;
 import gui_elements.Buttons;
 import gui_elements.ComboBoxes;
 import gui_elements.Labels;
+import javafx.animation.Animation;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -47,15 +49,21 @@ public class ChooseSimulation {
 	private static ComboBox<String> main_menu_sim_cb, main_menu_file_cb;
 	private static Label file_label;
 	private static Button ok_button;
+	private static Timeline newSimAnimation;
+	private static ChooseSimulation newSimChoice, oldSimChoice;
+	private static boolean setNewToOldChoice;
 	
     /**
      * Constructor for the simulation setup. 
      */
-	public ChooseSimulation(Stage stage, Group root, boolean setIntroLabels) {
+	public ChooseSimulation(Stage stage, Group root, boolean setIntroLabels, Timeline newSimAnimation, ChooseSimulation newSimChoice, boolean SetNewToOldChoice) {
 		this.stage = stage;
 		this.root = root;
 		this.setIntroLabels = setIntroLabels;
+		this.newSimAnimation = newSimAnimation;
+		this.newSimChoice = newSimChoice;
 		initialize();
+		this.setNewToOldChoice = SetNewToOldChoice;
 	}
 	
     /**
@@ -114,6 +122,12 @@ public class ChooseSimulation {
     
     private void createSimulation(Button ok_button) {
     	ok_button.setOnAction(value -> {
+    		if(oldSimChoice != null && oldSimChoice.getAnimation() != null){
+    			oldSimChoice.getAnimation().stop();
+    		}
+    		if(setNewToOldChoice) {
+    			ChooseSimulation.setOldSimChoice(newSimChoice);
+    		}
     		stage.close();
     		Simulation sim = assignSimulation(simulation_name, xml_file_name);
     		sim.start(new Stage());
@@ -163,10 +177,10 @@ public class ChooseSimulation {
 //    			new SpreadingOfFire(full_xml_file_name),
 //    			new SpreadingOfFire(full_xml_file_name),
 //    			new SpreadingOfFire(full_xml_file_name),
-    			new Segregation(full_xml_file_name),
-    			new Segregation(full_xml_file_name),
-    			new Segregation(full_xml_file_name),
-    			new Segregation(full_xml_file_name),
+//    			new Segregation(full_xml_file_name),
+//    			new Segregation(full_xml_file_name),
+//    			new Segregation(full_xml_file_name),
+//    			new Segregation(full_xml_file_name),
     	};
     }
     
@@ -181,4 +195,21 @@ public class ChooseSimulation {
 			root.getChildren().remove(obj);
 		}
     }
+        
+    public Timeline getAnimation() {
+    	return this.newSimAnimation;
+    }
+    
+    public static void setAnimation(Timeline simAnimation) {
+    	newSimAnimation = simAnimation;
+    }
+
+    public static ChooseSimulation getOldSimChoice() {
+    	return oldSimChoice;
+    }
+    
+    public static void setOldSimChoice(ChooseSimulation simChoice) {
+    	oldSimChoice = simChoice;
+    }
+    
 }
