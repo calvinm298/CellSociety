@@ -37,7 +37,7 @@ public class SpreadingOfFire extends Simulation {
 	protected void setupGrid() {
 		sizeX = parser.getSizeX();
 		sizeY = parser.getSizeY();
-		System.out.println("x: " + sizeX + " y: " +sizeY);
+//		System.out.println("x: " + sizeX + " y: " +sizeY);
 		curr_grid = new FireCell[sizeX][sizeY];
 		for (int i = 0; i < parser.getSizeX(); i++) {
 			for (int j = 0; j < parser.getSizeY(); j++) {
