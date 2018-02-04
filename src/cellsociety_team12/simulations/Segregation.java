@@ -17,42 +17,45 @@ import util.SegregationParser;
 public class Segregation extends Simulation {
 	private static SegregationParser parser;
 	private double similarPercentage;
+	private double bluePercentage;
+	private double redPercentage;
 	private ArrayList<Point> currEmptyList;
 	private ArrayList<Point> currBlueList;
 	private ArrayList<Point> currRedList;
 	private ArrayList<Point> nextEmptyList;
 	private ArrayList<Point> nextBlueList;
 	private ArrayList<Point> nextRedList;
-//	private Random rand = new Random();
 	private final String BLUE = "blue";
 	private final String RED = "red";
-//	private final String EMPTY = "empty";
 
 	public Segregation(String xml_file_name) {
-		//parser = new SegregationParser(xml_file_name);
-//		similarPercentage = parser.getSimilar();
-//		this.createTestGrid();
+		parser = new SegregationParser(xml_file_name);
+		similarPercentage = parser.getSimilar();
 		this.initializeCellLists();
 		this.setupGrid();
 	}
 
 	@Override
 	protected void setupGrid() {
-//		sizeX = parser.getSizeX();
-//		sizeY = parser.getSizeY();
-//		curr_grid = new SegregationCell[sizeX][sizeY];
-//		for (int i = 0; i < sizeX; i++) {
-//			for (int j = 0; j < sizeY; j++) {
-//				curr_grid[i][j] = new SegregationCell();
-//			}
-//		}
-//		for (Point p : parser.getCells(BLUE)) {
-//			((SegregationCell) curr_grid[p.x][p.y]).setBlue();
-//		}
-//		for (Point p : parser.getCells(RED)) {
-//			((SegregationCell) curr_grid[p.x][p.y]).setRed();
-//		}
-		this.createTestGrid();
+		sizeX = parser.getSizeX();
+		sizeY = parser.getSizeY();
+		Random rand = new Random();
+		this.similarPercentage = parser.getSimilar();
+		this.bluePercentage = parser.getBluePercentage();
+		this.redPercentage = parser.getRedPercentage();
+
+		curr_grid = new SegregationCell[sizeX][sizeY];
+		for (int i = 0; i < sizeX; i++) {
+			for (int j = 0; j < sizeY; j++) {
+				curr_grid[i][j] = new SegregationCell();
+				double randomboi = rand.nextDouble();
+				if (randomboi < this.bluePercentage) {
+					((SegregationCell)curr_grid[i][j]).setBlue();
+				} else if (randomboi > 1 - this.redPercentage) {
+					((SegregationCell)curr_grid[i][j]).setRed();
+				}
+			}
+		}
 	}
 	
 	@Override
@@ -190,26 +193,7 @@ public class Segregation extends Simulation {
 		}
 		curr_grid = next_grid;
 	}
-	private void createTestGrid() {
-		Random rand = new Random();
-		this.similarPercentage = 0.7;
-		sizeX = 50;
-		sizeY = 50;
-		curr_grid = new SegregationCell[sizeX][sizeY];
-		for (int i = 0; i < sizeX; i++) {
-			for (int j = 0; j < sizeY; j++) {
-				curr_grid[i][j] = new SegregationCell();
-				double randomboi = rand.nextDouble();
-				if (randomboi < 0.40) {
-					((SegregationCell)curr_grid[i][j]).setBlue();
-				} else if (randomboi > 0.60) {
-					((SegregationCell)curr_grid[i][j]).setRed();
-				}
-			}
-		}
 
-		
-	}
 	@Override
 	protected Node getObject(int row, int col) {
 		// TODO Auto-generated method stub
