@@ -173,12 +173,7 @@ public abstract class Simulation extends Application {
     
     private void updateGUI() {
     	root.getChildren().remove(visual_grid);
-    	for(int i = 0; i < curr_grid.length; i++) {
-    		for(int j = 0; j < curr_grid[0].length; j++) {
-    			visual_grid.getChildren().set(i*curr_grid[0].length + j, getObject(i, j));
-    		}
-    	}
-    	root.getChildren().add(visual_grid);
+    	initializeGUI();
     }
     
     protected abstract Node getObject(int row, int col);
