@@ -149,7 +149,7 @@ public class WaTor extends Simulation {
 		}
 		return emptyNeighbors;
 	}
-
+	//test
 	private void changeGrid() {
 		for (int i = 0; i < sizeX; i++) {
 			for (int j = 0; j < sizeY; j++) {
