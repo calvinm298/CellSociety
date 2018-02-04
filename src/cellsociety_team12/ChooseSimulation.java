@@ -155,10 +155,18 @@ public class ChooseSimulation {
     private Simulation[] listOfSimulations(String xml_file_name) {
     	String full_xml_file_name = XML_FILE_HEADING + xml_file_name;
     	return new Simulation[] {
-    			new GameOfLife(full_xml_file_name),
-    			new GameOfLife(full_xml_file_name),
-    			new GameOfLife(full_xml_file_name),
-    			new GameOfLife(full_xml_file_name),
+//    			new GameOfLife(full_xml_file_name),
+//    			new GameOfLife(full_xml_file_name),
+//    			new GameOfLife(full_xml_file_name),
+//    			new GameOfLife(full_xml_file_name),
+    			new SpreadingOfFire(full_xml_file_name),
+    			new SpreadingOfFire(full_xml_file_name),
+    			new SpreadingOfFire(full_xml_file_name),
+    			new SpreadingOfFire(full_xml_file_name),
+//    			new Segregation(full_xml_file_name),
+//    			new Segregation(full_xml_file_name),
+//    			new Segregation(full_xml_file_name),
+//    			new Segregation(full_xml_file_name),
     	};
     }
     

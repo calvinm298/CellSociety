@@ -3,7 +3,7 @@ package cellsociety_team12.simulations;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Collections;
-//import java.util.Random;
+import java.util.Random;
 
 import cells.SegregationCell;
 import javafx.scene.Node;
@@ -29,33 +29,38 @@ public class Segregation extends Simulation {
 //	private final String EMPTY = "empty";
 
 	public Segregation(String xml_file_name) {
-		parser = new SegregationParser(xml_file_name);
-		similarPercentage = parser.getSimilar();
+		//parser = new SegregationParser(xml_file_name);
+//		similarPercentage = parser.getSimilar();
+//		this.createTestGrid();
 		this.initializeCellLists();
 		this.setupGrid();
 	}
 
 	@Override
 	protected void setupGrid() {
-		sizeX = parser.getSizeX();
-		sizeY = parser.getSizeY();
-		curr_grid = new SegregationCell[sizeX][sizeY];
-		for (int i = 0; i < parser.getSizeX(); i++) {
-			for (int j = 0; j < parser.getSizeY(); j++) {
-				curr_grid[i][j] = new SegregationCell();
-			}
-		}
-		for (Point p : parser.getCells(BLUE)) {
-			((SegregationCell) curr_grid[p.x][p.y]).setBlue();
-		}
-		for (Point p : parser.getCells(RED)) {
-			((SegregationCell) curr_grid[p.x][p.y]).setRed();
-		}
+//		sizeX = parser.getSizeX();
+//		sizeY = parser.getSizeY();
+//		curr_grid = new SegregationCell[sizeX][sizeY];
+//		for (int i = 0; i < sizeX; i++) {
+//			for (int j = 0; j < sizeY; j++) {
+//				curr_grid[i][j] = new SegregationCell();
+//			}
+//		}
+//		for (Point p : parser.getCells(BLUE)) {
+//			((SegregationCell) curr_grid[p.x][p.y]).setBlue();
+//		}
+//		for (Point p : parser.getCells(RED)) {
+//			((SegregationCell) curr_grid[p.x][p.y]).setRed();
+//		}
+		this.createTestGrid();
 	}
 	
 	@Override
 	protected void updateGrid() {
 		this.setupCellLists();
+//		System.out.println("Blue: " + this.currRedList.size());
+//		System.out.println("Red: " + this.currBlueList.size());
+//		System.out.println("Empty: " + this.currEmptyList.size());
 		this.checkCells();
 		this.changeGrid();
 	}
@@ -75,8 +80,8 @@ public class Segregation extends Simulation {
 		this.nextEmptyList.clear();
 		this.nextBlueList.clear();
 		this.nextRedList.clear();
-		for (int i = 0; i < parser.getSizeX(); i++) {
-			for (int j = 0; j < parser.getSizeY(); j++) {
+		for (int i = 0; i < sizeX; i++) {
+			for (int j = 0; j < sizeY; j++) {
 				if (((SegregationCell) next_grid[i][j]).isEmpty()) {
 					this.currEmptyList.add(new Point(i, j));
 				} else if (((SegregationCell) next_grid[i][j]).isBlue()) {
@@ -89,8 +94,8 @@ public class Segregation extends Simulation {
 	}
 
 	private void checkCells() {
-		for (int i = 0; i < parser.getSizeX(); i++) {
-			for (int j = 0; j < parser.getSizeY(); j++) {
+		for (int i = 0; i < sizeX; i++) {
+			for (int j = 0; j < sizeY; j++) {
 				if (!((SegregationCell) next_grid[i][j]).isEmpty()) {
 					ArrayList<Point> neighborsToCheck = this.createNeighborsList(i, j);
 					int numSameNeighbors = -1;
@@ -160,7 +165,8 @@ public class Segregation extends Simulation {
 		return (percentage >= this.similarPercentage);
 	}
 	private void moveCell(String type, int i, int j) {
-		Point currPoint = new Point(i, j);
+		if (this.currEmptyList.isEmpty()) return;
+ 		Point currPoint = new Point(i, j);
 		this.nextEmptyList.add(currPoint);
 		Collections.shuffle(currEmptyList);
 		Point newPoint = currEmptyList.get(0);
@@ -183,6 +189,26 @@ public class Segregation extends Simulation {
 			((SegregationCell) next_grid[p.x][p.y]).setRed();
 		}
 		curr_grid = next_grid;
+	}
+	private void createTestGrid() {
+		Random rand = new Random();
+		this.similarPercentage = 0.7;
+		sizeX = 50;
+		sizeY = 50;
+		curr_grid = new SegregationCell[sizeX][sizeY];
+		for (int i = 0; i < sizeX; i++) {
+			for (int j = 0; j < sizeY; j++) {
+				curr_grid[i][j] = new SegregationCell();
+				double randomboi = rand.nextDouble();
+				if (randomboi < 0.40) {
+					((SegregationCell)curr_grid[i][j]).setBlue();
+				} else if (randomboi > 0.60) {
+					((SegregationCell)curr_grid[i][j]).setRed();
+				}
+			}
+		}
+
+		
 	}
 	@Override
 	protected Node getObject(int row, int col) {

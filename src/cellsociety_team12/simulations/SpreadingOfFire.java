@@ -37,6 +37,7 @@ public class SpreadingOfFire extends Simulation {
 	protected void setupGrid() {
 		sizeX = parser.getSizeX();
 		sizeY = parser.getSizeY();
+		System.out.println("x: " + sizeX + " y: " +sizeY);
 		curr_grid = new FireCell[sizeX][sizeY];
 		for (int i = 0; i < parser.getSizeX(); i++) {
 			for (int j = 0; j < parser.getSizeY(); j++) {
@@ -62,6 +63,7 @@ public class SpreadingOfFire extends Simulation {
 		for (int i = 0; i < parser.getSizeX(); i++) {
 			for (int j = 0; j < parser.getSizeY(); j++) {
 				if (((FireCell)next_grid[i][j]).isBurning()) {
+//					System.out.println("add burning");
 					this.burningList.add(new Point(i, j));
 				}
 			}
@@ -75,7 +77,7 @@ public class SpreadingOfFire extends Simulation {
 		for (int i = 0; i < parser.getSizeX(); i++) {
 			for (int j = 0; j < parser.getSizeY(); j++) {
 				if (((FireCell)next_grid[i][j]).isTree() && this.caughtFire(i, j)) {
-					((FireCell)next_grid[i][j]).isBurning();
+					((FireCell)next_grid[i][j]).setBurning();
 				}
 			}
 		}
@@ -94,12 +96,13 @@ public class SpreadingOfFire extends Simulation {
 	private boolean caughtFire(int i, int j) {
 		ArrayList<Point> neighborPoints = this.createNeighborPoints(i, j);
 		for (Point p : neighborPoints) {
+			//System.out.println(this.burningList.contains(p));
 			if (this.burningList.contains(p) && rand.nextDouble() <= this.probCatch) {
-				System.out.println("set fire");
+			//	System.out.println("set fire");
 				return true;
 			}
 		}
-		System.out.println("no fire");
+	//	System.out.println("no fire");
 		return false;
 	}
 	@Override
