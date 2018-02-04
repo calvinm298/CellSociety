@@ -46,9 +46,9 @@ public class SpreadingOfFire extends Simulation {
 		for (Point p : parser.getCells(BURNING)) {
 			((FireCell)curr_grid[p.x][p.y]).setBurning();
 		}
-		for (Point p : parser.getCells(TREE)) {
-			((FireCell)curr_grid[p.x][p.y]).setTree();
-		}
+//		for (Point p : parser.getCells(TREE)) {
+//			((FireCell)curr_grid[p.x][p.y]).setTree();
+//		}
 	}
 	@Override
 	public void updateGrid() {

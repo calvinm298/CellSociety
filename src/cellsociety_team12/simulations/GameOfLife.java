@@ -22,7 +22,7 @@ public class GameOfLife extends Simulation {
 
 	public GameOfLife(String xml_file_name) {
 		parser = new ConwayParser(xml_file_name);
-		cellArray = parser.getCells();
+		cellArray = parser.getCells("cell");
 		sizeX = parser.getSizeX();
 		sizeY = parser.getSizeY();
 		/**XML parser needs to take this in, and create the grid and objects that will be made into 
