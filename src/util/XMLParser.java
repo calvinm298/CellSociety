@@ -106,6 +106,7 @@ public class XMLParser {
 	public Document getDoc() {
 		return this.doc;
 	}
+	public void parseGameConstants() {}
 	public static void main(String[] args) {
 		XMLParser parser = new XMLParser("data\\XMLFiles\\wtest1.xml");
 		System.out.println(parser.getType());

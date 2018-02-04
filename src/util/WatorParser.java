@@ -16,12 +16,17 @@ public class WatorParser extends XMLParser {
 		this.parseGameConstants();
 		// TODO Auto-generated constructor stub
 	}
+	@Override
 	public void parseGameConstants() {
+		try {
 		this.maxChronCount = (Integer.parseInt(this.getDoc().getElementsByTagName("max_chron_count").item(0).getTextContent()));
 		this.sharkStartingEnergy = (Integer.parseInt(this.getDoc().getElementsByTagName("shark_starting_energy").item(0).getTextContent()));
 		this.sharkMaxEnergy = Integer.parseInt(this.getDoc().getElementsByTagName("shark_max_energy").item(0).getTextContent());
 		this.fishEnergy = Integer.parseInt(this.getDoc().getElementsByTagName("fish_energy").item(0).getTextContent());
-	}
+		} catch (NullPointerException e) {
+			return;
+		}
+		}
 	public int getMaxChronCount() {
 		return this.maxChronCount;
 	}
