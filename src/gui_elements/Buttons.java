@@ -8,8 +8,20 @@ public class Buttons {
 	
 	private static final int OK_X = 270;
 	private static final int OK_Y = 610;
+	private static final int START_X = 270;
+	private static final int START_Y = 610;
+	private static final int STOP_X = 270;
+	private static final int STOP_Y = 610;
+	private static final int RESET_X = 270;
+	private static final int RESET_Y = 610;
+	private static final int STEP_X = 270;
+	private static final int STEP_Y = 610;
 	private static final int WIDTH = 80;
 	private static final String OK_TEXT = "OK";
+	private static final String START_TEXT = "Start";
+	private static final String STOP_TEXT = "Stop";
+	private static final String RESET_TEXT = "Reset";
+	private static final String STEP_TEXT = "Step";
 	private static final String STYLE = "-fx-background-color: #0000ff";
 	private static final Paint COLOR = Color.YELLOW;
 	private static Button ok, start_or_resume, stop, reset, step;
