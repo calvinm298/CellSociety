@@ -42,9 +42,29 @@ public class WaterCell extends Cell {
 		this.willBeTakenByShark = true;
 	}
 	
-	public boolean ifFish() {
-		return this.animalType.equals(obj)); //probably add a private instance string of some sort for comparing purposes
+	public WaterAnimals getAnimal() {
+		return this.animalType; //probably add a private instance string of some sort for comparing purposes
 	}
 	
+	public void setAnimal(WaterAnimals animal) {
+		this.animalType = animal; //probably add a private instance string of some sort for comparing purposes
+	}
+	
+	public boolean getWillBeTakenByFish() {
+		return this.willBeTakenByFish == true;
+	}
+	
+	public boolean getWillBeTakenByShark() {
+		return this.willBeTakenByShark == true;
+	}
+	
+	public boolean isTakenByFish() {
+		return this.animalType.getAnimalTypeString().equals("Fish");
+	}
+	
+	public boolean isTakenByShark() {
+		return this.animalType.getAnimalTypeString().equals("Shark");
+	}
+
 	
 }
