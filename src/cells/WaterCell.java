@@ -1,6 +1,7 @@
 package cells;
 
 import objects.wator_objects.WaterAnimals;
+import objects.wator_objects.Fish;
 
 /**
  * Subclass for WatorAnimal Objects - will take into consideration the two objects (Sharks and Fish) and the interactions
@@ -41,8 +42,8 @@ public class WaterCell extends Cell {
 		this.willBeTakenByShark = true;
 	}
 	
-	public WaterAnimals getAnimal() {
-		return this.animalType;
+	public boolean ifFish() {
+		return this.animalType.equals(obj));
 	}
 	
 	

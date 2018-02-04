@@ -18,7 +18,7 @@ public class GameOfLife extends Simulation {
 	private static ArrayList<Point> cellArray;
 	private static ConwayParser parser;
 	private static final Paint ALIVE_COLOR = Color.GREEN;
-	private static final Paint DEAD_COLOR = Color.WHITE;
+	private static final Paint DEAD_COLOR = Color.PURPLE;
 
 	public GameOfLife(String xml_file_name) {
 		parser = new ConwayParser(xml_file_name);
@@ -43,20 +43,29 @@ public class GameOfLife extends Simulation {
 		for (Point p : cellArray) {
 			((ConwayCell) curr_grid[p.x][p.y]).setAlive();
 		}
+		
 	}
 	
 	protected void updateGrid(){
 		//ONLY EDIT NEXTGRID
 		next_grid = curr_grid;
+		
 		for (int x = 0; x < next_grid.length; x++) {
 			for (int y = 0; y < next_grid[x].length; y++) {
-				int numNeighbors = getNumNeighbors(x, y);
-				if (((ConwayCell) next_grid[x][y]).isAlive()) {
-					if (numNeighbors < 2 || numNeighbors > 3) {
-						((ConwayCell) next_grid[x][y]).setDead();
-					}					
+				if (((ConwayCell) curr_grid[x][y]).isAlive()) {
+					System.out.println(x + ", " + y);
 				}
-				if (((ConwayCell) next_grid[x][y]).isDead()) {
+				int numNeighbors = getNumNeighbors(x, y);
+				
+				if (((ConwayCell) next_grid[x][y]).isAlive()) {
+					System.out.println(numNeighbors);
+				}
+//				if (((ConwayCell) curr_grid[x][y]).isAlive()) {
+//					if (numNeighbors < 2 || numNeighbors > 3) {
+//						((ConwayCell) next_grid[x][y]).setDead();
+//					}					
+//				}
+				else if (((ConwayCell) curr_grid[x][y]).isDead()) {
 					if (numNeighbors == 3) {
 						((ConwayCell) next_grid[x][y]).setAlive();
 					}
@@ -85,7 +94,7 @@ public class GameOfLife extends Simulation {
 		if (xCoor < 0 || xCoor > (last - 1) || yCoor < 0 || yCoor > (last - 1)) {
 			return 0;
 		}
-		if (((ConwayCell) curr_grid[xCoor][yCoor]).isAlive()) {
+		else if (((ConwayCell) curr_grid[xCoor][yCoor]).isAlive()) {
 			return 1;
 		}
 		return 0;
