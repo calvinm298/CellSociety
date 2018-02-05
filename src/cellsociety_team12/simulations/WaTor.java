@@ -99,7 +99,7 @@ public class WaTor extends Simulation {
 //			}
 //
 //		}
-		
+//		
 		
 		this.chooseNextLocation();
 				
