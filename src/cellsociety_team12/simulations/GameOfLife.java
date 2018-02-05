@@ -40,6 +40,7 @@ public class GameOfLife extends Simulation {
 	 * sets up the grid
 	 */
 	protected void setupGrid() {
+		try {
 		curr_grid = new ConwayCell[sizeX][sizeY];
 		for (int i = 0; i < sizeX; i++) {
 			for (int j = 0; j < sizeY; j++) {
@@ -49,7 +50,9 @@ public class GameOfLife extends Simulation {
 		for (Point p : parser.getCells("cell")) {
 			((ConwayCell) curr_grid[p.x][p.y]).setAlive();
 		}
-		
+	} catch (IllegalArgumentException e) {
+		return;
+	}
 	}
 	
 	protected void updateGrid(){

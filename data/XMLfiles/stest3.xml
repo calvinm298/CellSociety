@@ -4,11 +4,11 @@
 		<type>segregation</type>
 		<title>Schelling's Model of Segregation</title>
 		<author>Team 12</author>
-		<size_x>50</size_x>
-		<size_y>50</size_y>
-		<similar>0.5</similar>
-		<blue_percent>0.48</blue_percent>
-		<red_percent>0.48</red_percent>
+		<size_x>80</size_x>
+		<size_y>80</size_y>
+		<similar>0.7</similar>
+		<blue_percent>0.46</blue_percent>
+		<red_percent>0.46</red_percent>
 	</setup>
 	<block>
 		<loc_x>-1</loc_x>

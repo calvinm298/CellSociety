@@ -35,6 +35,7 @@ public class SpreadingOfFire extends Simulation {
 	}
 	@Override
 	protected void setupGrid() {
+		try {
 		sizeX = parser.getSizeX();
 		sizeY = parser.getSizeY();
 //		System.out.println("x: " + sizeX + " y: " +sizeY);
@@ -50,6 +51,9 @@ public class SpreadingOfFire extends Simulation {
 //		for (Point p : parser.getCells(TREE)) {
 //			((FireCell)curr_grid[p.x][p.y]).setTree();
 //		}
+		} catch (IllegalArgumentException e) {
+			return;
+		}
 	}
 	@Override
 	public void updateGrid() {
