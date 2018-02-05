@@ -1,11 +1,21 @@
 package cellsociety_team12;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Arrays;
+import java.util.Properties;
 
+import cellsociety_team12.simulations.GameOfLife;
+import cellsociety_team12.simulations.Segregation;
 import cellsociety_team12.simulations.Simulation;
+import cellsociety_team12.simulations.SpreadingOfFire;
+import cellsociety_team12.simulations.WaTor;
 import gui_elements.Buttons;
 import gui_elements.ComboBoxes;
 import gui_elements.Labels;
+import javafx.animation.Animation;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -18,27 +28,42 @@ import sun.font.CreatedFontTracker;
 /**
  * This class sets up the simulation choices for "Cell Society." The user can select a new 
  * simulation at any time (whether from the main screen or from another running simulation). 
- * It is called from the "MainMenu" class.
+ * It is called from the "MainMenu" and "Simulation" classes.
  * 
  * @author Aditya Sridhar
  */
 public class ChooseSimulation {
 	
-	private static Stage stage;
+	private static final String SIMULATION_WORD = "simulation";
+    private static final String SIMULATION_PROPERTIES_FILENAME = "data/simulation_names.properties";
+    private static final String NUM_SIMULATIONS_PROPERTY = "numSims";
+    private static final String XML_FILE_HEADING = "data\\XMLFiles\\";
+	private static int number_of_simulations;
+	private static boolean setIntroLabels;
+	private static boolean setNewToOldChoice;
+	private static Properties simulation_properties;
+    private static InputStream input;
+    private static Stage stage;
 	private static Group root;
 	private static String simulation_name;
 	private static String xml_file_name;
 	private static ComboBox<String> main_menu_sim_cb, main_menu_file_cb;
 	private static Label file_label;
 	private static Button ok_button;
+	private static Timeline newSimAnimation;
+	private static ChooseSimulation newSimChoice, oldSimChoice;
 	
     /**
      * Constructor for the simulation setup. 
      */
-	public ChooseSimulation(Stage stage, Group root) {
+	public ChooseSimulation(Stage stage, Group root, boolean setIntroLabels, Timeline newSimAnimation, ChooseSimulation newSimChoice, boolean SetNewToOldChoice) {
 		this.stage = stage;
 		this.root = root;
+		this.setIntroLabels = setIntroLabels;
+		this.newSimAnimation = newSimAnimation;
+		this.newSimChoice = newSimChoice;
 		initialize();
+		this.setNewToOldChoice = SetNewToOldChoice;
 	}
 	
     /**
@@ -55,15 +80,23 @@ public class ChooseSimulation {
      * only after a simulation is chosen).
      */
     private Label setLabels() {
-    	Label[] main_menu_labels = {new Labels().getMainMenuHeading(),
-    	                            new Labels().getMainMenuBody(),
-    	                            new Labels().getMainMenuSim(),
-    	                            new Labels().getMainMenuFile()};
-    	for(int label_element = 0; label_element < 3; label_element++) {
+    	Label[] main_menu_labels;
+    	if(setIntroLabels) {
+    		main_menu_labels = new Label[] {new Labels().getMainMenuHeading(),
+                        					new Labels().getMainMenuBody(),
+                        					new Labels().getMainMenuSim(),
+                        					new Labels().getMainMenuFile()};
+    	}
+    	else {
+    		main_menu_labels = new Label[] {new Labels().getMainMenuSim(),
+											new Labels().getMainMenuFile()};    		
+    	}
+    				           
+    	for(int label_element = 0; label_element < main_menu_labels.length - 1; label_element++) {
         	rootAdd(main_menu_labels[label_element]);
         }
     	
-    	return main_menu_labels[3];
+    	return main_menu_labels[main_menu_labels.length - 1];
     }
 
     /**
@@ -89,11 +122,80 @@ public class ChooseSimulation {
     
     private void createSimulation(Button ok_button) {
     	ok_button.setOnAction(value -> {
+    		if(oldSimChoice != null && oldSimChoice.getAnimation() != null){
+    			oldSimChoice.getAnimation().stop();
+    		}
+    		if(setNewToOldChoice) {
+    			ChooseSimulation.setOldSimChoice(newSimChoice);
+    		}
     		stage.close();
-    		Simulation sim = new Simulation(simulation_name, xml_file_name);
+    		Simulation sim = assignSimulation(simulation_name, xml_file_name);
     		sim.start(new Stage());
     	});
     }
+    
+    private Simulation assignSimulation(String simulation_name, String xml_file_name) {
+    	System.out.println(xml_file_name);
+    	String full_xml_file_name = XML_FILE_HEADING + xml_file_name;
+    	switch(simulation_name) {
+    	case "Schelling's Model of Segregation": return new Segregation(full_xml_file_name);
+    	case "Wa-Tor World Model of Predator-Prey Relationships": return new WaTor(full_xml_file_name);
+    	case "Spreading of Fire": return new SpreadingOfFire(full_xml_file_name);
+    	case "Conway's Game of Life": return new GameOfLife(full_xml_file_name);
+    	}
+		return null;
+
+    	
+    	
+    	//    	Simulation[] simulations = listOfSimulations(xml_file_name);
+//    	simulation_properties = new Properties();
+//    	input = null;
+//
+//    	try {
+//	  		input = new FileInputStream(SIMULATION_PROPERTIES_FILENAME);
+//	  		simulation_properties.load(input);
+//
+//	  		number_of_simulations = Integer.parseInt(simulation_properties.getProperty(NUM_SIMULATIONS_PROPERTY));
+//	  		
+//	  		for(int simulation_number = 1; simulation_number <= number_of_simulations; simulation_number++) {
+//	  			String file_simulation_name = simulation_properties.getProperty(SIMULATION_WORD + simulation_number);
+//	  			if(simulation_name.equals(file_simulation_name)) {
+//	  				return simulations[simulation_number - 1];
+//	  			}
+//	  		}
+//	   	} catch (IOException ex) {
+//	  		ex.printStackTrace();
+//	  	} finally {
+//	  		if (input != null) {
+//	  			try {
+//	  				input.close();
+//	  			} catch (IOException e) {
+//	  				e.printStackTrace();
+//	  			}
+//	  		}
+//	  	}
+//		throw new NullPointerException("The simulation requested does not exist!");
+    }
+    
+//    private Simulation[] listOfSimulations(String xml_file_name) {
+//    	String full_xml_file_name = XML_FILE_HEADING + xml_file_name;
+//    	return new Simulation[] {
+//    			new Segregation(full_xml_file_name),
+//    			new WaTor(full_xml_file_name),
+//    			new GameOfLife(full_xml_file_name),
+//    			new GameOfLife(full_xml_file_name),
+//    			new GameOfLife(full_xml_file_name),
+//    			new GameOfLife(full_xml_file_name),
+//    			new SpreadingOfFire(full_xml_file_name),
+//    			new SpreadingOfFire(full_xml_file_name),
+//    			new SpreadingOfFire(full_xml_file_name),
+//    			new SpreadingOfFire(full_xml_file_name),
+//    			new Segregation(full_xml_file_name),
+//    			new Segregation(full_xml_file_name),
+//    			new Segregation(full_xml_file_name),
+//    			new GameOfLife(full_xml_file_name),
+//    	};
+//    }
     
     private void rootAdd(Object obj) {
 		if(!root.getChildren().contains(obj)) {
@@ -106,5 +208,20 @@ public class ChooseSimulation {
 			root.getChildren().remove(obj);
 		}
     }
+        
+    public Timeline getAnimation() {
+    	return this.newSimAnimation;
+    }
+    
+    public static void setAnimation(Timeline simAnimation) {
+    	newSimAnimation = simAnimation;
+    }
 
+    public static ChooseSimulation getOldSimChoice() {
+    	return oldSimChoice;
+    }
+    
+    public static void setOldSimChoice(ChooseSimulation simChoice) {
+    	oldSimChoice = simChoice;
+    }    
 }

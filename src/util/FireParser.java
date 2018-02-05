@@ -10,9 +10,14 @@ public class FireParser extends XMLParser {
 		super(file);
 		this.parseGameConstants();
 		}
+	@Override
 	public void parseGameConstants() {
+		try {
 		this.probCatch = Double.parseDouble(this.getDoc().getElementsByTagName("probcatch").item(0).getTextContent());
-	}
+		} catch (NullPointerException e) {
+			return;
+		}
+		}
 	public double getProbCatch() {
 		return this.probCatch;
 	}

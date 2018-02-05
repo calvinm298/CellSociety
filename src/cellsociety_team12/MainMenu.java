@@ -8,6 +8,7 @@ import java.util.Properties;
 
 import gui_elements.ComboBoxes;
 import gui_elements.Labels;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.scene.Group;
@@ -32,8 +33,8 @@ import javafx.stage.Stage;
  */
 public class MainMenu extends Application {
 
-    private static final int FRAMES_PER_SECOND = 60;
-    private static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
+    private static final double FRAMES_PER_SECOND = 1;
+    private static final double MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
     private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
     private static final Paint BACKGROUND = Color.BLACK;
     private static final Paint HIGHLIGHT = Color.OLIVEDRAB;
@@ -54,11 +55,15 @@ public class MainMenu extends Application {
     private static int image_height;
     private static int image_xloc;
     private static int image_yloc;
+    private static boolean setIntroLabels = true;
+    private static boolean setNewToOldChoice = true;
+    private static Timeline animation = null;
     private static Stage stage;
    	private static Properties menu_properties;
 	private static InputStream input;
 	private static Image image;
 	private static ImageView imageView;
+	private static ChooseSimulation firstSimChoice, newSimChoice, prevSimChoice = null;
 	
 	// Additional setup for the main menu
     private Scene myScene;
@@ -132,7 +137,8 @@ public class MainMenu extends Application {
      * including labels, drop-down menus, and the image.
      */
     private void chooseSimulation() {
-    	ChooseSimulation simChoice = new ChooseSimulation(stage, root);
+    	firstSimChoice = new ChooseSimulation(stage, root, setIntroLabels, animation, prevSimChoice, !setNewToOldChoice);
+    	newSimChoice = new ChooseSimulation(stage, root, setIntroLabels, animation, firstSimChoice, setNewToOldChoice);
     }
         
     /**

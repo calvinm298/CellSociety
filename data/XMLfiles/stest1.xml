@@ -7,15 +7,12 @@
 		<size_x>20</size_x>
 		<size_y>20</size_y>
 		<similar>0.4</similar>
+		<blue_percent>0.45</blue_percent>
+		<red_percent>0.44</red_percent>
 	</setup>
 	<block>
-		<loc_x>4</loc_x>
-		<loc_y>3</loc_y>
-		<class>blue</class>
-	</block>
-	<block>
-		<loc_x>4</loc_x>
-		<loc_y>3</loc_y>
-		<class>red</class>
+		<loc_x>-1</loc_x>
+		<loc_y>-1</loc_y>
+		<class>segregation</class>
 	</block>
 </Simulation>

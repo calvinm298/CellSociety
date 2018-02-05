@@ -1,6 +1,8 @@
 package cells;
 
 import objects.wator_objects.WaterAnimals;
+import objects.wator_objects.Fish;
+import objects.wator_objects.Shark;
 
 /**
  * Subclass for WatorAnimal Objects - will take into consideration the two objects (Sharks and Fish) and the interactions
@@ -11,10 +13,11 @@ import objects.wator_objects.WaterAnimals;
 
 
 public class WaterCell extends Cell {
-
-	private static WaterAnimals animalType = null;
-	private static boolean willBeTakenByFish = false;
-	private static boolean willBeTakenByShark = false;
+	
+	private String animalTypeString = "Water";
+	private WaterAnimals animalType = null;
+	private boolean willBeTakenByFish = false;
+	private boolean willBeTakenByShark = false;
 	
 	/**
 	 * This is a constructor to create a WaterCell. Each Watercell will contain the water
@@ -28,6 +31,16 @@ public class WaterCell extends Cell {
 		this.animalType = animalType;
 		this.willBeTakenByFish = willBeTakenByFish;
 		this.willBeTakenByShark = willBeTakenByShark;
+		if(animalType != null)
+			this.animalTypeString = animalType.getAnimalTypeString();
+	}
+	
+	public WaterCell() {
+		
+	}
+	
+	public String getAnimalTypeString() {
+		return this.animalTypeString;
 	}
 	
 	/**Checks to see if this cell will be taken by a fish in the next evolution
@@ -42,8 +55,38 @@ public class WaterCell extends Cell {
 	}
 	
 	public WaterAnimals getAnimal() {
-		return this.animalType;
+		return this.animalType; //probably add a private instance string of some sort for comparing purposes
 	}
 	
+	public void setAnimal(WaterAnimals animal) {
+		this.animalType = animal; //probably add a private instance string of some sort for comparing purposes
+		this.animalTypeString = animal.getAnimalTypeString();
+	}
 	
+	public boolean getWillBeTakenByFish() {
+		return this.willBeTakenByFish == true;
+	}
+	
+	public boolean getWillBeTakenByShark() {
+		return this.willBeTakenByShark == true;
+	}
+	
+	public boolean isTakenByFish() {
+		return this.getAnimalTypeString().equals("Fish");
+	}
+	
+	public boolean isTakenByShark() {
+		return this.getAnimalTypeString().equals("Shark");
+	}
+
+	public void reset() {
+		this.willBeTakenByFish = false;
+		this.willBeTakenByFish = false;
+		this.animalType = null;
+	}
+
+	public void setasFish() {
+		this.animalType = new Fish(5, 5);
+		this.animalTypeString = "Fish";
+	}	
 }

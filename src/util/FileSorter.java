@@ -12,7 +12,7 @@ import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
 /**
- * @author August Ning
+ * @author August Chicken-Ning
  *  Sorts files by type of simulations, used for start up screen so a user can only select the type of XML file for their choosen simulation
  */
 public class FileSorter {

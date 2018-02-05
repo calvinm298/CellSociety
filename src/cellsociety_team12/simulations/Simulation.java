@@ -5,79 +5,83 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Properties;
+import java.util.Random;
 
+import cells.Cell;
 import cellsociety_team12.ChooseSimulation;
+import gui_elements.Buttons;
 import gui_elements.ComboBoxes;
 import gui_elements.Labels;
+import javafx.animation.Animation.Status;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 /**
- * This class displays the main menu screen for "Cell Society." Here, we choose a simulation 
- * and select an XML file to read in. Based on these configurations, a simulation will be 
- * chosen thereafter. It calls the "Simulation" class, found in the "simulations" folder, and 
- * the frame will switch to the simulation corresponding to the configurations. This class has 
- * a main method, so this is the program to run to begin any simulation.
  * 
  * @author Aditya Sridhar
  */
-public class Simulation extends Application {
+public abstract class Simulation extends Application {
 
-    private static final int FRAMES_PER_SECOND = 60;
-    private static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
-    private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
+
+    private static final int FRAMES_PER_SECOND = 2;
+    private static final int GRID_SIZEX = 400;
+    private static final int GRID_SIZEY = 400;
+    private static final int GRID_XLOC = 100;
+    private static final int GRID_YLOC = 50;
+    private static final int INITIAL_TIME_DELAY = 1000 / FRAMES_PER_SECOND;
     private static final Paint BACKGROUND = Color.BLACK;
     private static final Paint HIGHLIGHT = Color.OLIVEDRAB;
     private static final String PROPERTY_FILENAME = "data/mainmenu.properties";
     private static final String TITLE_PROPERTY = "title";
     private static final String WIDTH_PROPERTY = "width";
     private static final String HEIGHT_PROPERTY = "height";
-    private static final String IMAGE_PROPERTY = "image";
-    private static final String IMAGE_WIDTH_PROPERTY = "imgWidth";
-    private static final String IMAGE_HEIGHT_PROPERTY = "imgHeight";
-    private static final String IMAGE_XLOC_PROPERTY = "imgXLoc";
-    private static final String IMAGE_YLOC_PROPERTY = "imgYLoc";
-    private static String title;
-    private static String image_name;
-    private static String simulation_name;
-    private static String xml_file_name;
-    private static int screen_width;
-    private static int screen_height;
-    private static int image_width;
-    private static int image_height;
-    private static int image_xloc;
-    private static int image_yloc;
+    private static String title, image_name, simulation_name, xml_file_name;
+    private static int screen_width, screen_height;
+    private static int time_delay = INITIAL_TIME_DELAY;
+    private static boolean setIntroLabels = false;
+	private static boolean setNewToOldChoice = true;
+	private static boolean initialButtonsCreated = false;
     private static Stage stage;
-   	private static Properties menu_properties;
+    private static Timeline animation;
+    private static Properties menu_properties;
 	private static InputStream input;
-	private static Image image;
-	private static ImageView imageView;
+	private static GridPane visual_grid;
+	protected ChooseSimulation simChoice, newSimChoice;
+	protected Cell[][] curr_grid, next_grid;
+	protected int sizeX, sizeY, cell_sizeX, cell_sizeY;
+	private static Button start_button, stop_button, reset_button, step_button, speed_plus_button, speed_minus_button;
+
 	
 	// Additional setup for the main menu
     private Scene myScene;
     private Group root;
     
-    public Simulation(String simulation_name, String xml_file_name) {
-    	this.simulation_name = simulation_name;
-    	this.xml_file_name = xml_file_name;
-    }
-
     /**
      * Initializes the stage for the main menu.
      */
     @Override
     public void start(Stage stage) {
     	this.stage = stage;
+    	initialButtonsCreated = false;
     	initialize();
     }
 
@@ -85,14 +89,52 @@ public class Simulation extends Application {
      * Sets the scene and initializes the screen properties.
      */
     private void initialize() {
+    	time_delay = INITIAL_TIME_DELAY;
     	root = new Group();
     	setProperties();
         myScene = new Scene(root, screen_width, screen_height, BACKGROUND);
         setStage();
         chooseSimulation();
-    	setImage();
+        setupGrid();
+        initializeGUI();
+        
+        KeyFrame frame = new KeyFrame(Duration.millis(INITIAL_TIME_DELAY),
+                                      e -> step());
+        Timeline animation = new Timeline();
+        animation.setCycleCount(Timeline.INDEFINITE);
+        animation.getKeyFrames().add(frame);
+        this.animation = animation;
+        ChooseSimulation.setAnimation(animation);
     }
 
+    private void step() {
+    	updateGrid();
+    	updateGUI();
+    }
+    
+    private void initializeGUI() {
+    	visual_grid = new GridPane();
+    	visual_grid.setPrefSize(GRID_SIZEX, GRID_SIZEY);
+    	visual_grid.setLayoutX(GRID_XLOC);
+    	visual_grid.setLayoutY(GRID_YLOC);
+    	if(!initialButtonsCreated) {
+    		createButtons();
+    		initialButtonsCreated = true;
+    	}
+    	cell_sizeX = GRID_SIZEX / curr_grid.length;
+    	cell_sizeY = GRID_SIZEY / curr_grid[0].length;
+    	initializeVisualGrid();
+    }
+    
+    private void initializeVisualGrid() {
+       	for(int i = 0; i < curr_grid.length; i++) {
+    		for(int j = 0; j < curr_grid[0].length; j++) {
+    			visual_grid.add(getObject(i, j), i, j);
+    		}
+    	}
+    	root.getChildren().add(visual_grid);
+    }
+        
     /**
      * Reads in properties from a property file and sets the  
      * screen properties.
@@ -105,13 +147,7 @@ public class Simulation extends Application {
     		menu_properties.load(input);
     		title = menu_properties.getProperty(TITLE_PROPERTY);
     		screen_width = Integer.parseInt(menu_properties.getProperty(WIDTH_PROPERTY));
-    		screen_height = Integer.parseInt(menu_properties.getProperty(HEIGHT_PROPERTY));
-    		image_name = menu_properties.getProperty(IMAGE_PROPERTY);
-    		image_width = Integer.parseInt(menu_properties.getProperty(IMAGE_WIDTH_PROPERTY));
-    		image_height = Integer.parseInt(menu_properties.getProperty(IMAGE_HEIGHT_PROPERTY));
-    		image_xloc = Integer.parseInt(menu_properties.getProperty(IMAGE_XLOC_PROPERTY));
-    		image_yloc = Integer.parseInt(menu_properties.getProperty(IMAGE_YLOC_PROPERTY));
-     	
+    		screen_height = Integer.parseInt(menu_properties.getProperty(HEIGHT_PROPERTY));     	
      	} catch (IOException ex) {
     		ex.printStackTrace();
     	} finally {
@@ -140,21 +176,100 @@ public class Simulation extends Application {
      * including labels, drop-down menus, and the image.
      */
     private void chooseSimulation() {
-    	ChooseSimulation simChoice = new ChooseSimulation(stage, root);
+    	if(simChoice == null) {
+    		newSimChoice = new ChooseSimulation(stage, root, setIntroLabels, animation, 
+    				simChoice == null ? ChooseSimulation.getOldSimChoice() : simChoice, setNewToOldChoice);
+    	}
+		simChoice = newSimChoice;
     }
-        
-    /**
-     * Sets the image for the main menu.
-     */
-    private void setImage() {
-        image = new Image(getClass().getClassLoader().getResourceAsStream(image_name));
-        imageView = new ImageView(image);
-        imageView.setX(image_xloc);
-        imageView.setY(image_yloc);
-        imageView.setFitWidth(image_width);
-        imageView.setFitHeight(image_height);
-        root.getChildren().add(imageView);
+    
+    protected abstract void setupGrid();
+    protected abstract void updateGrid();
+    
+    private void updateGUI() {
+    	root.getChildren().remove(visual_grid);
+    	initializeGUI();
     }
+    
+    private void createButtons() {
+    	function_start_button();
+    	function_stop_button();
+    	function_step_button();
+    	function_speed_plus_button();
+    	function_speed_minus_button();
+    }
+    
+    private void function_start_button() {
+    	start_button = Buttons.createStartButton();
+    	root.getChildren().add(start_button);
+    	start_button.setOnAction(value -> {
+    		animation.play();
+    		root.getChildren().remove(start_button);
+    		root.getChildren().add(stop_button);
+    	});    	
+    }
+
+    private void function_stop_button() {
+    	stop_button = Buttons.createStopButton();
+    	stop_button.setOnAction(value -> {
+    		animation.pause();
+    		root.getChildren().remove(stop_button);
+    		root.getChildren().add(start_button);
+    		Buttons.setResumeText(start_button);
+    	});
+    }
+
+    private void function_step_button() {
+    	step_button = Buttons.createStepButton();
+    	root.getChildren().add(step_button);
+    	step_button.setOnAction(value -> {
+    		animation.pause();
+    		if(!root.getChildren().contains(start_button))
+    			root.getChildren().add(start_button);
+       		Buttons.setResumeText(start_button);
+    		if(root.getChildren().contains(stop_button))
+    			root.getChildren().remove(stop_button);
+    		step();
+    	});
+    }
+
+    private void function_speed_plus_button() {
+    	speed_plus_button = Buttons.createSpeedPlusButton();
+    	root.getChildren().add(speed_plus_button);
+    	speed_plus_button.setOnAction(value -> {
+    		if(time_delay != 0) {
+	    		animation.stop();
+	    		time_delay -= 100 / FRAMES_PER_SECOND;
+	            KeyFrame frame = new KeyFrame(Duration.millis(time_delay),
+	                    e -> step());
+	            Timeline animation = new Timeline();
+				animation.setCycleCount(Timeline.INDEFINITE);
+				animation.getKeyFrames().add(frame);
+				this.animation = animation;
+				ChooseSimulation.setAnimation(animation);
+				animation.play();
+    		}
+    	});
+    }
+
+    private void function_speed_minus_button() {
+    	speed_minus_button = Buttons.createSpeedMinusButton();
+    	root.getChildren().add(speed_minus_button);
+    	speed_minus_button.setOnAction(value -> {
+    		animation.stop();
+    		time_delay += 200 / FRAMES_PER_SECOND;
+            KeyFrame frame = new KeyFrame(Duration.millis(time_delay),
+                    e -> step());
+            Timeline animation = new Timeline();
+			animation.setCycleCount(Timeline.INDEFINITE);
+			animation.getKeyFrames().add(frame);
+			this.animation = animation;
+			ChooseSimulation.setAnimation(animation);
+			animation.play();
+    	});
+    }
+
+    protected abstract Node getObject(int row, int col);
     
     /**
      * Returns the width of the main menu screen.
@@ -169,8 +284,4 @@ public class Simulation extends Application {
     public int getScreenHeight() {
     	return screen_height;
     }
-   
-	private void selectSim(String simulation) {
-		
-	}
 }
