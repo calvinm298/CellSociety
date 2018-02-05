@@ -4,8 +4,8 @@
 		<type>fire</type>
 		<title>Spreading Fire</title>
 		<author>Team 12</author>
-		<size_x>200</size_x>
-		<size_y>200</size_y>
+		<size_x>20</size_x>
+		<size_y>20</size_y>
 		<probcatch>0.6</probcatch>
 	</setup>
 	<block>

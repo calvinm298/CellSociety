@@ -4,18 +4,18 @@
 		<type>fire</type>
 		<title>Spreading Fire</title>
 		<author>Team 12</author>
-		<size_x>100</size_x>
-		<size_y>100</size_y>
-		<probcatch>0.7</probcatch>
+		<size_x>80</size_x>
+		<size_y>80</size_y>
+		<probcatch>0.6</probcatch>
 	</setup>
 	<block>
-		<loc_x>90</loc_x>
+		<loc_x>70</loc_x>
 		<loc_y>8</loc_y>
 		<class>burning</class>
 	</block>
 		<block>
-		<loc_x>80</loc_x>
-		<loc_y>90</loc_y>
+		<loc_x>60</loc_x>
+		<loc_y>70</loc_y>
 		<class>burning</class>
 	</block>
 		<block>
