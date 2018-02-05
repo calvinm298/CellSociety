@@ -88,9 +88,5 @@ public class WaterCell extends Cell {
 	public void setasFish() {
 		this.animalType = new Fish(5, 5);
 		this.animalTypeString = "Fish";
-	}
-
-	
-
-	
+	}	
 }
