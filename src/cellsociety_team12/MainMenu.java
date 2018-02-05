@@ -33,8 +33,8 @@ import javafx.stage.Stage;
  */
 public class MainMenu extends Application {
 
-    private static final int FRAMES_PER_SECOND = 1;
-    private static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
+    private static final double FRAMES_PER_SECOND = 1;
+    private static final double MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
     private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
     private static final Paint BACKGROUND = Color.BLACK;
     private static final Paint HIGHLIGHT = Color.OLIVEDRAB;

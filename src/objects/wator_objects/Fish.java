@@ -9,7 +9,7 @@ public class Fish extends WaterAnimals {
 	private final int giveEnergy;
 	
 	public Fish(int maxChrononCount, int givenEnergy) {
-		animalString = "Shark";
+		animalString = "Fish";
 		CurrChrononCount = 0;
 		MaxChrononCount = maxChrononCount;
 		this.giveEnergy = givenEnergy;
