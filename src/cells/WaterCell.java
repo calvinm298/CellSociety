@@ -2,7 +2,7 @@ package cells;
 
 import objects.wator_objects.WaterAnimals;
 import objects.wator_objects.Fish;
-import objects.wator_objects.Water;
+import objects.wator_objects.Shark;
 
 /**
  * Subclass for WatorAnimal Objects - will take into consideration the two objects (Sharks and Fish) and the interactions
@@ -15,7 +15,7 @@ import objects.wator_objects.Water;
 public class WaterCell extends Cell {
 	
 	private String animalTypeString = "Water";
-	private WaterAnimals animalType = new Water();
+	private WaterAnimals animalType = null;
 	private boolean willBeTakenByFish = false;
 	private boolean willBeTakenByShark = false;
 	
@@ -82,7 +82,7 @@ public class WaterCell extends Cell {
 	public void reset() {
 		this.willBeTakenByFish = false;
 		this.willBeTakenByFish = false;
-		this.animalType = new Water();
+		this.animalType = null;
 	}
 
 	public void setasFish() {

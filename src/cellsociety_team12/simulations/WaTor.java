@@ -12,7 +12,6 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import objects.wator_objects.Fish;
 import objects.wator_objects.Shark;
-import objects.wator_objects.Water;
 import objects.wator_objects.WaterAnimals;
 import util.WatorParser;
 
