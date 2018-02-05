@@ -9,6 +9,7 @@ import java.util.Random;
 
 import cells.Cell;
 import cellsociety_team12.ChooseSimulation;
+import gui_elements.Buttons;
 import gui_elements.ComboBoxes;
 import gui_elements.Labels;
 import javafx.animation.Animation.Status;
@@ -42,12 +43,11 @@ public abstract class Simulation extends Application {
 
 
     private static final int FRAMES_PER_SECOND = 2;
-    private static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
     private static final int GRID_SIZEX = 400;
     private static final int GRID_SIZEY = 400;
     private static final int GRID_XLOC = 100;
     private static final int GRID_YLOC = 50;
-    private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
+    private static final int INITIAL_TIME_DELAY = 1000 / FRAMES_PER_SECOND;
     private static final Paint BACKGROUND = Color.BLACK;
     private static final Paint HIGHLIGHT = Color.OLIVEDRAB;
     private static final String PROPERTY_FILENAME = "data/mainmenu.properties";
@@ -56,17 +56,20 @@ public abstract class Simulation extends Application {
     private static final String HEIGHT_PROPERTY = "height";
     private static String title, image_name, simulation_name, xml_file_name;
     private static int screen_width, screen_height;
+    private static int time_delay = INITIAL_TIME_DELAY;
     private static boolean setIntroLabels = false;
+	private static boolean setNewToOldChoice = true;
+	private static boolean initialButtonsCreated = false;
     private static Stage stage;
     private static Timeline animation;
     private static Properties menu_properties;
 	private static InputStream input;
 	private static GridPane visual_grid;
 	protected ChooseSimulation simChoice, newSimChoice;
-	private static boolean setNewToOldChoice = true;
 	protected Cell[][] curr_grid, next_grid;
 	protected int sizeX, sizeY, cell_sizeX, cell_sizeY;
-	 
+	private static Button start_button, stop_button, reset_button, step_button, speed_plus_button, speed_minus_button;
+
 	
 	// Additional setup for the main menu
     private Scene myScene;
@@ -78,7 +81,7 @@ public abstract class Simulation extends Application {
     @Override
     public void start(Stage stage) {
     	this.stage = stage;
-//    	newSimulationChosen = false;
+    	initialButtonsCreated = false;
     	initialize();
     }
 
@@ -86,27 +89,25 @@ public abstract class Simulation extends Application {
      * Sets the scene and initializes the screen properties.
      */
     private void initialize() {
+    	time_delay = INITIAL_TIME_DELAY;
     	root = new Group();
     	setProperties();
         myScene = new Scene(root, screen_width, screen_height, BACKGROUND);
-        myScene.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
         setStage();
         chooseSimulation();
         setupGrid();
         initializeGUI();
         
-        KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY),
+        KeyFrame frame = new KeyFrame(Duration.millis(INITIAL_TIME_DELAY),
                                       e -> step());
         Timeline animation = new Timeline();
         animation.setCycleCount(Timeline.INDEFINITE);
         animation.getKeyFrames().add(frame);
         this.animation = animation;
         ChooseSimulation.setAnimation(animation);
-        animation.play();
     }
 
     private void step() {
-    	//System.out.println("Hell");
     	updateGrid();
     	updateGUI();
     }
@@ -116,6 +117,10 @@ public abstract class Simulation extends Application {
     	visual_grid.setPrefSize(GRID_SIZEX, GRID_SIZEY);
     	visual_grid.setLayoutX(GRID_XLOC);
     	visual_grid.setLayoutY(GRID_YLOC);
+    	if(!initialButtonsCreated) {
+    		createButtons();
+    		initialButtonsCreated = true;
+    	}
     	cell_sizeX = GRID_SIZEX / curr_grid.length;
     	cell_sizeY = GRID_SIZEY / curr_grid[0].length;
     	initializeVisualGrid();
@@ -186,6 +191,84 @@ public abstract class Simulation extends Application {
     	initializeGUI();
     }
     
+    private void createButtons() {
+    	function_start_button();
+    	function_stop_button();
+    	function_step_button();
+    	function_speed_plus_button();
+    	function_speed_minus_button();
+    }
+    
+    private void function_start_button() {
+    	start_button = Buttons.createStartButton();
+    	root.getChildren().add(start_button);
+    	start_button.setOnAction(value -> {
+    		animation.play();
+    		root.getChildren().remove(start_button);
+    		root.getChildren().add(stop_button);
+    	});    	
+    }
+
+    private void function_stop_button() {
+    	stop_button = Buttons.createStopButton();
+    	stop_button.setOnAction(value -> {
+    		animation.pause();
+    		root.getChildren().remove(stop_button);
+    		root.getChildren().add(start_button);
+    		Buttons.setResumeText(start_button);
+    	});
+    }
+
+    private void function_step_button() {
+    	step_button = Buttons.createStepButton();
+    	root.getChildren().add(step_button);
+    	step_button.setOnAction(value -> {
+    		animation.pause();
+    		if(!root.getChildren().contains(start_button))
+    			root.getChildren().add(start_button);
+       		Buttons.setResumeText(start_button);
+    		if(root.getChildren().contains(stop_button))
+    			root.getChildren().remove(stop_button);
+    		step();
+    	});
+    }
+
+    private void function_speed_plus_button() {
+    	speed_plus_button = Buttons.createSpeedPlusButton();
+    	root.getChildren().add(speed_plus_button);
+    	speed_plus_button.setOnAction(value -> {
+    		if(time_delay != 0) {
+	    		animation.stop();
+	    		time_delay -= 100 / FRAMES_PER_SECOND;
+	            KeyFrame frame = new KeyFrame(Duration.millis(time_delay),
+	                    e -> step());
+	            Timeline animation = new Timeline();
+				animation.setCycleCount(Timeline.INDEFINITE);
+				animation.getKeyFrames().add(frame);
+				this.animation = animation;
+				ChooseSimulation.setAnimation(animation);
+				animation.play();
+    		}
+    	});
+    }
+
+    private void function_speed_minus_button() {
+    	speed_minus_button = Buttons.createSpeedMinusButton();
+    	root.getChildren().add(speed_minus_button);
+    	speed_minus_button.setOnAction(value -> {
+    		animation.stop();
+    		time_delay += 200 / FRAMES_PER_SECOND;
+            KeyFrame frame = new KeyFrame(Duration.millis(time_delay),
+                    e -> step());
+            Timeline animation = new Timeline();
+			animation.setCycleCount(Timeline.INDEFINITE);
+			animation.getKeyFrames().add(frame);
+			this.animation = animation;
+			ChooseSimulation.setAnimation(animation);
+			animation.play();
+    	});
+    }
+
     protected abstract Node getObject(int row, int col);
     
     /**
@@ -200,8 +283,5 @@ public abstract class Simulation extends Application {
      */
     public int getScreenHeight() {
     	return screen_height;
-    }    
-    
-    private void handleKeyInput (KeyCode code) {
     }
 }
