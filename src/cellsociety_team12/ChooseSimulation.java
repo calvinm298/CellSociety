@@ -14,6 +14,7 @@ import cellsociety_team12.simulations.WaTor;
 import gui_elements.Buttons;
 import gui_elements.ComboBoxes;
 import gui_elements.Labels;
+import javafx.animation.Animation;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.scene.Group;
@@ -55,11 +56,14 @@ public class ChooseSimulation {
     /**
      * Constructor for the simulation setup. 
      */
-	public ChooseSimulation(Stage stage, Group root, boolean setIntroLabels) {
+	public ChooseSimulation(Stage stage, Group root, boolean setIntroLabels, Timeline newSimAnimation, ChooseSimulation newSimChoice, boolean SetNewToOldChoice) {
 		this.stage = stage;
 		this.root = root;
 		this.setIntroLabels = setIntroLabels;
+		this.newSimAnimation = newSimAnimation;
+		this.newSimChoice = newSimChoice;
 		initialize();
+		this.setNewToOldChoice = SetNewToOldChoice;
 	}
 	
     /**
@@ -118,6 +122,12 @@ public class ChooseSimulation {
     
     private void createSimulation(Button ok_button) {
     	ok_button.setOnAction(value -> {
+    		if(oldSimChoice != null && oldSimChoice.getAnimation() != null){
+    			oldSimChoice.getAnimation().stop();
+    		}
+    		if(setNewToOldChoice) {
+    			ChooseSimulation.setOldSimChoice(newSimChoice);
+    		}
     		stage.close();
     		Simulation sim = assignSimulation(simulation_name, xml_file_name);
     		sim.start(new Stage());
@@ -167,7 +177,6 @@ public class ChooseSimulation {
 //		throw new NullPointerException("The simulation requested does not exist!");
     }
     
-
 //    private Simulation[] listOfSimulations(String xml_file_name) {
 //    	String full_xml_file_name = XML_FILE_HEADING + xml_file_name;
 //    	return new Simulation[] {

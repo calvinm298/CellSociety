@@ -105,7 +105,7 @@ public class WaTor extends Simulation {
 			}
 		}
 	}
-
+//
 	private void chooseNextLocation() {
 		for (Point currLocation : currAliveFishCell) {
 			Point nextLocation = getNextFishLocation(currLocation, fishIndicate);
