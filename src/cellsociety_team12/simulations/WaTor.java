@@ -12,7 +12,6 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import objects.wator_objects.Fish;
 import objects.wator_objects.Shark;
-import objects.wator_objects.Water;
 import objects.wator_objects.WaterAnimals;
 import util.WatorParser;
 
@@ -53,7 +52,7 @@ public class WaTor extends Simulation {
 		
 		for (int i = 0; i < sizeX; i++) {
 			for (int j = 0; j < sizeY; j++) {
-				System.out.println(((WaterCell) curr_grid[i][j]).getAnimalTypeString());
+				//System.out.println(((WaterCell) curr_grid[i][j]).getAnimalTypeString());
 			}
 		}
 		
@@ -90,13 +89,13 @@ public class WaTor extends Simulation {
 		this.currAliveSharkCell.clear();
 		for (int i = 0; i < sizeX; i++) {
 			for (int j = 0; j < sizeY; j++) {
-				if (((WaterCell) curr_grid[i][j]).getAnimal().getAnimalTypeString().equals(fishIndicate)) { // need to
+				if (((WaterCell) curr_grid[i][j]).getAnimalTypeString().equals(fishIndicate)) { // need to
 																											// create
 					// this
 					// comparator
 					currAliveFishCell.add(new Point(i, j));
 				}
-				if (((WaterCell) curr_grid[i][j]).getAnimal().getAnimalTypeString().equals(sharkIndicate)) { // need to
+				if (((WaterCell) curr_grid[i][j]).getAnimalTypeString().equals(sharkIndicate)) { // need to
 																												// create
 					// this
 					// comparator
@@ -109,6 +108,8 @@ public class WaTor extends Simulation {
 	private void chooseNextLocation() {
 		for (Point currLocation : currAliveFishCell) {
 			Point nextLocation = getNextFishLocation(currLocation, fishIndicate);
+			
+			
 			((WaterCell) next_grid[nextLocation.x][nextLocation.y]).markWillBeTakenByFish();
 			((WaterCell) curr_grid[currLocation.x][currLocation.y]).getAnimal().setNextLocation(currLocation.x,
 					currLocation.y);
@@ -118,6 +119,8 @@ public class WaTor extends Simulation {
 		}
 		for (Point currLocation : currAliveSharkCell) {
 			Point nextLocation = getNextSharkLocation(currLocation, sharkIndicate);
+			System.out.println("next shark location = " + nextLocation);
+
 			((WaterCell) next_grid[nextLocation.x][nextLocation.y]).markWillBeTakenByShark();
 			((WaterCell) curr_grid[currLocation.x][currLocation.y]).getAnimal().setNextLocation(currLocation.x,
 					currLocation.y);
@@ -156,13 +159,9 @@ public class WaTor extends Simulation {
 		ArrayList<Point> neighborList = new ArrayList<>();
 		int xCoor = currLocation.x;
 		int yCoor = currLocation.y;
-		neighborList.add(new Point(xCoor - 1, yCoor + 1));
 		neighborList.add(new Point(xCoor, yCoor + 1));
-		neighborList.add(new Point(xCoor + 1, yCoor + 1));
 		neighborList.add(new Point(xCoor + 1, yCoor));
-		neighborList.add(new Point(xCoor + 1, yCoor - 1));
 		neighborList.add(new Point(xCoor, yCoor - 1));
-		neighborList.add(new Point(xCoor - 1, yCoor - 1));
 		neighborList.add(new Point(xCoor - 1, yCoor));
 		ArrayList<Point> possibleLocations = new ArrayList<>();
 		if (animal == fishIndicate) {
@@ -210,63 +209,63 @@ public class WaTor extends Simulation {
 
 	// test
 	private void changeGrid() {
-//		for (int i = 0; i < sizeX; i++) {
-//			for (int j = 0; j < sizeY; j++) {
-//				if (((WaterCell) curr_grid[i][j]).isTaken()) {
-//					WaterAnimals currAnimal = ((WaterCell) curr_grid[i][j]).getAnimal();
-//					currAnimal.setChrononCount(currAnimal.getChrononCount() + 1);
-//					Point nextLocation = ((WaterCell) curr_grid[i][j]).getAnimal().getNextLocation();
-//					if (currAnimal.getChrononCount() == currAnimal.getMaxChrononCount()) {
-//						// reproduction
-//						if (((WaterCell) next_grid[i][j]).isTakenByFish()) {
-//							((WaterCell) next_grid[i][j])
-//									.setAnimal(new Fish(parser.getMaxChronCount(), parser.getFishEnergy()));
-//						}
-//						if (((WaterCell) next_grid[i][j]).isTakenByShark()) {
-//							((WaterCell) next_grid[i][j]).setAnimal(new Shark(parser.getSharkMaxEnergy(),
-//									parser.getSharkStartingEnergy(), parser.getMaxChronCount()));
-//						}
-//						currAnimal.setChrononCount(0);
-//					}
-//					if (currAnimal.getAnimalTypeString().equals(sharkIndicate)) {
-//						((Shark) currAnimal).changeEnergy(-1);
-//						if (((Shark) currAnimal).getEnergy() == 0) {
-//							continue;
-//						}
-//						((WaterCell) next_grid[nextLocation.x][nextLocation.y])
-//								.setAnimal(((WaterCell) curr_grid[i][j]).getAnimal());
-//
-//					}
-//
-//					if (currAnimal.getAnimalTypeString().equals(fishIndicate)) {
-//						if (((WaterCell) next_grid[nextLocation.x][nextLocation.y]).getWillBeTakenByShark()) {
-//							((Shark) ((WaterCell) next_grid[nextLocation.x][nextLocation.y]).getAnimal())
-//									.changeEnergy(((Fish) currAnimal).giveEnergy());
-//							if (((Shark) ((WaterCell) next_grid[nextLocation.x][nextLocation.y]).getAnimal())
-//									.getEnergy() > ((Shark) ((WaterCell) next_grid[nextLocation.x][nextLocation.y])
-//											.getAnimal()).getMaxEnergy()) {
-//								((Shark) ((WaterCell) next_grid[nextLocation.x][nextLocation.y]).getAnimal()).setEnergy(
-//										((Shark) ((WaterCell) next_grid[nextLocation.x][nextLocation.y]).getAnimal())
-//												.getMaxEnergy());
-//							}
-//							continue; // if a space will be taken by both a fish and shark, the shark "eats" the fish
-//										// and the fish will not go to this possition
-//
-//						}
-//					}
-//
-//				}
-//			}
-//		}
-//		/**
-//		 * set the curr_grid = next_grid and reset next_grid
-//		 */
-//		curr_grid = next_grid;
-//		for (int i = 0; i < sizeX; i++) {
-//			for (int j = 0; j < sizeY; j++) {
-//				((WaterCell) next_grid[i][j]).reset();
-//			}
-//		}
+		for (int i = 0; i < sizeX; i++) {
+			for (int j = 0; j < sizeY; j++) {
+				if (((WaterCell) curr_grid[i][j]).isTaken()) {
+					WaterAnimals currAnimal = ((WaterCell) curr_grid[i][j]).getAnimal();
+					currAnimal.setChrononCount(currAnimal.getChrononCount() + 1);
+					Point nextLocation = ((WaterCell) curr_grid[i][j]).getAnimal().getNextLocation();
+					if (currAnimal.getChrononCount() == currAnimal.getMaxChrononCount()) {
+						// reproduction
+						if (((WaterCell) next_grid[i][j]).isTakenByFish()) {
+							((WaterCell) next_grid[i][j])
+									.setAnimal(new Fish(parser.getMaxChronCount(), parser.getFishEnergy()));
+						}
+						if (((WaterCell) next_grid[i][j]).isTakenByShark()) {
+							((WaterCell) next_grid[i][j]).setAnimal(new Shark(parser.getSharkMaxEnergy(),
+									parser.getSharkStartingEnergy(), parser.getMaxChronCount()));
+						}
+						currAnimal.setChrononCount(0);
+					}
+					if (currAnimal.getAnimalTypeString().equals(sharkIndicate)) {
+						((Shark) currAnimal).changeEnergy(-1);
+						if (((Shark) currAnimal).getEnergy() == 0) {
+							continue;
+						}
+						((WaterCell) next_grid[nextLocation.x][nextLocation.y])
+								.setAnimal(((WaterCell) curr_grid[i][j]).getAnimal());
+
+					}
+
+					if (currAnimal.getAnimalTypeString().equals(fishIndicate)) {
+						if (((WaterCell) next_grid[nextLocation.x][nextLocation.y]).getWillBeTakenByShark()) {
+							((Shark) ((WaterCell) next_grid[nextLocation.x][nextLocation.y]).getAnimal())
+									.changeEnergy(((Fish) currAnimal).giveEnergy());
+							if (((Shark) ((WaterCell) next_grid[nextLocation.x][nextLocation.y]).getAnimal())
+									.getEnergy() > ((Shark) ((WaterCell) next_grid[nextLocation.x][nextLocation.y])
+											.getAnimal()).getMaxEnergy()) {
+								((Shark) ((WaterCell) next_grid[nextLocation.x][nextLocation.y]).getAnimal()).setEnergy(
+										((Shark) ((WaterCell) next_grid[nextLocation.x][nextLocation.y]).getAnimal())
+												.getMaxEnergy());
+							}
+							continue; // if a space will be taken by both a fish and shark, the shark "eats" the fish
+										// and the fish will not go to this possition
+
+						}
+					}
+
+				}
+			}
+		}
+		/**
+		 * set the curr_grid = next_grid and reset next_grid
+		 */
+		curr_grid = next_grid;
+		for (int i = 0; i < sizeX; i++) {
+			for (int j = 0; j < sizeY; j++) {
+				((WaterCell) next_grid[i][j]).reset();
+			}
+		}
 	}
 
 	// {
@@ -315,12 +314,12 @@ public class WaTor extends Simulation {
 		tempRect.setHeight(cell_sizeY);
 
 		if (((WaterCell) curr_grid[row][col]).getAnimalTypeString().equals(fishIndicate)) {
-			System.out.println(row + " " + col);
+			//System.out.println(row + " " + col);
 			tempRect.setFill(FISH_COLOR);
 			return tempRect;
 		}
 		else if (((WaterCell) curr_grid[row][col]).getAnimalTypeString().equals(sharkIndicate)) {
-			System.out.println(row + " " + col);
+			//System.out.println(row + " " + col);
 
 			tempRect.setFill(SHARK_COLOR);
 			return tempRect;
