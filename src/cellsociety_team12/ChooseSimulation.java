@@ -14,6 +14,7 @@ import cellsociety_team12.simulations.WaTor;
 import gui_elements.Buttons;
 import gui_elements.ComboBoxes;
 import gui_elements.Labels;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -38,7 +39,8 @@ public class ChooseSimulation {
     private static final String XML_FILE_HEADING = "data\\XMLFiles\\";
 	private static int number_of_simulations;
 	private static boolean setIntroLabels;
-    private static Properties simulation_properties;
+	private static boolean setNewToOldChoice;
+	private static Properties simulation_properties;
     private static InputStream input;
     private static Stage stage;
 	private static Group root;
@@ -47,6 +49,8 @@ public class ChooseSimulation {
 	private static ComboBox<String> main_menu_sim_cb, main_menu_file_cb;
 	private static Label file_label;
 	private static Button ok_button;
+	private static Timeline newSimAnimation;
+	private static ChooseSimulation newSimChoice, oldSimChoice;
 	
     /**
      * Constructor for the simulation setup. 
@@ -122,45 +126,67 @@ public class ChooseSimulation {
     
     private Simulation assignSimulation(String simulation_name, String xml_file_name) {
     	System.out.println(xml_file_name);
-    	Simulation[] simulations = listOfSimulations(xml_file_name);
-    	simulation_properties = new Properties();
-    	input = null;
+    	String full_xml_file_name = XML_FILE_HEADING + xml_file_name;
+    	switch(simulation_name) {
+    	case "Schelling's Model of Segregation": return new Segregation(full_xml_file_name);
+    	case "Wa-Tor World Model of Predator-Prey Relationships": return new WaTor(full_xml_file_name);
+    	case "Spreading of Fire": return new SpreadingOfFire(full_xml_file_name);
+    	case "Conway's Game of Life": return new GameOfLife(full_xml_file_name);
+    	}
+		return null;
 
-    	try {
-	  		input = new FileInputStream(SIMULATION_PROPERTIES_FILENAME);
-	  		simulation_properties.load(input);
-
-	  		number_of_simulations = Integer.parseInt(simulation_properties.getProperty(NUM_SIMULATIONS_PROPERTY));
-	  		
-	  		for(int simulation_number = 1; simulation_number <= number_of_simulations; simulation_number++) {
-	  			String file_simulation_name = simulation_properties.getProperty(SIMULATION_WORD + simulation_number);
-	  			if(simulation_name.equals(file_simulation_name)) {
-	  				return simulations[simulation_number - 1];
-	  			}
-	  		}
-	   	} catch (IOException ex) {
-	  		ex.printStackTrace();
-	  	} finally {
-	  		if (input != null) {
-	  			try {
-	  				input.close();
-	  			} catch (IOException e) {
-	  				e.printStackTrace();
-	  			}
-	  		}
-	  	}
-		throw new NullPointerException("The simulation requested does not exist!");
+    	
+    	
+    	//    	Simulation[] simulations = listOfSimulations(xml_file_name);
+//    	simulation_properties = new Properties();
+//    	input = null;
+//
+//    	try {
+//	  		input = new FileInputStream(SIMULATION_PROPERTIES_FILENAME);
+//	  		simulation_properties.load(input);
+//
+//	  		number_of_simulations = Integer.parseInt(simulation_properties.getProperty(NUM_SIMULATIONS_PROPERTY));
+//	  		
+//	  		for(int simulation_number = 1; simulation_number <= number_of_simulations; simulation_number++) {
+//	  			String file_simulation_name = simulation_properties.getProperty(SIMULATION_WORD + simulation_number);
+//	  			if(simulation_name.equals(file_simulation_name)) {
+//	  				return simulations[simulation_number - 1];
+//	  			}
+//	  		}
+//	   	} catch (IOException ex) {
+//	  		ex.printStackTrace();
+//	  	} finally {
+//	  		if (input != null) {
+//	  			try {
+//	  				input.close();
+//	  			} catch (IOException e) {
+//	  				e.printStackTrace();
+//	  			}
+//	  		}
+//	  	}
+//		throw new NullPointerException("The simulation requested does not exist!");
     }
     
-    private Simulation[] listOfSimulations(String xml_file_name) {
-    	String full_xml_file_name = XML_FILE_HEADING + xml_file_name;
-    	return new Simulation[] {
-    			new Segregation(full_xml_file_name),
-    			new Segregation(full_xml_file_name),
-    			new Segregation(full_xml_file_name),
-    			new GameOfLife(full_xml_file_name),
-    	};
-    }
+
+//    private Simulation[] listOfSimulations(String xml_file_name) {
+//    	String full_xml_file_name = XML_FILE_HEADING + xml_file_name;
+//    	return new Simulation[] {
+//    			new Segregation(full_xml_file_name),
+//    			new WaTor(full_xml_file_name),
+//    			new GameOfLife(full_xml_file_name),
+//    			new GameOfLife(full_xml_file_name),
+//    			new GameOfLife(full_xml_file_name),
+//    			new GameOfLife(full_xml_file_name),
+//    			new SpreadingOfFire(full_xml_file_name),
+//    			new SpreadingOfFire(full_xml_file_name),
+//    			new SpreadingOfFire(full_xml_file_name),
+//    			new SpreadingOfFire(full_xml_file_name),
+//    			new Segregation(full_xml_file_name),
+//    			new Segregation(full_xml_file_name),
+//    			new Segregation(full_xml_file_name),
+//    			new GameOfLife(full_xml_file_name),
+//    	};
+//    }
     
     private void rootAdd(Object obj) {
 		if(!root.getChildren().contains(obj)) {
@@ -173,4 +199,20 @@ public class ChooseSimulation {
 			root.getChildren().remove(obj);
 		}
     }
+        
+    public Timeline getAnimation() {
+    	return this.newSimAnimation;
+    }
+    
+    public static void setAnimation(Timeline simAnimation) {
+    	newSimAnimation = simAnimation;
+    }
+
+    public static ChooseSimulation getOldSimChoice() {
+    	return oldSimChoice;
+    }
+    
+    public static void setOldSimChoice(ChooseSimulation simChoice) {
+    	oldSimChoice = simChoice;
+    }    
 }
