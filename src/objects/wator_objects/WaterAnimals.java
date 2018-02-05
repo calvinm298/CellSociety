@@ -19,7 +19,6 @@ public class WaterAnimals {
 
 	public void setNextLocation(int x, int y) {
 		this.nextLocation = new Point(x, y);
-
 	}
 
 	public Point getNextLocation() {
