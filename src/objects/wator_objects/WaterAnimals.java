@@ -39,4 +39,9 @@ public class WaterAnimals {
 		return this.MaxChrononCount;
 	}
 
+	public void setCurrentLocation(int i, int j) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
