@@ -112,8 +112,10 @@ public class WaTor extends Simulation {
 		for (Point currLocation : currAliveFishCell) {
 			Point nextLocation = getNextFishLocation(currLocation, fishIndicate);
 			
+			System.out.println("next fish location = " + nextLocation);
 			
 			((WaterCell) next_grid[nextLocation.x][nextLocation.y]).markWillBeTakenByFish();
+			
 			((WaterCell) curr_grid[currLocation.x][currLocation.y]).getAnimal().setNextLocation(currLocation.x,
 					currLocation.y);
 			// MARK THE NEXT LOCATION WITHIN THE OBJECT - this way we can actually update
