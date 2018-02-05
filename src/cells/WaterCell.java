@@ -58,9 +58,14 @@ public class WaterCell extends Cell {
 		return this.animalType; //probably add a private instance string of some sort for comparing purposes
 	}
 	
-	public void setAnimal(WaterAnimals animal) {
-		this.animalType = animal; //probably add a private instance string of some sort for comparing purposes
-		this.animalTypeString = animal.getAnimalTypeString();
+	public void setFish(Fish fish) {
+		this.animalType = fish; //probably add a private instance string of some sort for comparing purposes
+		this.animalTypeString = "Fish";
+	}
+	
+	public void setShark(Shark shark) {
+		this.animalType = shark; //probably add a private instance string of some sort for comparing purposes
+		this.animalTypeString = "Shark";
 	}
 	
 	public boolean getWillBeTakenByFish() {

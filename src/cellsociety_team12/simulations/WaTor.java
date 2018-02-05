@@ -60,30 +60,85 @@ public class WaTor extends Simulation {
 		}
 		
 		
-		System.out.println(((WaterCell) curr_grid[4][4]).getAnimalTypeString());
+		//System.out.println(((WaterCell) curr_grid[4][4]).getAnimalTypeString());
 		for (Point p : parser.getCells("fish")) {
-			System.out.println("fish " + p);
-			((WaterCell) curr_grid[p.x][p.y]).setAnimal(new Fish(parser.getMaxChronCount(), parser.getFishEnergy()));
+			//System.out.println("fish " + p);
+			((WaterCell) curr_grid[p.x][p.y]).setFish(new Fish(parser.getMaxChronCount(), parser.getFishEnergy()));
 		}
 		for (Point p : parser.getCells("shark")) {
-			System.out.println("shark " + p);
-			((WaterCell) curr_grid[p.x][p.y]).setAnimal(
+			//System.out.println("shark " + p);
+			((WaterCell) curr_grid[p.x][p.y]).setShark(
 					new Shark(parser.getSharkMaxEnergy(), parser.getSharkStartingEnergy(), parser.getMaxChronCount()));
 		}
 
-//		for (int i = 0; i < sizeX; i++) {
-//			for (int j = 0; j < sizeY; j++) {
-//				if (((WaterCell) curr_grid[i][j]).isTakenByShark()) {
-//					System.out.println("Shark");
-//				}
-//			}
-//
-//		}
+		
+
 	}
 
 	protected void updateGrid() {
 		this.setupCellLists();
+//		for (int i = 0; i < sizeX; i++) {
+//			for (int j = 0; j < sizeY; j++) {
+//				if (((WaterCell) curr_grid[i][j]).isTakenByFish()) {
+//					System.out.println("BEFORE CHOOSE TAKEN FISH CURR AT " + i + ", " + j);
+//				}
+//				if (((WaterCell) curr_grid[i][j]).isTakenByShark()) {
+//					System.out.println("BEFORE CHOOSE TAKEN SHARK CURR AT " + i + ", " + j); 
+//				}
+//			}
+//
+//		}
+//		for (int i = 0; i < sizeX; i++) {
+//			for (int j = 0; j < sizeY; j++) {
+//				if (((WaterCell) next_grid[i][j]).isTakenByFish()) {
+//					System.out.println("BEFORE CHOOSE TAKEN FISH NEXT AT " + i + ", " + j);
+//				}
+//				if (((WaterCell) next_grid[i][j]).isTakenByShark()) {
+//					System.out.println("BEFORE CHOOSE TAKEN SHARK NEXT AT " + i + ", " + j); 
+//				}
+//			}
+//
+//		}
+		
+		
 		this.chooseNextLocation();
+				
+//		for (int i = 0; i < sizeX; i++) {
+//			for (int j = 0; j < sizeY; j++) {
+//				if (((WaterCell) curr_grid[i][j]).isTakenByFish()) {
+//					System.out.println("AFTER CHOOSE TAKEN FISH CURR AT " + i + ", " + j);
+//				}
+//				if (((WaterCell) curr_grid[i][j]).isTakenByShark()) {
+//					System.out.println("AFTER CHOOSE TAKEN SHARK CURR AT " + i + ", " + j); 
+//				}
+//			}
+//
+//		}
+//		for (int i = 0; i < sizeX; i++) {
+//			for (int j = 0; j < sizeY; j++) {
+//				if (((WaterCell) next_grid[i][j]).isTakenByFish()) {
+//					System.out.println("AFTER CHOOSE TAKEN FISH NEXT AT " + i + ", " + j);
+//					((WaterCell) next_grid[i][j]).reset();
+//				}
+//				if (((WaterCell) next_grid[i][j]).isTakenByShark()) {
+//					System.out.println("AFTER CHOOSE TAKEN SHARK NEXT AT " + i + ", " + j); 
+//					((WaterCell) next_grid[i][j]).reset();
+//
+//				}
+//			}
+//
+//		}
+		
+		
+		for (int i = 0; i < sizeX; i++) {
+			for (int j = 0; j < sizeY; j++) {
+				curr_grid[i][j] = next_grid[i][j];
+			}
+		}
+		
+
+		
+		
 		this.changeGrid();
 	}
 
@@ -112,10 +167,10 @@ public class WaTor extends Simulation {
 		for (Point currLocation : currAliveFishCell) {
 			Point nextLocation = getNextFishLocation(currLocation, fishIndicate);
 			
-			System.out.println("next fish location = " + nextLocation);
+			//System.out.println("next fish location = " + nextLocation);
 			
 			Fish curr_fish = (Fish) ((WaterCell) curr_grid[currLocation.x][currLocation.y]).getAnimal();
-			((WaterCell) next_grid[nextLocation.x][nextLocation.y]).setAnimal(curr_fish);
+			((WaterCell) next_grid[nextLocation.x][nextLocation.y]).setFish(curr_fish);
 			((WaterCell) curr_grid[nextLocation.x][nextLocation.y]).markWillBeTakenByFish();
 			// MARK THE NEXT LOCATION WITHIN THE OBJECT - this way we can actually update
 			// the next_grid and move
@@ -123,10 +178,10 @@ public class WaTor extends Simulation {
 		}
 		for (Point currLocation : currAliveSharkCell) {
 			Point nextLocation = getNextSharkLocation(currLocation, sharkIndicate);
-			System.out.println("next shark location = " + nextLocation);
+			//System.out.println("next shark location = " + nextLocation);
 
 			Shark curr_shark = (Shark) ((WaterCell) curr_grid[currLocation.x][currLocation.y]).getAnimal();
-			((WaterCell) next_grid[nextLocation.x][nextLocation.y]).setAnimal(curr_shark);
+			((WaterCell) next_grid[nextLocation.x][nextLocation.y]).setShark(curr_shark);
 			((WaterCell) curr_grid[nextLocation.x][nextLocation.y]).markWillBeTakenByShark();
 		}
 	}
@@ -275,10 +330,10 @@ public class WaTor extends Simulation {
 //		/**
 //		 * set the curr_grid = next_grid and reset next_grid
 //		 */
-		curr_grid = next_grid;
 		for (int i = 0; i < sizeX; i++) {
 			for (int j = 0; j < sizeY; j++) {
-				((WaterCell) next_grid[i][j]).reset();
+				next_grid[i][j] = null;
+				next_grid[i][j] = new WaterCell();
 			}
 		}
 	}
