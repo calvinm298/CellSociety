@@ -42,9 +42,12 @@ public class WaTor extends Simulation {
 	protected void setupGrid() {
 
 		curr_grid = new WaterCell[sizeX][sizeY];
+		next_grid = new WaterCell[sizeX][sizeY];
+
 		for (int i = 0; i < sizeX; i++) {
 			for (int j = 0; j < sizeY; j++) {
 				curr_grid[i][j] = new WaterCell();
+				next_grid[i][j] = new WaterCell();
 			}
 		}
 		
@@ -102,7 +105,7 @@ public class WaTor extends Simulation {
 					currAliveSharkCell.add(new Point(i, j));
 				}
 			}
-		}
+		}		
 	}
 //
 	private void chooseNextLocation() {
