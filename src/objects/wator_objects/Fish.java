@@ -18,5 +18,7 @@ public class Fish extends WaterAnimals {
 	public int giveEnergy() {
 		return this.giveEnergy;
 	}
+
+
 	
 }

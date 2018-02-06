@@ -33,4 +33,8 @@ public class Shark extends WaterAnimals {
 		this.Energy = i;
 	}
 
+	public boolean checkLivingEnergy() {
+		return Energy > 0;
+	}
+
 }

@@ -6,8 +6,8 @@ public class WaterAnimals {
 
 	protected String animalString = "Water";
 	protected Point nextLocation = new Point(6, 6);
-	protected int MaxChrononCount = 5;
-	protected int CurrChrononCount = 5;
+	protected int MaxChrononCount;
+	protected int CurrChrononCount = 0;
 
 	public WaterAnimals() {
 
@@ -38,9 +38,17 @@ public class WaterAnimals {
 		return this.MaxChrononCount;
 	}
 
-	public void setCurrentLocation(int i, int j) {
-		// TODO Auto-generated method stub
+	public void increaseChronon() {
+		this.CurrChrononCount = this.CurrChrononCount + 1;
+	}
+	
+	public boolean checkReproduction() {
+		if (CurrChrononCount == MaxChrononCount) {
+			CurrChrononCount = 0;
+			return true;
+		}
 		
+		return false;
 	}
 
 }
