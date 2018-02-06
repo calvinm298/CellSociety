@@ -41,7 +41,6 @@ import javafx.util.Duration;
  */
 public abstract class Simulation extends Application {
 
-
     private static final int FRAMES_PER_SECOND = 2;
     private static final int GRID_SIZEX = 400;
     private static final int GRID_SIZEY = 400;

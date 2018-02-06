@@ -98,6 +98,7 @@ public class WaTor extends Simulation {
 			((WaterCell) next_grid[nextLocation.x][nextLocation.y]).setShark(curr_shark);
 			((WaterCell) curr_grid[nextLocation.x][nextLocation.y]).markWillBeTakenByShark();
 			curr_shark.increaseChronon();
+//			curr_shark.changeEnergy(-1);
 			curr_shark.setEnergy(Math.min(curr_shark.getEnergy() - 1, curr_shark.getMaxEnergy()));
 		}
 		for (Point currLocation : currAliveFishCell) {

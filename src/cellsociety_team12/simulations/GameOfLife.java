@@ -12,7 +12,6 @@ import java.util.ArrayList;
 
 public class GameOfLife extends Simulation {
 	
-//	private static String XMLfileName;
 	private ArrayList<Point> currAliveCell;
 	private ArrayList<Point> nextAliveCell;
 	private ArrayList<Point> nextDeadCell;
@@ -35,74 +34,32 @@ public class GameOfLife extends Simulation {
 		nextAliveCell = new ArrayList<>();
 		nextDeadCell = new ArrayList<>();
 	}
+	
 	/**
 	 * @author August
 	 * sets up the grid
 	 */
 	protected void setupGrid() {
 		try {
-		curr_grid = new ConwayCell[sizeX][sizeY];
-		for (int i = 0; i < sizeX; i++) {
-			for (int j = 0; j < sizeY; j++) {
-				curr_grid[i][j] = new ConwayCell();
+			curr_grid = new ConwayCell[sizeX][sizeY];
+			for (int i = 0; i < sizeX; i++) {
+				for (int j = 0; j < sizeY; j++) {
+					curr_grid[i][j] = new ConwayCell();
+				}
 			}
+			for (Point p : parser.getCells("cell")) {
+				((ConwayCell) curr_grid[p.x][p.y]).setAlive();
+			}
+		} catch (IllegalArgumentException e) {
+			return;
 		}
-		for (Point p : parser.getCells("cell")) {
-			((ConwayCell) curr_grid[p.x][p.y]).setAlive();
-		}
-	} catch (IllegalArgumentException e) {
-		return;
-	}
 	}
 	
 	protected void updateGrid(){
 		this.setupCellLists();
 		this.checkCells();
 		this.changeGrid();
-//		//ONLY EDIT NEXTGRID
-//		next_grid = curr_grid;
-//		for (int x = 0; x < next_grid.length; x++) {
-//			for (int y = 0; y < next_grid[x].length; y++) {
-//				int numNeighbors = getNumNeighbors(x, y);
-//				if (((ConwayCell) next_grid[x][y]).isAlive()) {
-//					if (numNeighbors < 2 || numNeighbors > 3) {
-//						((ConwayCell) next_grid[x][y]).setDead();
-//					}					
-//				}
-//				if (((ConwayCell) next_grid[x][y]).isDead()) {
-//					if (numNeighbors == 3) {
-//						((ConwayCell) next_grid[x][y]).setAlive();
-//					}
-//				}
-//			}
-//		}
-//		
-//		//NEED A METHOD OR SOMETHING THAT SAYS CURRGRID = NEXTGRID
-//		curr_grid = next_grid;
-		
 	}
-//
-//	private int getNumNeighbors(int x, int y) {
-//		return 	checkIfAlive(x - 1, y - 1) +
-//				checkIfAlive(x - 1, y + 1) +
-//				checkIfAlive(x + 1, y - 1) +
-//				checkIfAlive(x + 1, y + 1) +
-//				checkIfAlive(x - 1, y) +
-//				checkIfAlive(x + 1, y) +
-//				checkIfAlive(x , y - 1) +
-//				checkIfAlive(x , y + 1);			
-//	}
-//
-//	private int checkIfAlive(int xCoor, int yCoor) {
-//		int last = curr_grid.length;
-//		if (xCoor < 0 || xCoor > (last - 1) || yCoor < 0 || yCoor > (last - 1)) {
-//			return 0;
-//		}
-//		if (((ConwayCell) curr_grid[xCoor][yCoor]).isAlive()) {
-//			return 1;
-//		}
-//		return 0;
-//	}
 	
 	private void setupCellLists() {
 		this.currAliveCell.clear();
@@ -133,24 +90,23 @@ public class GameOfLife extends Simulation {
 	private int calcNumNeighbors(ArrayList<Point> points) {
 		int numNeighbors = 0;
 		for (Point p : points) {
-			if (this.currAliveCell.contains(p)) {
+			if(!(p.x < 0 || p.x > sizeX || p.y < 0 || p.y > sizeY) && (this.currAliveCell.contains(p))) {
 				numNeighbors++;
 			}
 		}
-
 		return numNeighbors;
 	}
 	
 	private ArrayList<Point> createNeighborsList(int i, int j) {
 		ArrayList<Point> points = new ArrayList<>();
-		points.add(new Point(i - 1, j + 1));
-		points.add(new Point(i, j + 1));
-		points.add(new Point(i + 1, j + 1));
-		points.add(new Point(i + 1, j));
-		points.add(new Point(i + 1, j - 1));
-		points.add(new Point(i, j - 1));
 		points.add(new Point(i - 1, j - 1));
 		points.add(new Point(i - 1, j));
+		points.add(new Point(i - 1, j + 1));
+		points.add(new Point(i, j - 1));
+		points.add(new Point(i, j + 1));
+		points.add(new Point(i + 1, j - 1));
+		points.add(new Point(i + 1, j));
+		points.add(new Point(i + 1, j + 1));
 		return points;
 	}
 	
