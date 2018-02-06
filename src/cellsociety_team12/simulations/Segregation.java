@@ -37,6 +37,7 @@ public class Segregation extends Simulation {
 
 	@Override
 	protected void setupGrid() {
+		try {
 		sizeX = parser.getSizeX();
 		sizeY = parser.getSizeY();
 		Random rand = new Random();
@@ -55,6 +56,9 @@ public class Segregation extends Simulation {
 					((SegregationCell)curr_grid[i][j]).setRed();
 				}
 			}
+		}
+		} catch (IllegalArgumentException e) {
+			return;
 		}
 	}
 	

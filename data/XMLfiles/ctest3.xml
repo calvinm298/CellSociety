@@ -4,22 +4,42 @@
 		<type>conway</type>
 		<title>Conway's Game of Life</title>
 		<author>Team 12</author>
-		<size_x>20</size_x>
-		<size_y>20</size_y>
+		<size_x>40</size_x>
+		<size_y>40</size_y>
 	</setup>
 	<block>
-		<loc_x>5</loc_x>
-		<loc_y>4</loc_y>
+		<loc_x>25</loc_x>
+		<loc_y>25</loc_y>
 		<class>cell</class>
 	</block>
 	<block>
-		<loc_x>5</loc_x>
-		<loc_y>5</loc_y>
+		<loc_x>24</loc_x>
+		<loc_y>25</loc_y>
 		<class>cell</class>
 	</block>
 		<block>
-		<loc_x>5</loc_x>
-		<loc_y>6</loc_y>
+		<loc_x>23</loc_x>
+		<loc_y>25</loc_y>
+		<class>cell</class>
+	</block>
+		<block>
+		<loc_x>22</loc_x>
+		<loc_y>24</loc_y>
+		<class>cell</class>
+			</block>
+			<block>
+		<loc_x>20</loc_x>
+		<loc_y>25</loc_y>
+		<class>cell</class>
+			</block>
+			<block>
+		<loc_x>19</loc_x>
+		<loc_y>25</loc_y>
+		<class>cell</class>
+	</block>
+				<block>
+		<loc_x>20</loc_x>
+		<loc_y>23</loc_y>
 		<class>cell</class>
 	</block>
 </Simulation>

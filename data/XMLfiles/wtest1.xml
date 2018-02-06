@@ -7,7 +7,7 @@
 		<size_x>20</size_x>
 		<size_y>20</size_y>
 		<max_chron_count>5</max_chron_count>
-		<shark_starting_energy>5</shark_starting_energy>
+		<shark_starting_energy>8</shark_starting_energy>
 		<shark_max_energy>10</shark_max_energy>
 		<fish_energy>2</fish_energy>
 	</setup>

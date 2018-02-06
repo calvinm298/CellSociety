@@ -5,9 +5,9 @@ import java.awt.Point;
 public class WaterAnimals {
 
 	protected String animalString = "Water";
-	protected Point nextLocation;
+	protected Point nextLocation = new Point(6, 6);
 	protected int MaxChrononCount;
-	protected int CurrChrononCount;
+	protected int CurrChrononCount = 0;
 
 	public WaterAnimals() {
 
@@ -19,7 +19,6 @@ public class WaterAnimals {
 
 	public void setNextLocation(int x, int y) {
 		this.nextLocation = new Point(x, y);
-
 	}
 
 	public Point getNextLocation() {
@@ -37,6 +36,19 @@ public class WaterAnimals {
 
 	public int getMaxChrononCount() {
 		return this.MaxChrononCount;
+	}
+
+	public void increaseChronon() {
+		this.CurrChrononCount = this.CurrChrononCount + 1;
+	}
+	
+	public boolean checkReproduction() {
+		if (CurrChrononCount == MaxChrononCount) {
+			CurrChrononCount = 0;
+			return true;
+		}
+		
+		return false;
 	}
 
 }
