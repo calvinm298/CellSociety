@@ -5,7 +5,7 @@ import java.awt.Point;
 public class WaterAnimals {
 
 	protected String animalString = "Water";
-	protected Point nextLocation = new Point(6, 6);
+	protected Point nextLocation;
 	protected int MaxChrononCount;
 	protected int CurrChrononCount = 0;
 

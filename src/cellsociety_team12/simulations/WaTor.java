@@ -15,12 +15,12 @@ public class WaTor extends Simulation {
 
 	private ArrayList<Point> currAliveFishCell;
 	private ArrayList<Point> currAliveSharkCell;
-	private final String sharkIndicate = "Shark";
-	private final String fishIndicate = "Fish";
+	private final static String sharkIndicate = "Shark";
+	private final static String fishIndicate = "Fish";
 	private WatorParser parser;
-	private final Paint FISH_COLOR = Color.DARKGREEN;
-	private final Paint SHARK_COLOR = Color.DEEPSKYBLUE;
-	private final Paint WATER_COLOR = Color.WHITE;
+	private final static Paint FISH_COLOR = Color.DARKGREEN;
+	private final static Paint SHARK_COLOR = Color.DEEPSKYBLUE;
+	private final static Paint WATER_COLOR = Color.WHITE;
 
 	public WaTor(String xml_file_name) {
 		parser = new WatorParser(xml_file_name);
@@ -156,7 +156,7 @@ public class WaTor extends Simulation {
 			int y = (int) neighbor.getY();
 			if (x >= 0 && x < sizeX && y >= 0 && y < sizeY && !(((WaterCell) curr_grid[x][y]).isTakenByFish())
 					&& !(((WaterCell) curr_grid[x][y]).isTakenByShark())
-					&& (((WaterCell) curr_grid[x][y]).getWillBeTakenByFish() == false)) {
+					&& (!((WaterCell) curr_grid[x][y]).getWillBeTakenByFish())) {
 				emptyNeighbors.add(neighbor);
 			}
 		}
@@ -169,10 +169,10 @@ public class WaTor extends Simulation {
 			int x = (int) neighbor.getX();
 			int y = (int) neighbor.getY();
 			if (x >= 0 && x < sizeX && y >= 0 && y < sizeY && (((WaterCell) curr_grid[x][y]).isTakenByFish())
-					&& (((WaterCell) curr_grid[x][y]).getWillBeTakenByShark() == false)) {
+					&& (!((WaterCell) curr_grid[x][y]).getWillBeTakenByShark())) {
 				fishNeighbors.add(neighbor);
 			} else if (x >= 0 && x < sizeX && y >= 0 && y < sizeY && (((WaterCell) curr_grid[x][y]).isNotTaken())
-					&& (((WaterCell) curr_grid[x][y]).getWillBeTakenByShark() == false)) {
+					&& (!((WaterCell) curr_grid[x][y]).getWillBeTakenByShark())) {
 				emptyNeighbors.add(neighbor);
 			}
 		}

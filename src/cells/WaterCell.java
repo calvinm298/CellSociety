@@ -69,11 +69,11 @@ public class WaterCell extends Cell {
 	}
 	
 	public boolean getWillBeTakenByFish() {
-		return this.willBeTakenByFish == true;
+		return this.willBeTakenByFish;
 	}
 	
 	public boolean getWillBeTakenByShark() {
-		return this.willBeTakenByShark == true;
+		return this.willBeTakenByShark;
 	}
 	
 	public boolean isTakenByFish() {
@@ -91,7 +91,7 @@ public class WaterCell extends Cell {
 	}
 
 	public void setasFish() {
-		this.animalType = new Fish(5, 5);
+		this.animalType = new Fish(0, 0);
 		this.animalTypeString = "Fish";
 	}	
 }
