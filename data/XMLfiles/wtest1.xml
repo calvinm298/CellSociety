@@ -11,6 +11,12 @@
 		<shark_max_energy>10</shark_max_energy>
 		<fish_energy>2</fish_energy>
 	</setup>
+			<style>
+	<shape>rectangle</shape>
+<grid_visible>false</grid_visible>
+<void_color>black</void_color>
+<considered_neighbors>all</considered_neighbors>
+</style>
 	<block>
 		<loc_x>4</loc_x>
 		<loc_y>3</loc_y>

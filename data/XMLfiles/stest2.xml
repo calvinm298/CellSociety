@@ -10,6 +10,12 @@
 		<blue_percent>0.40</blue_percent>
 		<red_percent>0.40</red_percent>
 	</setup>
+		<style>
+	<shape>rectangle</shape>
+<grid_visible>false</grid_visible>
+<void_color>black</void_color>
+<considered_neighbors>all</considered_neighbors>
+</style>
 	<block>
 		<loc_x>-1</loc_x>
 		<loc_y>-1</loc_y>

@@ -8,6 +8,12 @@
 		<size_y>80</size_y>
 		<probcatch>0.6</probcatch>
 	</setup>
+	<style>
+	<shape>rectangle</shape>
+<grid_visible>false</grid_visible>
+<void_color>black</void_color>
+<considered_neighbors>cardinal</considered_neighbors>
+</style>
 	<block>
 		<loc_x>70</loc_x>
 		<loc_y>8</loc_y>

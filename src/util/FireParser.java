@@ -15,7 +15,7 @@ public class FireParser extends XMLParser {
 		try {
 		this.probCatch = Double.parseDouble(this.getDoc().getElementsByTagName("probcatch").item(0).getTextContent());
 		} catch (NullPointerException e) {
-			return;
+			throw new IllegalArgumentException();
 		}
 		}
 	public double getProbCatch() {

@@ -1,14 +1,14 @@
 <?xml version="1.0" ?>
 <Simulation>
 	<setup>
-		<type>segregation</type>
-		<title>Schelling's Model of Segregation</title>
+		<type>rps</type>
+		<title>Rock, Paper, Scissors Game</title>
 		<author>Team 12</author>
-		<size_x>80</size_x>
-		<size_y>80</size_y>
-		<similar>0.7</similar>
-		<blue_percent>0.46</blue_percent>
-		<red_percent>0.46</red_percent>
+		<size_x>20</size_x>
+		<size_y>20</size_y>
+		<prob_rock>0.3</prob_rock>
+		<prob_paper>0.3</prob_paper>
+		<prob_scissors>0.3</prob_scissors>
 	</setup>
 		<style>
 	<shape>rectangle</shape>
@@ -19,6 +19,6 @@
 	<block>
 		<loc_x>-1</loc_x>
 		<loc_y>-1</loc_y>
-		<class>segregation</class>
+		<class>rps</class>
 	</block>
 </Simulation>

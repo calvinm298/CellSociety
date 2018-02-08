@@ -8,13 +8,13 @@ import javafx.scene.shape.Rectangle;
 import util.ConwayParser;
 
 import java.awt.Point;
-import java.util.ArrayList;
+import java.util.*;
 
 public class GameOfLife extends Simulation {
 	
-	private ArrayList<Point> currAliveCell;
-	private ArrayList<Point> nextAliveCell;
-	private ArrayList<Point> nextDeadCell;
+	private List<Point> currAliveCell;
+	private List<Point> nextAliveCell;
+	private List<Point> nextDeadCell;
 	private ConwayParser parser;
 	private static final Paint ALIVE_COLOR = Color.GREEN;
 	private static final Paint DEAD_COLOR = Color.WHITE;
@@ -80,14 +80,14 @@ public class GameOfLife extends Simulation {
 	private void checkCells() {
 		for (int i = 0; i < sizeX; i++) {
 			for (int j = 0; j < sizeY; j++) {
-				ArrayList<Point> pointsToCheck = this.createNeighborsList(i, j);
+				List<Point> pointsToCheck = this.createNeighborsList(i, j);
 				int numNeighbors = this.calcNumNeighbors(pointsToCheck);
 				this.calcNextTurnState(numNeighbors, i, j, ((ConwayCell) next_grid[i][j]).isAlive());
 			}
 		}
 	}
 
-	private int calcNumNeighbors(ArrayList<Point> points) {
+	private int calcNumNeighbors(List<Point> points) {
 		int numNeighbors = 0;
 		for (Point p : points) {
 			if(!(p.x < 0 || p.x > sizeX || p.y < 0 || p.y > sizeY) && (this.currAliveCell.contains(p))) {
@@ -97,7 +97,7 @@ public class GameOfLife extends Simulation {
 		return numNeighbors;
 	}
 	
-	private ArrayList<Point> createNeighborsList(int i, int j) {
+	private List<Point> createNeighborsList(int i, int j) {
 		ArrayList<Point> points = new ArrayList<>();
 		points.add(new Point(i - 1, j - 1));
 		points.add(new Point(i - 1, j));
