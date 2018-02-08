@@ -1,9 +1,7 @@
 package cellsociety_team12.simulations;
 
 import java.awt.Point;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Random;
+import java.util.*;
 
 import cells.SegregationCell;
 import javafx.scene.Node;
@@ -19,12 +17,12 @@ public class Segregation extends Simulation {
 	private double similarPercentage;
 	private double bluePercentage;
 	private double redPercentage;
-	private ArrayList<Point> currEmptyList;
-	private ArrayList<Point> currBlueList;
-	private ArrayList<Point> currRedList;
-	private ArrayList<Point> nextEmptyList;
-	private ArrayList<Point> nextBlueList;
-	private ArrayList<Point> nextRedList;
+	private List<Point> currEmptyList;
+	private List<Point> currBlueList;
+	private List<Point> currRedList;
+	private List<Point> nextEmptyList;
+	private List<Point> nextBlueList;
+	private List<Point> nextRedList;
 	private final String BLUE = "blue";
 	private final String RED = "red";
 
@@ -104,7 +102,7 @@ public class Segregation extends Simulation {
 		for (int i = 0; i < sizeX; i++) {
 			for (int j = 0; j < sizeY; j++) {
 				if (!((SegregationCell) next_grid[i][j]).isEmpty()) {
-					ArrayList<Point> neighborsToCheck = this.createNeighborsList(i, j);
+					List<Point> neighborsToCheck = this.createNeighborsList(i, j);
 					int numSameNeighbors = -1;
 					String cellType = "";
 					if (((SegregationCell) next_grid[i][j]).isBlue()) {
@@ -125,7 +123,7 @@ public class Segregation extends Simulation {
 		}
 	}
 
-	private ArrayList<Point> createNeighborsList(int i, int j) {
+	private List<Point> createNeighborsList(int i, int j) {
 		ArrayList<Point> points = new ArrayList<>();
 		points.add(new Point(i - 1, j + 1));
 		points.add(new Point(i, j + 1));
@@ -138,7 +136,7 @@ public class Segregation extends Simulation {
 		return points;
 	}
 
-	private int checkBlueNeighbors(ArrayList<Point> points) {
+	private int checkBlueNeighbors(List<Point> points) {
 		int numNeighbors = 0;
 		for (Point p : points) {
 			if (this.currBlueList.contains(p)) {
@@ -148,7 +146,7 @@ public class Segregation extends Simulation {
 		return numNeighbors;
 	}
 
-	private int checkRedNeighbors(ArrayList<Point> points) {
+	private int checkRedNeighbors(List<Point> points) {
 		int numNeighbors = 0;
 		for (Point p : points) {
 			if (this.currRedList.contains(p)) {
@@ -158,7 +156,7 @@ public class Segregation extends Simulation {
 		return numNeighbors;
 	}
 	
-	private int calcNumNeighbors(ArrayList<Point> neighbors) {
+	private int calcNumNeighbors(List<Point> neighbors) {
 		int numNeighbors = 0;
 		for (Point p : neighbors) {
 			if (this.currBlueList.contains(p) || this.currRedList.contains(p)) {

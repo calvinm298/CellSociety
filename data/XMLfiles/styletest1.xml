@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+<style>
+<shape>rectangle</shape>
+<cell_size>20</cell_size>
+<grid_visible>false</grid_visible>
+<void_color>black</void_color>
+<considered_neighbors>all</considered_neighbors>
+</style>

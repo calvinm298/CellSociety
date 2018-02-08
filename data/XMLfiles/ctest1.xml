@@ -7,6 +7,12 @@
 		<size_x>20</size_x>
 		<size_y>20</size_y>
 	</setup>
+	<style>
+<shape>rectangle</shape>
+<grid_visible>false</grid_visible>
+<void_color>black</void_color>
+<considered_neighbors>all</considered_neighbors>
+</style>
 	<block>
 		<loc_x>7</loc_x>
 		<loc_y>7</loc_y>
