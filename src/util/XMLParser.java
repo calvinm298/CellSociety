@@ -2,8 +2,7 @@ package util;
 
 import java.awt.Point;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -23,6 +22,9 @@ public class XMLParser {
 	private String type;
 	private String title;
 	private String author;
+	private String cellShape;
+	private String consideredNeighbors;
+	private boolean showGrid;
 	private int sizeX;
 	private int sizeY;
 	private Document doc;
@@ -40,17 +42,24 @@ public class XMLParser {
 			this.parseCells();
 		} catch (ParserConfigurationException | SAXException | IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new IllegalArgumentException();
 		}
 
 	}
 	
 	public void parseSettings(Document doc) {
+		try {
 		this.type = doc.getElementsByTagName("type").item(0).getTextContent();
 		this.title = doc.getElementsByTagName("title").item(0).getTextContent();
 		this.author = doc.getElementsByTagName("author").item(0).getTextContent();
 		this.sizeX = Integer.parseInt(doc.getElementsByTagName("size_x").item(0).getTextContent());
 		this.sizeY = Integer.parseInt(doc.getElementsByTagName("size_y").item(0).getTextContent());
+		this.cellShape = doc.getElementsByTagName("shape").item(0).getTextContent();
+		this.consideredNeighbors = doc.getElementsByTagName("considered_neighbors").item(0).getTextContent();
+		this.showGrid = Boolean.parseBoolean(doc.getElementsByTagName("considered_neighbors").item(0).getTextContent());
+		} catch (Exception e) {
+			throw new IllegalArgumentException();
+		}
 	}
 	public void parseCells() {
 		NodeList cellList = this.getDoc().getElementsByTagName("block");
@@ -80,7 +89,7 @@ public class XMLParser {
 			}
 		}
 	}
-	public ArrayList<Point> getCells(String cellclass) {
+	public List<Point> getCells(String cellclass) {
 		if (!this.cellLocations.containsKey(cellclass)) throw new IllegalArgumentException();
 		return this.cellLocations.get(cellclass);
 	}

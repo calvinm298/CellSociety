@@ -28,7 +28,7 @@ public class WatorParser extends XMLParser {
 			this.fishEnergy = Integer
 					.parseInt(this.getDoc().getElementsByTagName("fish_energy").item(0).getTextContent());
 		} catch (NullPointerException e) {
-			return;
+			throw new IllegalArgumentException();
 		}
 	}
 

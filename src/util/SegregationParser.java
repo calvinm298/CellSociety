@@ -16,7 +16,7 @@ public class SegregationParser extends XMLParser {
 		this.bluePercentage = Double.parseDouble(this.getDoc().getElementsByTagName("blue_percent").item(0).getTextContent());
 		this.redPercentage = Double.parseDouble(this.getDoc().getElementsByTagName("red_percent").item(0).getTextContent());
 		} catch (NullPointerException e) {
-			return;
+			throw new IllegalArgumentException();
 		}
 		}
 		
