@@ -1,10 +1,6 @@
 package cellsociety_team12.simulations;
-
 import java.awt.Point;
 import java.util.ArrayList;
-import java.util.Random;
-
-import cells.ConwayCell;
 import cells.WaterCell;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
@@ -33,7 +29,6 @@ public class WaTor extends Simulation {
 		this.initializeCellLists();
 		this.setupGrid();
 	}
-
 	private void initializeCellLists() {
 		currAliveFishCell = new ArrayList<>();
 		currAliveSharkCell = new ArrayList<>();
@@ -69,16 +64,10 @@ public class WaTor extends Simulation {
 		this.currAliveSharkCell.clear();
 		for (int i = 0; i < sizeX; i++) {
 			for (int j = 0; j < sizeY; j++) {
-				if (((WaterCell) curr_grid[i][j]).getAnimalTypeString().equals(fishIndicate)) { // need to
-																								// create
-					// this
-					// comparator
+				if (((WaterCell) curr_grid[i][j]).getAnimalTypeString().equals(fishIndicate)) { 
 					currAliveFishCell.add(new Point(i, j));
 				}
-				if (((WaterCell) curr_grid[i][j]).getAnimalTypeString().equals(sharkIndicate)) { // need to
-																									// create
-					// this
-					// comparator
+				if (((WaterCell) curr_grid[i][j]).getAnimalTypeString().equals(sharkIndicate)) { 
 					currAliveSharkCell.add(new Point(i, j));
 				}
 			}
@@ -104,7 +93,7 @@ public class WaTor extends Simulation {
 			Point nextLocation = getNextFishLocation(currLocation, fishIndicate);
 			Fish curr_fish = (Fish) ((WaterCell) curr_grid[currLocation.x][currLocation.y]).getAnimal();
 			if (((WaterCell) curr_grid[nextLocation.x][nextLocation.y]).getWillBeTakenByShark()) {
-//				((Shark) ((WaterCell) next_grid[nextLocation.x][nextLocation.y]).getAnimal()).changeEnergy(curr_fish.giveEnergy());
+				((Shark) ((WaterCell) next_grid[nextLocation.x][nextLocation.y]).getAnimal()).changeEnergy(curr_fish.giveEnergy());
 				Shark curr_shark = ((Shark) ((WaterCell) next_grid[nextLocation.x][nextLocation.y]).getAnimal());
 				curr_shark.setEnergy(Math.min(curr_shark.getEnergy() + curr_fish.giveEnergy(), curr_shark.getMaxEnergy()));
 				continue;
@@ -119,7 +108,6 @@ public class WaTor extends Simulation {
 			curr_fish.increaseChronon();
 		}
 	}
-
 	private Point getNextFishLocation(Point currLocation, String animal) {
 		ArrayList<Point> nextPossibleFishLocations = getNextPossibleNeighbors(currLocation, animal);
 		Point nextFishLocation = getRandomLocation(nextPossibleFishLocations);
@@ -128,7 +116,6 @@ public class WaTor extends Simulation {
 		}
 		return nextFishLocation;
 	}
-
 	private Point getNextSharkLocation(Point currLocation, String animal) {
 		ArrayList<Point> nextPossibleSharkLocations = getNextPossibleNeighbors(currLocation, animal);
 		Point nextSharkLocation = getRandomLocation(nextPossibleSharkLocations);
@@ -137,7 +124,6 @@ public class WaTor extends Simulation {
 		}
 		return nextSharkLocation;
 	}
-
 	private Point getRandomLocation(ArrayList<Point> nextPossibleFishLocations) {
 		int maxNum = nextPossibleFishLocations.size();
 		if (maxNum == 0) {
@@ -146,7 +132,6 @@ public class WaTor extends Simulation {
 		int rand = (int) (Math.random() * maxNum);
 		return nextPossibleFishLocations.get(rand);
 	}
-
 	private ArrayList<Point> getNextPossibleNeighbors(Point currLocation, String animal) {
 		ArrayList<Point> neighborList = new ArrayList<>();
 		int xCoor = currLocation.x;
@@ -163,7 +148,6 @@ public class WaTor extends Simulation {
 		}
 		return possibleLocations;
 	}
-
 	private ArrayList<Point> getNextPossibleLocationForFish(ArrayList<Point> neighborList) {
 		ArrayList<Point> emptyNeighbors = new ArrayList<>();
 		for (Point neighbor : neighborList) {
@@ -177,7 +161,6 @@ public class WaTor extends Simulation {
 		}
 		return emptyNeighbors;
 	}
-
 	private ArrayList<Point> getNextPossibleLocationForShark(ArrayList<Point> neighborList) {
 		ArrayList<Point> fishNeighbors = new ArrayList<>();
 		ArrayList<Point> emptyNeighbors = new ArrayList<>();
@@ -197,9 +180,7 @@ public class WaTor extends Simulation {
 		}
 		return emptyNeighbors;
 	}
-
 	private void changeGrid() {
-
 		for (int i = 0; i < sizeX; i++) {
 			for (int j = 0; j < sizeY; j++) {
 				curr_grid[i][j] = next_grid[i][j];
@@ -207,14 +188,9 @@ public class WaTor extends Simulation {
 		}
 		for (int i = 0; i < sizeX; i++) {
 			for (int j = 0; j < sizeY; j++) {
-				next_grid[i][j] = null;
 				next_grid[i][j] = new WaterCell();
-			}
-		}
-	}
-
+	}}}
 	protected Node getObject(int row, int col) {
-
 		Rectangle tempRect = new Rectangle();
 		tempRect.setWidth(cell_sizeX);
 		tempRect.setHeight(cell_sizeY);
